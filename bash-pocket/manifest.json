@@ -1,0 +1,19 @@
+{
+    "id": "bash-pocket",
+    "name": "Bash Pocket",
+    "version": "1.0.0",
+    "minNoctaliaVersion": "3.6.0",
+    "author": "Antigravity",
+    "license": "MIT",
+    "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+    "description": "Create and execute custom bash scripts from the bar.",
+    "entryPoints": {
+        "barWidget": "BarWidget.qml"
+    },
+    "dependencies": {
+        "plugins": []
+    },
+    "metadata": {
+        "defaultSettings": {}
+    }
+}
