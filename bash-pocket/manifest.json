@@ -5,7 +5,7 @@
     "minNoctaliaVersion": "3.6.0",
     "author": "Hakan Göksu",
     "license": "MIT",
-    "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+    "repository": "https://github.com/hakangoksu/noctalia-plugins",
     "description": "Create and execute custom bash scripts from the bar.",
     "entryPoints": {
         "barWidget": "BarWidget.qml"
