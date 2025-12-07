@@ -12,10 +12,17 @@ Item {
 
   // SmartPanel
   readonly property var geometryPlaceholder: panelContainer
-  readonly property bool allowAttach: true
 
   property real contentPreferredWidth: 680 * Style.uiScaleRatio
   property real contentPreferredHeight: 540 * Style.uiScaleRatio
+
+  readonly property bool allowAttach: true
+  // readonly property bool panelAnchorHorizontalCenter: true
+  // readonly property bool panelAnchorVerticalCenter: true
+  // readonly property bool panelAnchorTop: false
+  // readonly property bool panelAnchorBottom: false
+  // readonly property bool panelAnchorLeft: false
+  // readonly property bool panelAnchorRight: false
 
   anchors.fill: parent
 

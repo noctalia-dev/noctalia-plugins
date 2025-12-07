@@ -9,10 +9,27 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const REGISTRY_VERSION = 1;
 const ROOT_DIR = path.join(__dirname, '..', '..');
 const REGISTRY_PATH = path.join(ROOT_DIR, 'registry.json');
+
+/**
+ * Get the last commit date for a file using git
+ */
+function getLastCommitDate(filePath) {
+  try {
+    const result = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
+      cwd: ROOT_DIR,
+      encoding: 'utf8'
+    }).trim();
+    return result || null;
+  } catch (error) {
+    console.warn(`Warning: Could not get last commit date for ${filePath}`);
+    return null;
+  }
+}
 
 /**
  * Check if a directory contains a valid plugin (has manifest.json)
@@ -39,7 +56,8 @@ function readPluginManifest(dirPath) {
 /**
  * Extract registry-relevant fields from a plugin manifest
  */
-function extractRegistryEntry(manifest) {
+function extractRegistryEntry(manifest, dirPath) {
+  const manifestPath = path.join(dirPath, 'manifest.json');
   // Extract only the fields needed for the registry
   return {
     id: manifest.id,
@@ -49,7 +67,8 @@ function extractRegistryEntry(manifest) {
     description: manifest.description,
     repository: manifest.repository,
     minNoctaliaVersion: manifest.minNoctaliaVersion,
-    license: manifest.license
+    license: manifest.license,
+    lastUpdated: getLastCommitDate(manifestPath)
   };
 }
 
@@ -73,7 +92,7 @@ function scanPlugins() {
     if (isPluginDirectory(dirPath)) {
       const manifest = readPluginManifest(dirPath);
       if (manifest) {
-        const registryEntry = extractRegistryEntry(manifest);
+        const registryEntry = extractRegistryEntry(manifest, dirPath);
         plugins.push(registryEntry);
         console.log(`- Found plugin: ${manifest.name} (${manifest.id})`);
       }
