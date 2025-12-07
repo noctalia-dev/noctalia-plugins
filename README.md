@@ -17,6 +17,7 @@ plugin-name/
 ├── BarWidget.qml      # Bar widget component (optional)
 ├── Panel.qml          # Panel component (optional)
 ├── Settings.qml       # Settings UI (optional)
+├── preview.png        # Preview image used noctalia's website
 └── README.md          # Plugin documentation
 ```
 

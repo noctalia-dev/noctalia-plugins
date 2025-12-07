@@ -24,7 +24,7 @@
     {
       "id": "privacy-indicator",
       "name": "Privacy Indicator",
-      "version": "1.0.1",
+      "version": "1.0.4",
       "author": "Noctalia Team",
       "description": "A privacy indicator widget that shows when microphone, camera, or screen sharing is active.",
       "repository": "https://github.com/noctalia-dev/noctalia-plugins",
