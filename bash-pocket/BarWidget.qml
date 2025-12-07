@@ -212,9 +212,7 @@ Rectangle {
                 anchors.centerIn: parent
                 spacing: Style.marginS
                 
-                // Header / Title (Optional, but good for spacing)
                 Item { height: Style.marginXS; width: 1 }
-
                 Repeater {
                     model: root.pockets
                     delegate: RowLayout {
