@@ -2,6 +2,17 @@
   "version": 1,
   "plugins": [
     {
+      "id": "catwalk",
+      "name": "Catwalk",
+      "version": "1.0.0",
+      "author": "MannuVilasara",
+      "description": "A cute animated cat for your bar.",
+      "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+      "minNoctaliaVersion": "3.6.0",
+      "license": "MIT",
+      "lastUpdated": "2025-12-08T11:23:44+05:30"
+    },
+    {
       "id": "hello-world",
       "name": "Hello World",
       "version": "1.0.1",
@@ -26,13 +37,13 @@
     {
       "id": "privacy-indicator",
       "name": "Privacy Indicator",
-      "version": "1.0.5",
-      "author": "Noctalia Team <team@noctalia.dev>",
+      "version": "1.0.8",
+      "author": "Noctalia Team",
       "description": "A privacy indicator widget that shows when microphone, camera, or screen sharing is active.",
       "repository": "https://github.com/noctalia-dev/noctalia-plugins",
       "minNoctaliaVersion": "3.6.0",
       "license": "MIT",
-      "lastUpdated": "2025-12-08T00:52:09+01:00"
+      "lastUpdated": "2025-12-08T18:51:43+01:00"
     }
   ]
 }
