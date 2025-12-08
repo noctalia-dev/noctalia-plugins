@@ -187,7 +187,7 @@ Rectangle {
 
     PopupWindow {
         id: pocketMenu
-        width: 260
+        width: 160
         // Calculate height based on content
         implicitHeight: contentLayout.implicitHeight + Style.marginS * 2
         
@@ -241,7 +241,7 @@ Rectangle {
                         spacing: Style.marginS
                         
                         NButton {
-                            text: "Pocket " + modelData
+                            text: "bash " + modelData
                             Layout.fillWidth: true
                             onClicked: {
                                 root.executePocket(modelData);
@@ -271,7 +271,7 @@ Rectangle {
                 
                 // Add Button
                 NButton {
-                    text: "+ Add Pocket"
+                    text: "+"
                     Layout.fillWidth: true
                     Layout.margins: Style.marginS
                     onClicked: {
@@ -283,5 +283,4 @@ Rectangle {
             }
         }
     }
-
 }
