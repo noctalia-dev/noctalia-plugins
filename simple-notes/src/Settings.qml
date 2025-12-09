@@ -16,7 +16,7 @@ ColumnLayout {
     property var pluginApi: null
     readonly property var supergfxctl: pluginApi.mainInstance
 
-    property bool debug: false
+    property bool debug: pluginApi?.pluginSettings?.debug || pluginApi?.manifest?.metadata?.defaultSettings?.debug || false
 
     spacing: Style.marginM
 
@@ -25,8 +25,10 @@ ColumnLayout {
         label: "Debug"
         description: "Print debug values in console"
         checked: root.debug
+        onToggled: checked => root.debug = checked
     }
 
+    // This function is called by the dialog
     function saveSettings() {
         if (!pluginApi) {
             supergfxctl.error("cannot save settings: pluginApi is null");

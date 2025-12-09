@@ -6,7 +6,7 @@
 	"author": "cod3d",
 	"license": "AGPL-3.0-or-later",
 	"repository": "https://github.com/cod3ddot/noctalia-supergfxctl",
-	"description": "GPU control with supergfxctl.",
+	"description": "GPU control with supergfxctl for noctalia.",
 	"entryPoints": {
 		"main": "src/Main.qml",
 		"barWidget": "src/Bar.qml",
@@ -17,6 +17,8 @@
 		"plugins": []
 	},
 	"metadata": {
-		"defaultSettings": {}
+		"defaultSettings": {
+			"debug": false
+		}
 	}
 }

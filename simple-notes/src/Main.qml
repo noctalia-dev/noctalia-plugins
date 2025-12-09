@@ -14,6 +14,7 @@ Item {
 
     property var pluginApi: null
     readonly property string pluginId: pluginApi?.pluginId ?? "noctalia-supergfxctl"
+    property bool debug: pluginApi?.pluginSettings?.debug || pluginApi?.manifest?.metadata?.defaultSettings?.debug || false
 
     enum SGFXMode {
         Integrated,
@@ -94,15 +95,18 @@ Item {
     }
 
     function log(...msg) {
-        Logger.i(root.pluginId, "(supergfxctl v" + d.version + "):", ...msg);
+        if (debug)
+            Logger.i(root.pluginId, "(supergfxctl v" + d.version + "):", ...msg);
     }
 
     function warn(...msg) {
-        Logger.w(root.pluginId, "(supergfxctl v" + d.version + "):", ...msg);
+        if (debug)
+            Logger.w(root.pluginId, "(supergfxctl v" + d.version + "):", ...msg);
     }
 
     function error(...msg) {
-        Logger.e(root.pluginId, "(supergfxctl v" + d.version + "):", ...msg);
+        if (debug)
+            Logger.e(root.pluginId, "(supergfxctl v" + d.version + "):", ...msg);
     }
 
     QtObject {

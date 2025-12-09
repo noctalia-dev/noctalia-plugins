@@ -1,6 +1,9 @@
 {
 	"gpu": "GPU",
 	"unknown": "Unknown",
+	"context-menu": {
+		"refresh": "Refresh status"
+	},
 	"action": {
 		"required": "required",
 		"switch": "Switch to Integrated",
