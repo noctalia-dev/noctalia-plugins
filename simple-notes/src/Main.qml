@@ -34,8 +34,7 @@ Item {
     readonly property bool debug: !!(pluginApi?.pluginSettings?.debug)
 
     readonly property bool available: sgfx.available
-    readonly property bool refreshing: refreshProc.running
-    readonly property bool setting: setModeProc.running
+    readonly property bool busy: setModeProc.running || refreshProc.running
 
     readonly property string version: sgfx.version
     readonly property int mode: sgfx.mode
@@ -108,9 +107,9 @@ Item {
     function getActionLabel(action: int): string {
         switch (action) {
         case Main.SGFXAction.Logout:
-            return I18n.tr("session.logout");
+            return I18n.tr("session-menu.logout");
         case Main.SGFXAction.Reboot:
-            return I18n.tr("session.reboot");
+            return I18n.tr("session-menu.reboot");
         case Main.SGFXAction.SwitchToIntegrated:
             return root.pluginApi.tr("action.SwitchToIntegrated") + " " + root.pluginApi.tr("action.required");
         case Main.SGFXAction.AsusEgpuDisable:
@@ -360,8 +359,8 @@ Item {
             // only set if pending mode has not been set manually
             if (pendingMode === Main.SGFXMode.None) {
                 mode = newMode;
-                pendingAction = newPendingAction;
                 pendingMode = newPendMode;
+                pendingAction = requiredAction(sgfx.mode, newPendMode);
             }
             supportedModesMask = newSupportedMask;
             available = true;

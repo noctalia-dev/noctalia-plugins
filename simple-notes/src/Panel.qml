@@ -31,6 +31,7 @@ Item {
 
     readonly property var gpuApi: pluginApi?.mainInstance
     readonly property bool available: gpuApi?.available ?? false
+    readonly property bool busy: gpuApi?.busy ?? false
 
     readonly property string currentIcon: gpuApi.getModeIcon(gpuApi.mode)
     readonly property string currentLabel: gpuApi.getModeLabel(gpuApi.mode)
@@ -53,6 +54,10 @@ Item {
 
         // Not clickable when current or unsupported
         readonly property bool interactive: {
+            if (root.busy) {
+                return false;
+            }
+
             if (!isSupported) {
                 return false;
             }
@@ -69,18 +74,21 @@ Item {
         }
 
         readonly property color textColor: {
-            if (!isSupported)
+            if (!isSupported) {
                 return Color.mOutline;
+            }
 
             if (hovered) {
                 return Color.mTertiary;
             }
 
-            if (isPendingMode)
+            if (isPendingMode) {
                 return Color.mOnTertiary;
+            }
 
-            if (isCurrentMode)
+            if (isCurrentMode) {
                 return Color.mOnPrimary;
+            }
 
             return Color.mPrimary;
         }
@@ -133,6 +141,7 @@ Item {
                 easing.type: Easing.OutCubic
             }
         }
+
         Behavior on border.color {
             ColorAnimation {
                 duration: Style.animationFast
@@ -226,11 +235,22 @@ Item {
             }
 
             NIconButton {
+                id: refreshButton
                 icon: "refresh"
                 tooltipText: I18n.tr("tooltips.refresh")
                 baseSize: Style.baseWidgetSize * 0.8
-                enabled: root.available && !root.gpuApi.refreshing
+                enabled: root.available && !root.busy
                 onClicked: root.gpuApi.refresh()
+
+                RotationAnimation {
+                    id: rotationAnimator
+                    target: refreshButton
+                    property: "rotation"
+                    to: 360
+                    duration: 2000
+                    loops: Animation.Infinite
+                    running: root.busy
+                }
             }
 
             NIconButton {
