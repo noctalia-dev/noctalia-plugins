@@ -164,20 +164,21 @@ Rectangle {
             
             Logger.i("Catwalk", "Clicked! API:", !!pluginApi, "Screen:", root.screen ? root.screen.name : "null");
 
-            // Open Panel on click
-            if (pluginApi) {
-                var result = pluginApi.openPanel(root.screen);
-                Logger.i("Catwalk", "OpenPanel result:", result);
-            } else {
-                Logger.e("Catwalk", "PluginAPI is null");
-            }
             
             if (!root.enabled && !root.allowClickWhenDisabled) {
                 return;
             }
             if (mouse.button === Qt.LeftButton) {
+                // Open Panel on click
+                if (pluginApi) {
+                    var result = pluginApi.openPanel(root.screen);
+                    Logger.i("Catwalk", "OpenPanel result:", result);
+                } else {
+                    Logger.e("Catwalk", "PluginAPI is null");
+                }
                 root.clicked();
             } else if (mouse.button === Qt.RightButton) {
+                Quickshell.execDetached(["sh", "-c", "missioncenter || resources || flatpak run io.missioncenter.MissionCenter || flatpak run net.nokyan.Resources || gnome-system-monitor || plasma-systemmonitor"]);
                 root.rightClicked();
             } else if (mouse.button === Qt.MiddleButton) {
                 root.middleClicked();
