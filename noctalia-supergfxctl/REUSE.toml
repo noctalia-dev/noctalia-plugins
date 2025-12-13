@@ -1,0 +1,25 @@
+version = 1
+SPDX-PackageName = "noctalia-supergfxctl"
+SPDX-PackageSupplier = "https://github.com/cod3ddot/noctalia-supergfxctl"
+
+[[annotations]]
+path = [
+	"manifest.json",
+    "REUSE.toml"
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2025 cod3ddot@proton.me"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = [
+    "i18n/**/*.json"
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2025 contributors"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["README.md", "CHANGES.md", "preview.png"]
+SPDX-FileCopyrightText = "2025 cod3ddot@proton.me"
+SPDX-License-Identifier = "CC-BY-NC-SA-4.0"
