@@ -1,0 +1,27 @@
+{
+  "tooltip": {
+    "toggle-button": "Toggle Virtual Keyboard"
+  },
+  "settings": {
+    "layout": {
+      "label": "Virtual Keyboard layout",
+      "description": "Change the keyboard layout"
+    },
+    "size": {
+      "label": "Virtual Keyboard size",
+      "description": "Change the keyboard size"
+    }
+  },
+  "options": {
+    "layout": {
+      "auto": "auto (QWERTY)",
+      "qwerty": "QWERTY",
+      "azerty": "AZERTY",
+      "dvorak": "DVORAK"
+    },
+    "size": {
+      "compact": "compact",
+      "full": "full"
+    }
+  }
+}

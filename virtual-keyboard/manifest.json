@@ -1,0 +1,25 @@
+{
+  "id": "virtual-keyboard",
+  "name": "Virtual Keyboard",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "Adrien Piechocki",
+  "license": "MIT",
+  "repository": "https://github.com/AdrienPiechocki/noctalia-virtual-keyboard-plugin",
+  "description": "A Virtual Keyboard plugin made for accessibility.",
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "settings": "Settings.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "enabled": false,
+      "layout": "qwerty",
+      "style": "compact"
+    }
+  }
+}

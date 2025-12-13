@@ -1,0 +1,27 @@
+{
+  "tooltip": {
+    "toggle-button": "Activer le Clavier Virtuel"
+  },
+  "settings": {
+    "layout": {
+      "label": "Disposition du Clavier Virtuel",
+      "description": "Changez la disposition des touches"
+    },
+    "size": {
+      "label": "Taille du clavier",
+      "description": "Changez la taille du clavier"
+    }
+  },
+  "options": {
+    "layout": {
+      "auto": "auto (AZERTY)",
+      "qwerty": "QWERTY",
+      "azerty": "AZERTY",
+      "dvorak": "DVORAK"
+    },
+    "size": {
+      "compact": "compacte",
+      "full": "complet"
+    }
+  }
+}
