@@ -52,9 +52,5 @@
             "label": "Text",
             "desc": "Set the text color used for both RX and TX values."
         }
-    },
-    "tooltip": {
-        "running": "Katze läuft",
-        "sleeping": "Katze schläft"
     }
 }
