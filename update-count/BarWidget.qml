@@ -82,6 +82,16 @@ Rectangle {
         }
     }
 
+    Timer {
+        id: externalHideTimer
+        interval: 10000
+        running: false
+        onTriggered: {
+            root.checkForUpdates();
+            root.hiddenWidgetMode();
+        }
+    }
+
     Item {
         id: layout
         anchors.centerIn: parent
@@ -130,6 +140,7 @@ Rectangle {
 
             onClicked: {
                 updateSystemPopup();
+                externalHideTimer.restart();
             }
 
             onEntered: {
