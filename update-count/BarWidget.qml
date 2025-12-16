@@ -126,6 +126,7 @@ Rectangle {
                 text: root.count.toString()
                 color: Settings.data.colorSchemes.darkMode ? Color.mOnSurface : Color.mOnPrimary
                 pointSize: Style.fontSizeS
+                Layout.alignment: Qt.AlignCenter
             }
         }
 
