@@ -25,8 +25,8 @@ Rectangle {
     readonly property bool isVertical: barPosition === "left" || barPosition === "right"
     readonly property string updateScriptDir: pluginApi?.pluginDir + "/scripts"
 
-    implicitWidth: isVertical ? Style.capsuleHeight : layout.implicitWidth + Style.marginM * 2
-    implicitHeight: isVertical ? layout.implicitHeight + Style.marginM * 2 : Style.capsuleHeight
+    implicitWidth: isVertical ? Style.capsuleHeight : layout.implicitWidth + Style.marginS * 2
+    implicitHeight: isVertical ? layout.implicitHeight + Style.marginS * 2 : Style.capsuleHeight
 
     color: Style.capsuleColor
     radius: Style.radiusM
