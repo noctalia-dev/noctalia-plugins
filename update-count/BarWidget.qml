@@ -17,7 +17,6 @@ Rectangle {
     property int updateInterval: pluginApi?.pluginSettings.updateInterval || pluginApi?.manifest?.metadata.defaultSettings?.updateInterval
     property string configuredTerminal: pluginApi?.pluginSettings.configuredTerminal || pluginApi?.manifest?.metadata.defaultSettings?.configuredTerminal
     property int count: checkForUpdates() || 0
-    property bool isVisible: root.count > 0 || true
     property bool hideOnZero: pluginApi?.pluginSettings.hideOnZero || pluginApi?.manifest?.metadata.defaultSettings?.hideOnZero
     property string configuredIcon: pluginApi?.pluginSettings?.configuredIcon || pluginApi?.manifest?.metadata?.defaultSettings?.configuredIcon
 
@@ -33,9 +32,9 @@ Rectangle {
 
     function hiddenWidgetMode() {
         if (root.hideOnZero) {
-            if (!root.isVisible) {
+            if (root.count === 0) {
                 root.visible = false;
-            } else if (root.isVisible) {
+            } else if (root.count > 0) {
                 root.visible = true;
             }
         }
