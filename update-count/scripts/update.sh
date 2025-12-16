@@ -56,9 +56,9 @@ if [[ $(_checkCommandExists "pacman") == 0 ]]; then
     if [[ $(_checkCommandExists "paru") == 0 ]]; then
         paru_installed="true"
     fi
-    if [[ $yay_installed == "true" ]] && [[ $paru_installed == "false" ]]; then
+    if [[ $yay_installed == "true" ]]; then
         aur_helper="yay"
-    elif [[ $yay_installed == "false" ]] && [[ $paru_installed == "true" ]]; then
+    elif [[ $paru_installed == "true" ]]; then
         aur_helper="paru"
     else
         aur_helper="none"
