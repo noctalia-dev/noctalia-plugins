@@ -33,19 +33,10 @@ Rectangle {
 
     function hiddenWidgetMode() {
         if (root.hideOnZero) {
-            if (root.isVertical) {
-                if (root.count === 0) {
-                    root.visible = false;
-                } else if (root.count > 0) {
-                    root.visible = true;
-                }
-            }
-            if (!root.isVertical) {
-                if (root.count === 0) {
-                    root.visible = false;
-                } else if (root.count > 0) {
-                    root.visible = true;
-                }
+            if (!root.isVisible) {
+                root.visible = false;
+            } else if (root.isVisible) {
+                root.visible = true;
             }
         }
     }
