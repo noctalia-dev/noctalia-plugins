@@ -19,6 +19,7 @@ Rectangle {
     property int count: checkForUpdates() || 0
     property bool isVisible: root.count > 0 || true
     property bool hideOnZero: pluginApi?.pluginSettings.hideOnZero || pluginApi?.manifest?.metadata.defaultSettings?.hideOnZero
+    property string configuredIcon: pluginApi?.pluginSettings?.configuredIcon || pluginApi?.manifest?.metadata?.defaultSettings?.configuredIcon
 
     readonly property string barPosition: Settings.data.bar.position
     readonly property bool isVertical: barPosition === "left" || barPosition === "right"
@@ -100,7 +101,7 @@ Rectangle {
             spacing: Style.marginS
 
             NIcon {
-                icon: pluginApi?.pluginSettings?.configuredIcon || pluginApi?.manifest?.metadata?.defaultSettings?.configuredIcon
+                icon: root.configuredIcon
                 color: Settings.data.colorSchemes.darkMode ? Color.mOnSurface : Color.mOnPrimary
             }
 
@@ -117,7 +118,7 @@ Rectangle {
             spacing: Style.marginS
 
             NIcon {
-                icon: pluginApi?.pluginSettings?.configuredIcon || pluginApi?.manifest?.metadata?.defaultSettings?.configuredIcon
+                icon: root.configuredIcon
                 color: Settings.data.colorSchemes.darkMode ? Color.mOnSurface : Color.mOnPrimary
             }
 
