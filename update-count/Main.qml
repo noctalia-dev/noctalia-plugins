@@ -115,12 +115,35 @@ Item {
   // ------ Start update ------
   //
   function startDoSystemUpdate() {
-    const cmd = root.customUpdater.cmdDoSystemUpdate || root.updater.cmdDoSystemUpdate || "echo 'No update cmd found.'"
+    const updateCmd = root.customUpdater.cmdDoSystemUpdate || root.updater.cmdDoSystemUpdate || "echo 'No update cmd found.'"
+    const ipcCmd = "qs -c noctalia-shell ipc call plugin:update-count check"
+    const combinedCmd = updateCmd + " && " + ipcCmd
+
     const term = root.updateTerminalCommand.trim();
+    const fullCmd = (term.indexOf("{}") !== -1) ? term.replace("{}", combinedCmd) : term + " " + combinedCmd;
 
-    const fullCmd = (term.indexOf("{}") !== -1) ? term.replace("{}", cmd) : term + " " + cmd;
+    doSystemUpdate.command = ["sh", "-c", fullCmd]
+    doSystemUpdate.running = true;
 
-    Quickshell.execDetached(["sh", "-c", fullCmd]);
     Logger.i("UpdateCount", `Executed update command: ${fullCmd}`);
+  }
+
+  Process {
+    id: doSystemUpdate
+  }
+
+  //
+  // ------ IPC ------
+  //
+  IpcHandler {
+    target: "plugin:update-count"
+
+    function check(): void {
+      root.startGetNumUpdates()
+    }
+
+    function run(): void {
+      root.startDoSystemUpdate()
+    }
   }
 }

@@ -70,7 +70,8 @@ Rectangle {
       cursorShape: root.pluginApi?.mainInstance?.updateCount > 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
 
       onClicked: {
-        root.pluginApi?.mainInstance?.startDoSystemUpdate();
+        if (root.pluginApi?.mainInstance?.updateCount > 0)
+          root.pluginApi?.mainInstance?.startDoSystemUpdate();
       }
 
 
