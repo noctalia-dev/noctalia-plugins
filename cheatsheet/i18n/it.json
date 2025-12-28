@@ -1,0 +1,23 @@
+{
+  "panel": {
+    "title": "Foglio di Riferimento",
+    "loading": "Caricamento...",
+    "error_read_file": "Errore di lettura del file",
+    "no_data": "Nessun dato",
+    "refresh_button": "Aggiorna",
+    "no_description": "Nessuna descrizione",
+    "no_categories": "Nessuna categoria trovata",
+    "workspace_switching": "SPAZI DI LAVORO - CAMBIO",
+    "workspace_moving": "SPAZI DI LAVORO - SPOSTAMENTO",
+    "workspace_mouse": "SPAZI DI LAVORO - MOUSE"
+  },
+  "main": {
+    "error": "ERRORE",
+    "cannot_get_home": "Impossibile ottenere $HOME",
+    "read_error": "ERRORE DI LETTURA",
+    "exit_code": "CODICE DI USCITA",
+    "stderr": "STDERR",
+    "file_empty": "FILE VUOTO",
+    "file_no_data": "Il file non contiene dati"
+  }
+}

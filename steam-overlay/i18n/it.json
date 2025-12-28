@@ -1,0 +1,25 @@
+{
+  "main": {
+    "plugin_loaded": "API del plugin caricata",
+    "resolution_detected": "Risoluzione rilevata: {width} x {height}",
+    "windows_found": "Trovate {count} finestre Steam",
+    "windows_moved": "Finestre spostate, codice di uscita: {code}",
+    "workspace_toggled": "Area di lavoro alternata",
+    "toggle_called": "Alternanza chiamata",
+    "launching_steam": "Avvio di Steam...",
+    "steam_launched": "Steam avviato",
+    "no_windows_found": "Nessuna finestra Steam trovata",
+    "ipc_received": "Alternanza IPC ricevuta"
+  },
+  "bar_widget": {
+    "tooltip": "Sovrapposizione Steam",
+    "tooltip_active": "Sovrapposizione Steam (Attiva)",
+    "tooltip_inactive": "Sovrapposizione Steam (Clicca per attivare)"
+  },
+  "notifications": {
+    "steam_launching": "Avvio di Steam...",
+    "steam_not_running": "Steam non è in esecuzione",
+    "overlay_shown": "Sovrapposizione Steam mostrata",
+    "overlay_hidden": "Sovrapposizione Steam nascosta"
+  }
+}

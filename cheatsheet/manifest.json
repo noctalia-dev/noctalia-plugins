@@ -1,0 +1,22 @@
+{
+  "id": "cheatsheet",
+  "name": "Cheatsheet",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "blacku",
+  "license": "MIT",
+  "description": "Dynamic keyboard shortcuts cheatsheet for Hyprland",
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "parsedData": [] 
+    }
+  }
+}

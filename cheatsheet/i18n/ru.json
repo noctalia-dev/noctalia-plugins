@@ -1,0 +1,23 @@
+{
+  "panel": {
+    "title": "Шпаргалка",
+    "loading": "Загрузка...",
+    "error_read_file": "Ошибка чтения файла",
+    "no_data": "Нет данных",
+    "refresh_button": "Обновить",
+    "no_description": "Нет описания",
+    "no_categories": "Категории не найдены",
+    "workspace_switching": "РАБОЧИЕ ОБЛАСТИ - ПЕРЕКЛЮЧЕНИЕ",
+    "workspace_moving": "РАБОЧИЕ ОБЛАСТИ - ПЕРЕМЕЩЕНИЕ",
+    "workspace_mouse": "РАБОЧИЕ ОБЛАСТИ - МЫШЬ"
+  },
+  "main": {
+    "error": "ОШИБКА",
+    "cannot_get_home": "Не удается получить $HOME",
+    "read_error": "ОШИБКА ЧТЕНИЯ",
+    "exit_code": "КОД ВЫХОДА",
+    "stderr": "STDERR",
+    "file_empty": "ФАЙЛ ПУСТ",
+    "file_no_data": "Файл не содержит данных"
+  }
+}

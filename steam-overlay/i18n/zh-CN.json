@@ -1,0 +1,25 @@
+{
+  "main": {
+    "plugin_loaded": "插件API已加载",
+    "resolution_detected": "检测到分辨率：{width} x {height}",
+    "windows_found": "找到 {count} 个Steam窗口",
+    "windows_moved": "窗口已移动，退出代码：{code}",
+    "workspace_toggled": "工作区已切换",
+    "toggle_called": "切换已调用",
+    "launching_steam": "正在启动Steam...",
+    "steam_launched": "Steam已启动",
+    "no_windows_found": "未找到Steam窗口",
+    "ipc_received": "已接收IPC切换"
+  },
+  "bar_widget": {
+    "tooltip": "Steam叠加层",
+    "tooltip_active": "Steam叠加层（活动）",
+    "tooltip_inactive": "Steam叠加层（点击激活）"
+  },
+  "notifications": {
+    "steam_launching": "正在启动Steam...",
+    "steam_not_running": "Steam未运行",
+    "overlay_shown": "Steam叠加层已显示",
+    "overlay_hidden": "Steam叠加层已隐藏"
+  }
+}

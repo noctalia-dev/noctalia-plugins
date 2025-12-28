@@ -1,0 +1,25 @@
+{
+  "main": {
+    "plugin_loaded": "API du plugin chargée",
+    "resolution_detected": "Résolution détectée: {width} x {height}",
+    "windows_found": "{count} fenêtres Steam trouvées",
+    "windows_moved": "Fenêtres déplacées, code de sortie: {code}",
+    "workspace_toggled": "Espace de travail basculé",
+    "toggle_called": "Basculement appelé",
+    "launching_steam": "Lancement de Steam...",
+    "steam_launched": "Steam lancé",
+    "no_windows_found": "Aucune fenêtre Steam trouvée",
+    "ipc_received": "Basculement IPC reçu"
+  },
+  "bar_widget": {
+    "tooltip": "Superposition Steam",
+    "tooltip_active": "Superposition Steam (Active)",
+    "tooltip_inactive": "Superposition Steam (Cliquer pour activer)"
+  },
+  "notifications": {
+    "steam_launching": "Lancement de Steam...",
+    "steam_not_running": "Steam n'est pas en cours d'exécution",
+    "overlay_shown": "Superposition Steam affichée",
+    "overlay_hidden": "Superposition Steam masquée"
+  }
+}

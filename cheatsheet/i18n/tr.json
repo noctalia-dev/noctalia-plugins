@@ -1,0 +1,23 @@
+{
+  "panel": {
+    "title": "Kopya Kağıdı",
+    "loading": "Yükleniyor...",
+    "error_read_file": "Dosya okuma hatası",
+    "no_data": "Veri yok",
+    "refresh_button": "Yenile",
+    "no_description": "Açıklama yok",
+    "no_categories": "Kategori bulunamadı",
+    "workspace_switching": "ÇALIŞMA ALANLARI - DEĞİŞTİRME",
+    "workspace_moving": "ÇALIŞMA ALANLARI - TAŞIMA",
+    "workspace_mouse": "ÇALIŞMA ALANLARI - FARE"
+  },
+  "main": {
+    "error": "HATA",
+    "cannot_get_home": "$HOME alınamıyor",
+    "read_error": "OKUMA HATASI",
+    "exit_code": "ÇIKIŞ KODU",
+    "stderr": "STDERR",
+    "file_empty": "DOSYA BOŞ",
+    "file_no_data": "Dosya veri içermiyor"
+  }
+}

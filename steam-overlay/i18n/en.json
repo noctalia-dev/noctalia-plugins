@@ -1,0 +1,25 @@
+{
+  "main": {
+    "plugin_loaded": "Plugin API loaded",
+    "resolution_detected": "Detected resolution: {width} x {height}",
+    "windows_found": "Found {count} Steam windows",
+    "windows_moved": "Windows moved, exit code: {code}",
+    "workspace_toggled": "Workspace toggled",
+    "toggle_called": "Toggle called",
+    "launching_steam": "Launching Steam...",
+    "steam_launched": "Steam launched",
+    "no_windows_found": "No Steam windows found",
+    "ipc_received": "IPC toggle received"
+  },
+  "bar_widget": {
+    "tooltip": "Steam Overlay",
+    "tooltip_active": "Steam Overlay (Active)",
+    "tooltip_inactive": "Steam Overlay (Click to activate)"
+  },
+  "notifications": {
+    "steam_launching": "Launching Steam...",
+    "steam_not_running": "Steam is not running",
+    "overlay_shown": "Steam overlay shown",
+    "overlay_hidden": "Steam overlay hidden"
+  }
+}

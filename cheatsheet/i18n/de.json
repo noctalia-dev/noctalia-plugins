@@ -1,0 +1,23 @@
+{
+  "panel": {
+    "title": "Spickzettel",
+    "loading": "Wird geladen...",
+    "error_read_file": "Dateilesefehler",
+    "no_data": "Keine Daten",
+    "refresh_button": "Aktualisieren",
+    "no_description": "Keine Beschreibung",
+    "no_categories": "Keine Kategorien gefunden",
+    "workspace_switching": "ARBEITSBEREICHE - UMSCHALTEN",
+    "workspace_moving": "ARBEITSBEREICHE - VERSCHIEBEN",
+    "workspace_mouse": "ARBEITSBEREICHE - MAUS"
+  },
+  "main": {
+    "error": "FEHLER",
+    "cannot_get_home": "$HOME kann nicht abgerufen werden",
+    "read_error": "LESEFEHLER",
+    "exit_code": "EXIT CODE",
+    "stderr": "STDERR",
+    "file_empty": "DATEI LEER",
+    "file_no_data": "Datei enthält keine Daten"
+  }
+}

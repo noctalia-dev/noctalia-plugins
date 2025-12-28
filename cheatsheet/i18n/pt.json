@@ -1,0 +1,23 @@
+{
+  "panel": {
+    "title": "Folha de Dicas",
+    "loading": "Carregando...",
+    "error_read_file": "Erro ao ler o arquivo",
+    "no_data": "Sem dados",
+    "refresh_button": "Atualizar",
+    "no_description": "Sem descrição",
+    "no_categories": "Nenhuma categoria encontrada",
+    "workspace_switching": "ESPAÇOS DE TRABALHO - ALTERNAR",
+    "workspace_moving": "ESPAÇOS DE TRABALHO - MOVER",
+    "workspace_mouse": "ESPAÇOS DE TRABALHO - MOUSE"
+  },
+  "main": {
+    "error": "ERRO",
+    "cannot_get_home": "Não é possível obter $HOME",
+    "read_error": "ERRO DE LEITURA",
+    "exit_code": "CÓDIGO DE SAÍDA",
+    "stderr": "STDERR",
+    "file_empty": "ARQUIVO VAZIO",
+    "file_no_data": "O arquivo não contém dados"
+  }
+}

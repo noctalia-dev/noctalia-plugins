@@ -1,0 +1,27 @@
+{
+  "id": "steam-overlay",
+  "name": "Steam Overlay",
+  "version": "1.3.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "blacku",
+  "license": "MIT",
+  "description": "Steam overlay with automatic window management and chat notifications",
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "friendsWidth": 375,
+      "mainWidth": 2600,
+      "chatWidth": 465,
+      "screenWidth": 3440,
+      "hasNewMessages": false,
+      "autoLaunchSteam": true
+    }
+  }
+}

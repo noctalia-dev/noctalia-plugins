@@ -1,0 +1,23 @@
+{
+  "panel": {
+    "title": "Шпаргалка",
+    "loading": "Завантаження...",
+    "error_read_file": "Помилка читання файлу",
+    "no_data": "Немає даних",
+    "refresh_button": "Оновити",
+    "no_description": "Немає опису",
+    "no_categories": "Категорії не знайдено",
+    "workspace_switching": "РОБОЧІ ОБЛАСТІ - ПЕРЕМИКАННЯ",
+    "workspace_moving": "РОБОЧІ ОБЛАСТІ - ПЕРЕМІЩЕННЯ",
+    "workspace_mouse": "РОБОЧІ ОБЛАСТІ - МИША"
+  },
+  "main": {
+    "error": "ПОМИЛКА",
+    "cannot_get_home": "Не вдається отримати $HOME",
+    "read_error": "ПОМИЛКА ЧИТАННЯ",
+    "exit_code": "КОД ВИХОДУ",
+    "stderr": "STDERR",
+    "file_empty": "ФАЙЛ ПОРОЖНІЙ",
+    "file_no_data": "Файл не містить даних"
+  }
+}

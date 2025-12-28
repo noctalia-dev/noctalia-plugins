@@ -1,0 +1,409 @@
+{
+  "cheatsheetData": [
+    {
+      "title": "APLIKACJE I SYSTEM",
+      "binds": [
+        {
+          "keys": "Super + RETURN",
+          "desc": "Terminal"
+        },
+        {
+          "keys": "Super + Q",
+          "desc": "Przeglądarka"
+        },
+        {
+          "keys": "Super + Shift + E",
+          "desc": "Wyjście z Hyprlanda"
+        },
+        {
+          "keys": "Super + F1",
+          "desc": "Lista skrótów"
+        }
+      ]
+    },
+    {
+      "title": "INTEGRACJA Z NOCTALIĄ (QUICKSHELL)",
+      "binds": [
+        {
+          "keys": "Super + D",
+          "desc": "Menu Aplikacji"
+        },
+        {
+          "keys": "Super + V",
+          "desc": "Historia Schowka"
+        },
+        {
+          "keys": "Super + C",
+          "desc": "Kalkulator"
+        },
+        {
+          "keys": "Super + B",
+          "desc": "Kalendarz"
+        },
+        {
+          "keys": "Super + X",
+          "desc": "Menu Zasilania"
+        },
+        {
+          "keys": "Super + Z",
+          "desc": "Zmień tapetę"
+        },
+        {
+          "keys": "Super + N",
+          "desc": "Powiadomienia"
+        },
+        {
+          "keys": "Super + ESCAPE",
+          "desc": "Zablokuj ekran"
+        },
+        {
+          "keys": "Super + S",
+          "desc": "Nakładka Steam"
+        },
+        {
+          "keys": "Super + M",
+          "desc": "Komunikator"
+        }
+      ]
+    },
+    {
+      "title": "ZARZĄDZANIE OKNAMI",
+      "binds": [
+        {
+          "keys": "Super + W",
+          "desc": "Zamknij okno"
+        },
+        {
+          "keys": "Super + F",
+          "desc": "Pełny ekran (z paskiem)"
+        },
+        {
+          "keys": "Super + Shift + D",
+          "desc": "Pełny ekran (czysty)"
+        },
+        {
+          "keys": "Super + Shift + T",
+          "desc": "Tryb pływający"
+        },
+        {
+          "keys": "Super + G",
+          "desc": "Grupowanie okien"
+        },
+        {
+          "keys": "Super + R",
+          "desc": "Obróć podział"
+        },
+        {
+          "keys": "Super + BRACKETLEFT",
+          "desc": "Preselect Lewo"
+        },
+        {
+          "keys": "Super + BRACKETRIGHT",
+          "desc": "Preselect Prawo"
+        },
+        {
+          "keys": "Super + TAB",
+          "desc": "Następna zakładka"
+        },
+        {
+          "keys": "Super + Shift + TAB",
+          "desc": "Poprzednia zakładka"
+        },
+        {
+          "keys": "Super + O",
+          "desc": "Wyjmij z grupy"
+        },
+        {
+          "keys": "Super + H",
+          "desc": "Włóż do grupy (Lewo)"
+        },
+        {
+          "keys": "Super + L",
+          "desc": "Włóż do grupy (Prawo)"
+        },
+        {
+          "keys": "Super + K",
+          "desc": "Włóż do grupy (Góra)"
+        },
+        {
+          "keys": "Super + J",
+          "desc": "Włóż do grupy (Dół)"
+        }
+      ]
+    },
+    {
+      "title": "SCREENSHOTY",
+      "binds": [
+        {
+          "keys": "PRINT",
+          "desc": "Zrzut wycinka (Schowek)"
+        },
+        {
+          "keys": "Ctrl + PRINT",
+          "desc": "Zrzut ekranu (Schowek)"
+        },
+        {
+          "keys": "Alt + PRINT",
+          "desc": "Zrzut okna (Schowek)"
+        }
+      ]
+    },
+    {
+      "title": "MULTIMEDIA I JASNOŚĆ",
+      "binds": [
+        {
+          "keys": "XF86AUDIORAISEVOLUME",
+          "desc": "Głośniej"
+        },
+        {
+          "keys": "XF86AUDIOLOWERVOLUME",
+          "desc": "Ciszej"
+        },
+        {
+          "keys": "XF86AUDIOMUTE",
+          "desc": "Wycisz"
+        },
+        {
+          "keys": "XF86AUDIOPLAY",
+          "desc": "Play / Pause"
+        },
+        {
+          "keys": "XF86AUDIONEXT",
+          "desc": "Następny utwór"
+        },
+        {
+          "keys": "XF86AUDIOPREV",
+          "desc": "Poprzedni utwór"
+        },
+        {
+          "keys": "XF86MONBRIGHTNESSUP",
+          "desc": "Jasność +"
+        },
+        {
+          "keys": "XF86MONBRIGHTNESSDOWN",
+          "desc": "Jasność -"
+        }
+      ]
+    },
+    {
+      "title": "NAWIGACJA (FOCUS)",
+      "binds": [
+        {
+          "keys": "Super + LEFT",
+          "desc": "Fokus lewo"
+        },
+        {
+          "keys": "Super + RIGHT",
+          "desc": "Fokus prawo"
+        },
+        {
+          "keys": "Super + UP",
+          "desc": "Fokus góra"
+        },
+        {
+          "keys": "Super + DOWN",
+          "desc": "Fokus dół"
+        },
+        {
+          "keys": "Super + H",
+          "desc": "Fokus lewo (Vim)"
+        },
+        {
+          "keys": "Super + J",
+          "desc": "Fokus dół (Vim)"
+        },
+        {
+          "keys": "Super + K",
+          "desc": "Fokus góra (Vim)"
+        },
+        {
+          "keys": "Super + L",
+          "desc": "Fokus prawo (Vim)"
+        }
+      ]
+    },
+    {
+      "title": "PRZESUWANIE OKIEN",
+      "binds": [
+        {
+          "keys": "Super + Shift + LEFT",
+          "desc": "Przesuń lewo"
+        },
+        {
+          "keys": "Super + Shift + RIGHT",
+          "desc": "Przesuń prawo"
+        },
+        {
+          "keys": "Super + Shift + UP",
+          "desc": "Przesuń górę"
+        },
+        {
+          "keys": "Super + Shift + DOWN",
+          "desc": "Przesuń dół"
+        },
+        {
+          "keys": "Super + Shift + H",
+          "desc": "Przesuń lewo (Vim)"
+        },
+        {
+          "keys": "Super + Shift + J",
+          "desc": "Przesuń dół (Vim)"
+        },
+        {
+          "keys": "Super + Shift + K",
+          "desc": "Przesuń górę (Vim)"
+        },
+        {
+          "keys": "Super + Shift + L",
+          "desc": "Przesuń prawo (Vim)"
+        }
+      ]
+    },
+    {
+      "title": "MONITORY",
+      "binds": [
+        {
+          "keys": "Super + Ctrl + LEFT",
+          "desc": "Fokus monitor lewy"
+        },
+        {
+          "keys": "Super + Ctrl + RIGHT",
+          "desc": "Fokus monitor prawy"
+        },
+        {
+          "keys": "Super + Ctrl + H",
+          "desc": "Fokus monitor lewy"
+        },
+        {
+          "keys": "Super + Ctrl + J",
+          "desc": "Fokus monitor dolny"
+        },
+        {
+          "keys": "Super + Ctrl + K",
+          "desc": "Fokus monitor górny"
+        },
+        {
+          "keys": "Super + Ctrl + L",
+          "desc": "Fokus monitor prawy"
+        },
+        {
+          "keys": "Super + Shift + Ctrl + LEFT",
+          "desc": "Wyślij na monitor lewy"
+        },
+        {
+          "keys": "Super + Shift + Ctrl + RIGHT",
+          "desc": "Wyślij na monitor prawy"
+        },
+        {
+          "keys": "Super + Shift + Ctrl + H",
+          "desc": "Wyślij na monitor lewy"
+        },
+        {
+          "keys": "Super + Shift + Ctrl + J",
+          "desc": "Wyślij na monitor dolny"
+        },
+        {
+          "keys": "Super + Shift + Ctrl + K",
+          "desc": "Wyślij na monitor górny"
+        },
+        {
+          "keys": "Super + Shift + Ctrl + L",
+          "desc": "Wyślij na monitor prawy"
+        }
+      ]
+    },
+    {
+      "title": "OBSZARY ROBOCZE (WORKSPACES)",
+      "binds": [
+        {
+          "keys": "Super + 1",
+          "desc": "Obszar 1"
+        },
+        {
+          "keys": "Super + 2",
+          "desc": "Obszar 2"
+        },
+        {
+          "keys": "Super + 3",
+          "desc": "Obszar 3"
+        },
+        {
+          "keys": "Super + 4",
+          "desc": "Obszar 4"
+        },
+        {
+          "keys": "Super + 5",
+          "desc": "Obszar 5"
+        },
+        {
+          "keys": "Super + 6",
+          "desc": "Obszar 6"
+        },
+        {
+          "keys": "Super + 7",
+          "desc": "Obszar 7"
+        },
+        {
+          "keys": "Super + 8",
+          "desc": "Obszar 8"
+        },
+        {
+          "keys": "Super + 9",
+          "desc": "Obszar 9"
+        },
+        {
+          "keys": "Super + Shift + 1",
+          "desc": "Wyślij do obszaru 1"
+        },
+        {
+          "keys": "Super + Shift + 2",
+          "desc": "Wyślij do obszaru 2"
+        },
+        {
+          "keys": "Super + Shift + 3",
+          "desc": "Wyślij do obszaru 3"
+        },
+        {
+          "keys": "Super + Shift + 4",
+          "desc": "Wyślij do obszaru 4"
+        },
+        {
+          "keys": "Super + Shift + 5",
+          "desc": "Wyślij do obszaru 5"
+        },
+        {
+          "keys": "Super + Shift + 6",
+          "desc": "Wyślij do obszaru 6"
+        },
+        {
+          "keys": "Super + Shift + 7",
+          "desc": "Wyślij do obszaru 7"
+        },
+        {
+          "keys": "Super + Shift + 8",
+          "desc": "Wyślij do obszaru 8"
+        },
+        {
+          "keys": "Super + Shift + 9",
+          "desc": "Wyślij do obszaru 9"
+        },
+        {
+          "keys": "Super + MOUSE_DOWN",
+          "desc": "Następny obszar"
+        },
+        {
+          "keys": "Super + MOUSE_UP",
+          "desc": "Poprzedni obszar"
+        },
+        {
+          "keys": "Super + MOUSE:272",
+          "desc": "Przesuń okno myszą"
+        },
+        {
+          "keys": "Super + MOUSE:273",
+          "desc": "Zmień rozmiar myszą"
+        }
+      ]
+    }
+  ]
+}
