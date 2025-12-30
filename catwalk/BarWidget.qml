@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 import Quickshell
+import Quickshell.Io
 import qs.Commons
 import qs.Modules.Bar.Extras
 import qs.Services.UI
@@ -69,6 +70,10 @@ Rectangle {
     readonly property var idleIcons: root.pluginApi?.mainInstance?.idleIcons || []
 
     readonly property real cpuUsage: root.pluginApi?.mainInstance?.cpuUsage ?? 0
+    
+    function openExternalMonitor() {
+      Quickshell.execDetached(["sh", "-c", Settings.data.systemMonitor.externalMonitor]);
+    }
 
     Timer {
         interval: Math.max(30, 200 - root.cpuUsage * 1.7)
@@ -170,11 +175,14 @@ Rectangle {
                     Logger.e("Catwalk", "PluginAPI is null");
                 }
                 root.clicked();
-            } else if (mouse.button === Qt.RightButton) {
-                Quickshell.execDetached(["sh", "-c", "missioncenter || resources || flatpak run io.missioncenter.MissionCenter || flatpak run net.nokyan.Resources || gnome-system-monitor || plasma-systemmonitor"]);
-                root.rightClicked();
-            } else if (mouse.button === Qt.MiddleButton) {
-                root.middleClicked();
+            } else {
+                TooltipService.hide();
+                root.openExternalMonitor();
+                if (mouse.button === Qt.RightButton) {
+                    root.rightClicked();
+                } else if (mouse.button === Qt.MiddleButton) {
+                    root.middleClicked();
+                }
             }
         }
         onWheel: wheel => root.wheel(wheel.angleDelta.y)
