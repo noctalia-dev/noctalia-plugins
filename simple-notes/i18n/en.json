@@ -6,13 +6,21 @@
 			"label": "Debug mode",
 			"description": "Prints debug output in console"
 		},
-		"polling": {
-			"label": "Polling",
-			"description": "Enable/disable polling of supergfxctl process"
+		"supergfxctl": {
+			"patchPending": {
+				"label": "Patch pending action",
+				"description": "Enable/disable crude guessing of required action instead of relying on supergfxctl's output."
+			},
+			"polling": {
+				"label": "Polling",
+				"description": "Enable/disable polling of supergfxctl process"
+			}
 		},
-		"listenToNotifications": {
-			"label": "Listen to notifications",
-			"description": "Listen to rog-control-center notifications"
+		"rogcc": {
+			"listenToNotifications": {
+				"label": "Listen to notifications",
+				"description": "Listen to rog-control-center mode switch notifications"
+			}
 		}
 	},
 	"context-menu": {

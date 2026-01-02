@@ -36,13 +36,27 @@ QtObject {
     readonly property string pluginVersion: pluginApi?.manifest.version ?? "???"
 
     readonly property QtObject pluginSettings: QtObject {
-        readonly property var _manifest: root.pluginApi?.manifest.defaultSettings ?? {}
+        readonly property var _manifest: root.pluginApi?.manifest.metadata.defaultSettings ?? {}
         readonly property var _user: root.pluginApi?.pluginSettings ?? {}
 
         property bool debug: _user.debug ?? _manifest.debug ?? false
-        property bool polling: _user.polling ?? _manifest.polling ?? false
-        property int pollingInterval: _user.pollingInterval ?? _manifest.pollingInterval ?? 3000
-        property bool listenToNotifications: _user.listenToNotifications ?? _manifest.listenToNotifications ?? false
+
+        // rog-control-center
+	    readonly property QtObject rogcc: QtObject {
+			readonly property var _manifest: root.pluginApi?.manifest.metadata.defaultSettings.rogcc ?? {}
+			readonly property var _user: root.pluginApi?.pluginSettings.rogcc ?? {}
+
+			property bool listenToNotifications: _user.listenToNotifications ?? _manifest.listenToNotifications ?? false
+	    }
+
+		readonly property QtObject supergfxctl: QtObject {
+			readonly property var _manifest: root.pluginApi?.manifest.metadata.defaultSettings.supergfxctl ?? {}
+			readonly property var _user: root.pluginApi?.pluginSettings.supergfxctl ?? {}
+
+			property bool patchPending: _user.patchPending ?? _manifest.patchPending ?? true
+			property bool polling: _user.polling ?? _manifest.polling ?? false
+        	property int pollingInterval: _user.pollingInterval ?? _manifest.pollingInterval ?? 3000
+	    }
     }
 
     readonly property bool available: sgfx.available
@@ -175,9 +189,9 @@ QtObject {
     }
 
     readonly property Timer pollingTimer: Timer {
-        interval: root.pluginSettings.pollingInterval
+        interval: root.pluginSettings.supergfxctl.pollingInterval
         repeat: true
-        running: root.available && root.pluginSettings.polling && !root.busy
+        running: root.available && !root.busy && root.pluginSettings.supergfxctl.polling
 
         onTriggered: {
             if (root.busy) {

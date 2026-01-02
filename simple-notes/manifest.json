@@ -19,9 +19,14 @@
 	"metadata": {
 		"defaultSettings": {
 			"debug": false,
-			"polling": false,
-			"pollingInterval": 3000,
-			"listenToNotifications": false
+			"supergfxctl": {
+				"patchPending": true,
+				"polling": false,
+				"pollingInterval": 3000
+			},
+			"rogcc": {
+				"listenToNotifications": false
+			}
 		}
 	}
 }
