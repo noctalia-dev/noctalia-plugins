@@ -20,6 +20,20 @@ ColumnLayout {
     spacing: Style.marginM
 
     RowLayout {
+    	Layout.fillWidth: true
+
+    	NText {
+	    	text: "ROG Control Center"
+			color: Color.mSecondary
+	    }
+
+	    NDivider {
+	    	Layout.fillWidth: true
+	     	Layout.margins: Style.marginL
+	    }
+    }
+
+    RowLayout {
 	    NIcon {
 		    icon: "barrier-block"
             pointSize: Style.fontSizeL
@@ -34,6 +48,20 @@ ColumnLayout {
 	        description: root.pluginApi.tr("settings.rogcc.listenToNotifications.description")
 	        checked: root.pluginSettings.rogcc.listenToNotifications
 	        onToggled: checked => root.pluginSettings.rogcc.listenToNotifications = checked
+	    }
+    }
+
+    RowLayout {
+    	Layout.fillWidth: true
+
+    	NText {
+	    	text: "supergfxctl"
+			color: Color.mSecondary
+	    }
+
+	    NDivider {
+	    	Layout.fillWidth: true
+	     	Layout.margins: Style.marginL
 	    }
     }
 
@@ -70,6 +98,20 @@ ColumnLayout {
         stepSize: 250
         value: root.pluginSettings.supergfxctl.pollingInterval
         onMoved: value => root.pluginSettings.supergfxctl.pollingInterval = value
+    }
+
+    RowLayout {
+    	Layout.fillWidth: true
+
+    	NText {
+	    	text: "Miscellaneous"
+			color: Color.mSecondary
+	    }
+
+	    NDivider {
+	    	Layout.fillWidth: true
+	     	Layout.margins: Style.marginL
+	    }
     }
 
     NToggle {

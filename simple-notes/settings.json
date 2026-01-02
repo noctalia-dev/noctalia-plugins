@@ -1,0 +1,11 @@
+{
+  "debug": false,
+  "rogcc": {
+    "listenToNotifications": false
+  },
+  "supergfxctl": {
+    "patchPending": true,
+    "polling": false,
+    "pollingInterval": 3000
+  }
+}
