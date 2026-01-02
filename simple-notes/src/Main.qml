@@ -266,13 +266,22 @@ QtObject {
 
         readonly property var modeEnumReversed: Object.entries(modeEnum).reduce((obj, item) => (obj[item[1]] = item[0]) && obj, {})
 
-        readonly property var actionEnum: ({
-                "Logout required to complete mode change": Main.SGFXAction.Logout,
-                "Reboot required to complete mode change": Main.SGFXAction.Reboot,
-                "You must switch to Integrated first": Main.SGFXAction.SwitchToIntegrated,
-                "The mode must be switched to Integrated or Hybrid first": Main.SGFXAction.AsusEgpuDisable,
-                "No action required": Main.SGFXAction.Nothing
-            })
+        function actionFromString(message: string): int {
+            switch (message) {
+            case "Logout required to complete mode change":
+                return Main.SGFXAction.Logout;
+            case "Reboot required to complete mode change":
+                return Main.SGFXAction.Reboot;
+            case "You must switch to Integrated first":
+                return Main.SGFXAction.SwitchToIntegrated;
+            case "The mode must be switched to Integrated or Hybrid first":
+                return Main.SGFXAction.AsusEgpuDisable;
+            case "No action required":
+                return Main.SGFXAction.Nothing;
+            default:
+                return Main.SGFXAction.Nothing;
+            }
+        }
 
         // patched up version of pending actions for mode switch
         // TODO: this WILL differ depending on hardware (maybe fw versions?)
@@ -404,7 +413,7 @@ QtObject {
                 root.warn("[parseOutput] no supported modes reported");
             }
 
-            const newPendingAction = actionEnum[linePendAction] ?? Main.SGFXAction.Nothing;
+            const newPendingAction = actionFromString(linePendAction);
 
             // does not work reliably on refresh, so
             // only set if pending mode has not been set manually
