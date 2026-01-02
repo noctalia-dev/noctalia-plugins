@@ -261,6 +261,7 @@ Item {
             return modeEnumReversed.hasOwnProperty(v);
         }
 
+        // TODO: perf of QJSVlue vs a switch statement
         readonly property var modeEnum: ({
                 "Integrated": Main.SGFXMode.Integrated,
                 "Hybrid": Main.SGFXMode.Hybrid,

@@ -46,16 +46,16 @@ Item {
         icon: root.currentIcon
         autoHide: false
         tooltipText: {
-            if (!pluginCore?.hasPendingAction) {
-                return currentLabel;
+            if (!root.pluginCore?.hasPendingAction) {
+                return root.currentLabel;
             }
-            return currentLabel + " | " + root.pendingActionLabel;
+            return root.currentLabel + " | " + root.pendingActionLabel;
         }
 
         onClicked: root.pluginApi?.openPanel(root.screen)
 
         onRightClicked: {
-            var popupMenuWindow = PanelService.getPopupMenuWindow(root.screen);
+            const popupMenuWindow = PanelService.getPopupMenuWindow(root.screen);
             if (popupMenuWindow) {
                 popupMenuWindow.showContextMenu(contextMenu);
                 contextMenu.openAtItem(pill, root.screen);
@@ -103,9 +103,10 @@ Item {
         ]
 
         onTriggered: action => {
-            var popupMenuWindow = PanelService.getPopupMenuWindow(root.screen);
+            const popupMenuWindow = PanelService.getPopupMenuWindow(root.screen);
             if (popupMenuWindow) {
                 popupMenuWindow.close();
+                return;
             }
 
             switch (action) {
