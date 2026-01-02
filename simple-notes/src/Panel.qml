@@ -253,7 +253,9 @@ Item {
                 icon: "close"
                 tooltipText: I18n.tr("tooltips.close")
                 baseSize: Style.baseWidgetSize * 0.8
-                onClicked: root.pluginApi?.closePanel(root.screen)
+                onClicked: root.pluginApi?.withCurrentScreen(screen => {
+                    root.pluginApi?.closePanel(screen);
+                })
             }
         }
     }
