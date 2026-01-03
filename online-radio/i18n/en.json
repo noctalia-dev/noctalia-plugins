@@ -1,0 +1,22 @@
+{
+  "iconLabel": "Icon Selection",
+  "iconDescription": "Select icon for the widget",
+  "changeIconButton": "Change Icon",
+  "fileTitle": "Load from file",
+  "fileDescription": "File format described in README.md",
+  "fileNotExist": "File not selected",
+  "fileSelect": "Select file",
+  "fileSelectTitle": "Select stations file",
+  "addTitle": "Add station",
+  "addNameLabel": "Station name",
+  "addNameDescription": "Enter radio station name",
+  "addNameHolder": "For example: Kiss FM",
+  "addUrlLabel": "Station URL",
+  "addUrlDescription": "Enter radio stream URL",
+  "addUrlHolder": "For example: http://stream.radiostation.com",
+  "NotLoaded": "No stations loaded",
+  "available": "available",
+  "nowPlay": "Now Playing",
+  "addStations": "Add stations via JSON file or manually in settings",
+  "radioList": "Radio Stations"
+}

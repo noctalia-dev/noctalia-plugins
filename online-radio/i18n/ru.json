@@ -1,0 +1,22 @@
+{
+  "iconLabel": "Выбор иконки",
+  "iconDescription": "Выберите иконку для виджета",
+  "changeIconButton": "Изменить иконку",
+  "fileTitle": "Загрузить из файла",
+  "fileDescription": "Формат файла в README.md",
+  "fileNotExist":"Файл не выбран",
+  "fileSelect":"Выбрать файл",
+  "fileSelectTitle":"Выберите файл со списком станций",
+  "addTitle":"Добавить станцию",
+  "addNameLabel":"Имя станции",
+  "addNameDescription":"Введите название радиостанции",
+  "addNameHolder":"Например: Kiss FM",
+  "addUrlLabel":"URL станции",
+  "addUrlDescription":"Введите ссылку на поток радиостанции",
+  "addUrlHolder":"Например: http://stream.radiostation.com",
+  "NotLoaded":"Станции не загружены",
+  "available":"доступно",
+  "nowPlay":"Воспроизводится",
+  "addStations":"Добававьте станции через JSON-файл или вручную в настройках",
+  "radioList": "Радио Станции"
+}

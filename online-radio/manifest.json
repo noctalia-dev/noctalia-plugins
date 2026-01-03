@@ -1,0 +1,24 @@
+{
+  "id": "online-radio",
+  "name": "Online radio",
+  "version": "1.0.5",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "Qvarta",
+  "license": "MIT",
+  "repository": "https://github.com/Qvarta/noctalia-plugins",
+ "description": "A Noctalia Shell plugin that provides online radio streaming functionality with support for custom station lists and playback controls.",
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml",
+    "settings": "Settings.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "currentIconName": "access-point"
+    }
+  }
+}
