@@ -1,0 +1,57 @@
+# SPDX-FileCopyrightText: 2025 cod3ddot@proton.me
+# SPDX-License-Identifier: MIT
+
+name: Release plugin
+
+on:
+    push:
+        branches:
+            - main
+        tags:
+            - "*"
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    id-token: write
+    attestations: write
+
+jobs:
+    lint:
+        name: lint and license
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - uses: actions/checkout@v6
+            - name: Check REUSE compliance
+              uses: fsfe/reuse-action@v6
+
+    create-release:
+        name: Publish release
+        needs: [package]
+        if: startsWith(github.ref, 'refs/tags/')
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+
+            - name: Generate release attestation
+              id: attest
+              uses: actions/attest-build-provenance@v2
+              with:
+                  subject-path: .
+
+            - name: Extract latest changelog entry
+              run: |
+                  if [ -f CHANGES.md ]; then
+                    awk '/^## \[/ { if (found) exit; found=1 } found' CHANGES.md > latest_changes.md
+                  else
+                    echo "Release ${{ github.ref_name }}" > latest_changes.md
+                  fi
+
+            - name: Create GitHub release
+              uses: softprops/action-gh-release@v2
+              with:
+                  files: ${{ steps.attest.outputs.bundle-path }}
+                  body_path: latest_changes.md
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.2] - 2026-01-03
 
--   Clicking on the proposed action icon now opens the sessions menu
--	Polling is now available
+-   Clicking on the proposed action icon now opens the session menu
+-	Implemented polling supergfxctl
 -	Settings refactor
--	Small fixes and performance imporvements
-
+-	Small fixes and performance improvements
 
 ## [0.0.1] - 2025-12-08
 

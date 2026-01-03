@@ -14,6 +14,13 @@ import qs.Modules.Bar.Extras
 import qs.Services.UI
 import qs.Services.Noctalia
 
+/**
+	Bar widget for showing the current GPU mode, with an optional badge when a pending
+	action is available.
+
+	Left click to open the plugin panel
+	Right click to open a context menu
+ */
 Item {
     id: root
 
@@ -34,6 +41,7 @@ Item {
     implicitWidth: pill.width
     implicitHeight: pill.height
 
+    // 
     BarPill {
         id: pill
 
@@ -50,7 +58,7 @@ Item {
             if (!root.pluginCore?.hasPendingAction) {
                 return root.currentLabel;
             }
-            const pendingActionLabel = root.pluginCore?.hasPendingAction ? pluginCore?.getActionLabel(pluginCore.pendingAction) : ""
+            const pendingActionLabel = root.pluginCore?.hasPendingAction ? pluginCore?.getActionLabel(pluginCore.pendingAction) : "";
             return root.currentLabel + " | " + pendingActionLabel;
         }
 

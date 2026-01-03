@@ -12,9 +12,9 @@ This plugin attempts to guess the action the user needs to take (generally one o
 Made possible by [supergfxctl](https://gitlab.com/asus-linux/supergfxctl).  
 Thanks [asusctl](https://gitlab.com/asus-linux/asusctl), [rog-control-center](https://gitlab.com/asus-linux/asusctl/-/tree/main/rog-control-center) for code inspiration.
 
-## Quick Setup
+## Quick development setup
 
-Follow [plugin development overview](https://docs.noctalia.dev/plugins/overview/).
+Follow [plugin development overview](https://docs.noctalia.dev/development/plugins/overview/).
 
 ## Project Structure
 
@@ -22,12 +22,12 @@ Follow [plugin development overview](https://docs.noctalia.dev/plugins/overview/
 ├── LICENCES/               # REUSE licenses (See README)
 ├── i18n/					# Translations
 ├── src/
-│   ├── Bar.qml				# Bar widget ui
+│   ├── Bar.qml				# Bar widget UI
 │   ├── Main.qml			# Entrypoint, common logic
-│   ├── Panel.qml			# Panel ui
-│   └── Settings.qml        # Settings ui
+│   ├── Panel.qml			# Panel UI
+│   └── Settings.qml        # Settings UI
 ├── CHANGES.md              # Changelog
-├── COPYING                 # AGPL-3.0-or-later (See README)
+├── COPYING                 # MIT (See README)
 ├── manifest.json           # https://docs.noctalia.dev/plugins/manifest/
 └── README.md               # This file
 ```
@@ -39,7 +39,7 @@ This project strives to be [REUSE](https://reuse.software/) compliant.
 Generally:
 - Documentation is under CC-BY-NC-SA-4.0
 - Code is under MIT
-- Config files are under CC0-1.0
+- Config and translation files are under CC0-1.0
 
 ```
     noctalia-supergfxctl: GPU control with supergfxctl for noctalia

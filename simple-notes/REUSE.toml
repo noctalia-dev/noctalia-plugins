@@ -5,7 +5,8 @@ SPDX-PackageSupplier = "https://github.com/cod3ddot/noctalia-supergfxctl"
 [[annotations]]
 path = [
 	"manifest.json",
-    "REUSE.toml"
+    "REUSE.toml",
+    ".gitignore"
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "2025 cod3ddot@proton.me"
