@@ -13,6 +13,7 @@ Available modes are detected automatically. Current mode is highlighted in the m
 
 Made possible by [supergfxctl](https://gitlab.com/asus-linux/supergfxctl).  
 Thanks [asusctl](https://gitlab.com/asus-linux/asusctl), [rog-control-center](https://gitlab.com/asus-linux/asusctl/-/tree/main/rog-control-center) for code inspiration.
+Check out [noctalia](https://github.com/noctalia-dev/noctalia-shell) for a great shell.
 
 ## Quick development setup
 
