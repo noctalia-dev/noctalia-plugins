@@ -7,7 +7,9 @@ Minimum noctalia version: `3.7.5`
 Brings GPU control to your noctalia shell.  
 Available modes are detected automatically. Current mode is highlighted in the main color, pending mode will be in tertiary.
 
-This plugin attempts to guess the action the user needs to take (generally one of logout/reboot/nothing) after mode switch. It is unknown whether supergfxctl reports reliable information after the switch, be it the current mode or the pending action needed to get to that mode. In the future, proposed actions will be customizable. For now, DO NOT rely on the plugin's proposed action.
+> [!IMPORTANT]
+> Supergfxctl may not always report reliable information about the pending mode or the action required to apply it.
+> The plugin can optionally **guess the needed action** (generally logout, reboot, or none) required after switching GPU modes. This behavior is controlled by the **`Guess fallback action`** option.
 
 Made possible by [supergfxctl](https://gitlab.com/asus-linux/supergfxctl).  
 Thanks [asusctl](https://gitlab.com/asus-linux/asusctl), [rog-control-center](https://gitlab.com/asus-linux/asusctl/-/tree/main/rog-control-center) for code inspiration.
