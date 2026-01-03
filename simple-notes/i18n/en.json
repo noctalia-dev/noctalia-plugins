@@ -4,22 +4,22 @@
 	"settings": {
 		"debug": {
 			"label": "Debug mode",
-			"description": "Prints debug output in console"
+			"description": "Print debug information to the console."
 		},
 		"supergfxctl": {
 			"patchPending": {
-				"label": "Patch pending action",
-				"description": "Enable/disable crude guessing of required action instead of relying on supergfxctl's output."
+				"label": "Guess fallback action",
+				"description": "Guess the required action instead of relying on supergfxctl output."
 			},
 			"polling": {
 				"label": "Polling",
-				"description": "Enable/disable polling of supergfxctl process"
+				"description": "Periodically poll the supergfxctl process for status updates."
 			}
 		},
 		"rogcc": {
 			"listenToNotifications": {
-				"label": "Listen to notifications",
-				"description": "Listen to rog-control-center mode switch notifications"
+				"label": "Listen for mode change notifications",
+				"description": "React to GPU mode change notifications from rog-control-center."
 			}
 		}
 	},
@@ -27,14 +27,14 @@
 		"refresh": "Refresh status"
 	},
 	"action": {
-		"SwitchToIntegrated": "Switch to integrated gpu first",
-		"AsusEgpuDisable": "Disable ASUS eGPU first"
+		"SwitchToIntegrated": "Switch to integrated gpu first.",
+		"AsusEgpuDisable": "Disable ASUS eGPU first."
 	},
 	"mode": {
 		"Integrated": "Integrated",
 		"Hybrid": "Hybrid",
 		"NvidiaNoModeset": "Nvidia no modeset",
-		"Vfio": "VFIO",
+		"Vfio": "VFIO Passthrough",
 		"AsusEgpu": "Asus eGPU",
 		"AsusMuxDgpu": "Asus MUX dGPU"
 	}
