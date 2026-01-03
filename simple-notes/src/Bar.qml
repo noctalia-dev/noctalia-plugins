@@ -41,7 +41,7 @@ Item {
     implicitWidth: pill.width
     implicitHeight: pill.height
 
-    // 
+    // https://github.com/noctalia-dev/noctalia-shell/blob/main/Modules/Bar/Extras/BarPill.qml
     BarPill {
         id: pill
 
@@ -89,6 +89,7 @@ Item {
         }
     }
 
+    // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NPopupContextMenu.qml
     NPopupContextMenu {
         id: contextMenu
 

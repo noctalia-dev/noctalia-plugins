@@ -20,77 +20,84 @@ ColumnLayout {
     spacing: Style.marginM
 
     RowLayout {
-    	Layout.fillWidth: true
+        Layout.fillWidth: true
 
-    	NText {
-	    	text: "ROG Control Center"
-			color: Color.mSecondary
-	    }
+        // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NText.qml
+        NText {
+            text: "ROG Control Center"
+            color: Color.mSecondary
+        }
 
-	    NDivider {
-	    	Layout.fillWidth: true
-	     	Layout.margins: Style.marginL
-	    }
+        NDivider {
+            Layout.fillWidth: true
+            Layout.margins: Style.marginL
+        }
     }
 
     RowLayout {
-	    NIcon {
-		    icon: "barrier-block"
+        // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NIcon.qml
+        NIcon {
+            icon: "barrier-block"
             pointSize: Style.fontSizeL
             color: Color.mTertiary
-	    }
+        }
 
-	    NToggle {
-	        Layout.fillWidth: true
-	        // TODO: enable once implemented
-	        enabled: false
-	        label: root.pluginApi.tr("settings.rogcc.listenToNotifications.label")
-	        description: root.pluginApi.tr("settings.rogcc.listenToNotifications.description")
-	        checked: root.pluginSettings.rogcc.listenToNotifications
-	        onToggled: checked => root.pluginSettings.rogcc.listenToNotifications = checked
-	    }
+        // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NToggle.qml
+        NToggle {
+            Layout.fillWidth: true
+            // TODO: enable once implemented
+            enabled: false
+            label: root.pluginApi.tr("settings.rogcc.listenToNotifications.label")
+            description: root.pluginApi.tr("settings.rogcc.listenToNotifications.description")
+            checked: root.pluginSettings.rogcc.listenToNotifications
+            onToggled: checked => root.pluginSettings.rogcc.listenToNotifications = checked
+        }
     }
 
     RowLayout {
-    	Layout.fillWidth: true
+        Layout.fillWidth: true
 
-    	NText {
-	    	text: "supergfxctl"
-			color: Color.mSecondary
-	    }
+        // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NText.qml
+        NText {
+            text: "supergfxctl"
+            color: Color.mSecondary
+        }
 
-	    NDivider {
-	    	Layout.fillWidth: true
-	     	Layout.margins: Style.marginL
-	    }
+        NDivider {
+            Layout.fillWidth: true
+            Layout.margins: Style.marginL
+        }
     }
 
+    // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NToggle.qml
     NToggle {
-	    Layout.fillWidth: true
-	    label: root.pluginApi.tr("settings.supergfxctl.patchPending.label")
-	    description: root.pluginApi.tr("settings.supergfxctl.patchPending.description")
-	    checked: root.pluginSettings.supergfxctl.patchPending
-	    onToggled: checked => root.pluginSettings.supergfxctl.patchPending = checked
-	}
+        Layout.fillWidth: true
+        label: root.pluginApi.tr("settings.supergfxctl.patchPending.label")
+        description: root.pluginApi.tr("settings.supergfxctl.patchPending.description")
+        checked: root.pluginSettings.supergfxctl.patchPending
+        onToggled: checked => root.pluginSettings.supergfxctl.patchPending = checked
+    }
 
     RowLayout {
-	    NIcon {
-		    icon: "flask"
+        // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NIcon.qml
+        NIcon {
+            icon: "flask"
             pointSize: Style.fontSizeL
             color: Color.mTertiary
-	    }
+        }
 
-	    NToggle {
-	        Layout.fillWidth: true
-	        label: root.pluginApi.tr("settings.supergfxctl.polling.label")
-	        description: root.pluginApi.tr("settings.supergfxctl.polling.description")
-	        checked: root.pluginSettings.supergfxctl.polling
-	        onToggled: checked => root.pluginSettings.supergfxctl.polling = checked
-	    }
+        // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NToggle.qml
+        NToggle {
+            Layout.fillWidth: true
+            label: root.pluginApi.tr("settings.supergfxctl.polling.label")
+            description: root.pluginApi.tr("settings.supergfxctl.polling.description")
+            checked: root.pluginSettings.supergfxctl.polling
+            onToggled: checked => root.pluginSettings.supergfxctl.polling = checked
+        }
     }
 
     NValueSlider {
-    	isSettings: true
+        isSettings: true
         text: root.pluginSettings.supergfxctl.pollingInterval + "ms"
         enabled: root.pluginSettings.supergfxctl.polling
         from: 1000
@@ -101,19 +108,21 @@ ColumnLayout {
     }
 
     RowLayout {
-    	Layout.fillWidth: true
+        Layout.fillWidth: true
 
-    	NText {
-	    	text: "Miscellaneous"
-			color: Color.mSecondary
-	    }
+        // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NText.qml
+        NText {
+            text: "Miscellaneous"
+            color: Color.mSecondary
+        }
 
-	    NDivider {
-	    	Layout.fillWidth: true
-	     	Layout.margins: Style.marginL
-	    }
+        NDivider {
+            Layout.fillWidth: true
+            Layout.margins: Style.marginL
+        }
     }
 
+    // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NToggle.qml
     NToggle {
         Layout.fillWidth: true
         label: root.pluginApi.tr("settings.debug.label")
@@ -124,9 +133,9 @@ ColumnLayout {
 
     // This function is called by noctalia dialog
     function saveSettings(): void {
-	    if (!root.pluginSettings) {
-			return console.error("supergfxctl", "[Settings]: plugin core (Main.qml) is not loaded");
-	    }
+        if (!root.pluginSettings) {
+            return console.error("supergfxctl", "[Settings]: plugin core (Main.qml) is not loaded");
+        }
 
         if (!root.pluginApi) {
             return console.error("supergfxctl", "[Settings]: cannot save settings: pluginApi is null");
@@ -143,7 +152,7 @@ ColumnLayout {
                 polling: root.pluginSettings.supergfxctl.polling,
                 pollingInterval: root.pluginSettings.supergfxctl.pollingInterval
             }
-        }
+        };
 
         // Persist to disk
         root.pluginApi.saveSettings();
