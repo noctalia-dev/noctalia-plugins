@@ -1,0 +1,25 @@
+{
+  "main": {
+    "plugin_loaded": "Plugin-API geladen",
+    "resolution_detected": "Auflösung erkannt: {width} x {height}",
+    "windows_found": "{count} Steam-Fenster gefunden",
+    "windows_moved": "Fenster verschoben, Exit-Code: {code}",
+    "workspace_toggled": "Arbeitsbereich umgeschaltet",
+    "toggle_called": "Umschaltung aufgerufen",
+    "launching_steam": "Steam wird gestartet...",
+    "steam_launched": "Steam gestartet",
+    "no_windows_found": "Keine Steam-Fenster gefunden",
+    "ipc_received": "IPC-Umschaltung empfangen"
+  },
+  "bar_widget": {
+    "tooltip": "Steam-Overlay",
+    "tooltip_active": "Steam-Overlay (Aktiv)",
+    "tooltip_inactive": "Steam-Overlay (Klicken zum Aktivieren)"
+  },
+  "notifications": {
+    "steam_launching": "Steam wird gestartet...",
+    "steam_not_running": "Steam läuft nicht",
+    "overlay_shown": "Steam-Overlay angezeigt",
+    "overlay_hidden": "Steam-Overlay ausgeblendet"
+  }
+}

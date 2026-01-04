@@ -1,0 +1,23 @@
+{
+  "panel": {
+    "title": "Cheat Sheet",
+    "loading": "Loading...",
+    "error_read_file": "File read error",
+    "no_data": "No data",
+    "refresh_button": "Refresh",
+    "no_description": "No description",
+    "no_categories": "No categories found",
+    "workspace_switching": "WORKSPACES - SWITCHING",
+    "workspace_moving": "WORKSPACES - MOVING",
+    "workspace_mouse": "WORKSPACES - MOUSE"
+  },
+  "main": {
+    "error": "ERROR",
+    "cannot_get_home": "Cannot get $HOME",
+    "read_error": "READ ERROR",
+    "exit_code": "EXIT CODE",
+    "stderr": "STDERR",
+    "file_empty": "FILE EMPTY",
+    "file_no_data": "File contains no data"
+  }
+}

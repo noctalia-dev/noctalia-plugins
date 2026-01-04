@@ -1,0 +1,23 @@
+{
+  "panel": {
+    "title": "チートシート",
+    "loading": "読み込み中...",
+    "error_read_file": "ファイル読み取りエラー",
+    "no_data": "データなし",
+    "refresh_button": "更新",
+    "no_description": "説明なし",
+    "no_categories": "カテゴリが見つかりません",
+    "workspace_switching": "ワークスペース - 切り替え",
+    "workspace_moving": "ワークスペース - 移動",
+    "workspace_mouse": "ワークスペース - マウス"
+  },
+  "main": {
+    "error": "エラー",
+    "cannot_get_home": "$HOMEを取得できません",
+    "read_error": "読み取りエラー",
+    "exit_code": "終了コード",
+    "stderr": "STDERR",
+    "file_empty": "ファイルが空",
+    "file_no_data": "ファイルにデータが含まれていません"
+  }
+}

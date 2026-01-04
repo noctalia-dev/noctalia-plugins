@@ -1,0 +1,25 @@
+{
+  "main": {
+    "plugin_loaded": "Plugin-API geladen",
+    "resolution_detected": "Resolutie gedetecteerd: {width} x {height}",
+    "windows_found": "{count} Steam-vensters gevonden",
+    "windows_moved": "Vensters verplaatst, afsluitcode: {code}",
+    "workspace_toggled": "Werkruimte gewisseld",
+    "toggle_called": "Wisselen aangeroepen",
+    "launching_steam": "Steam wordt gestart...",
+    "steam_launched": "Steam gestart",
+    "no_windows_found": "Geen Steam-vensters gevonden",
+    "ipc_received": "IPC-wisseling ontvangen"
+  },
+  "bar_widget": {
+    "tooltip": "Steam-overlay",
+    "tooltip_active": "Steam-overlay (Actief)",
+    "tooltip_inactive": "Steam-overlay (Klik om te activeren)"
+  },
+  "notifications": {
+    "steam_launching": "Steam wordt gestart...",
+    "steam_not_running": "Steam is niet actief",
+    "overlay_shown": "Steam-overlay getoond",
+    "overlay_hidden": "Steam-overlay verborgen"
+  }
+}

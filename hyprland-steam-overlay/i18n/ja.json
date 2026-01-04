@@ -1,0 +1,25 @@
+{
+  "main": {
+    "plugin_loaded": "プラグインAPIが読み込まれました",
+    "resolution_detected": "解像度を検出：{width} x {height}",
+    "windows_found": "{count}個のSteamウィンドウが見つかりました",
+    "windows_moved": "ウィンドウを移動、終了コード：{code}",
+    "workspace_toggled": "ワークスペースを切り替えました",
+    "toggle_called": "トグルが呼び出されました",
+    "launching_steam": "Steamを起動中...",
+    "steam_launched": "Steamを起動しました",
+    "no_windows_found": "Steamウィンドウが見つかりません",
+    "ipc_received": "IPCトグルを受信しました"
+  },
+  "bar_widget": {
+    "tooltip": "Steamオーバーレイ",
+    "tooltip_active": "Steamオーバーレイ（アクティブ）",
+    "tooltip_inactive": "Steamオーバーレイ（クリックして有効化）"
+  },
+  "notifications": {
+    "steam_launching": "Steamを起動中...",
+    "steam_not_running": "Steamが実行されていません",
+    "overlay_shown": "Steamオーバーレイを表示しました",
+    "overlay_hidden": "Steamオーバーレイを非表示にしました"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "main": {
+    "plugin_loaded": "API плагина загружен",
+    "resolution_detected": "Обнаружено разрешение: {width} x {height}",
+    "windows_found": "Найдено {count} окон Steam",
+    "windows_moved": "Окна перемещены, код выхода: {code}",
+    "workspace_toggled": "Рабочее пространство переключено",
+    "toggle_called": "Переключение вызвано",
+    "launching_steam": "Запуск Steam...",
+    "steam_launched": "Steam запущен",
+    "no_windows_found": "Окна Steam не найдены",
+    "ipc_received": "Получено переключение IPC"
+  },
+  "bar_widget": {
+    "tooltip": "Оверлей Steam",
+    "tooltip_active": "Оверлей Steam (Активен)",
+    "tooltip_inactive": "Оверлей Steam (Нажмите для активации)"
+  },
+  "notifications": {
+    "steam_launching": "Запуск Steam...",
+    "steam_not_running": "Steam не запущен",
+    "overlay_shown": "Оверлей Steam показан",
+    "overlay_hidden": "Оверлей Steam скрыт"
+  }
+}

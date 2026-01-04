@@ -1,0 +1,13 @@
+{
+  "cheatsheetData": [
+    {
+      "title": "BŁĄD",
+      "binds": [
+        {
+          "keys": "ERROR",
+          "desc": "Nie można pobrać $HOME"
+        }
+      ]
+    }
+  ]
+}
