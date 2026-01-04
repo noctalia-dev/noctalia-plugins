@@ -1,32 +1,41 @@
 {
-  "bar_widget": {
-    "tooltip": "Simple Notes"
-  },
-  "panel": {
-    "confirm": {
-      "delete_message": "Are you sure you want to delete this note?",
-      "delete_title": "Delete Note?"
-    },
-    "editor": {
-      "cancel_button": "Cancel",
-      "content_placeholder": "Write your thoughts here...",
-      "delete_button": "Delete",
-      "save_button": "Save",
-      "title_placeholder": "Note Title"
-    },
-    "header": {
-      "add_button": "New Note",
-      "title": "Notes"
-    },
-    "list": {
-      "empty_message": "No notes yet. Create one!",
-      "last_modified": "Last modified: "
-    }
-  },
-  "settings": {
-    "show_count": {
-      "description": "Show the number of notes in the bar widget",
-      "label": "Show Note Count"
-    }
-  }
+	"gpu": "GPU",
+	"unknown": "Unknown",
+	"settings": {
+		"debug": {
+			"label": "Debug mode",
+			"description": "Print debug information to the console."
+		},
+		"supergfxctl": {
+			"patchPending": {
+				"label": "Guess fallback action",
+				"description": "Guess the required action instead of relying on the output of supergfxctl."
+			},
+			"polling": {
+				"label": "Polling",
+				"description": "Periodically poll the supergfxctl process for status updates. Warning: this can cause supergfxctl to hang!"
+			}
+		},
+		"rogcc": {
+			"listenToNotifications": {
+				"label": "Listen for mode change notifications",
+				"description": "React to GPU mode change notifications from rog-control-center."
+			}
+		}
+	},
+	"context-menu": {
+		"refresh": "Refresh status"
+	},
+	"action": {
+		"SwitchToIntegrated": "Switch to integrated GPU first.",
+		"AsusEgpuDisable": "Disable ASUS eGPU first."
+	},
+	"mode": {
+		"Integrated": "Integrated",
+		"Hybrid": "Hybrid",
+		"NvidiaNoModeset": "Nvidia no modeset",
+		"Vfio": "VFIO Passthrough",
+		"AsusEgpu": "Asus eGPU",
+		"AsusMuxDgpu": "Asus MUX dGPU"
+	}
 }

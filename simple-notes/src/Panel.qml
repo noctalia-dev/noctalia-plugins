@@ -20,24 +20,15 @@ Item {
     id: root
 
     // Plugin API (injected by PluginPanelSlot)
-    property var pluginApi: null
+    property QtObject pluginApi: null
     readonly property QtObject pluginCore: pluginApi?.mainInstance
 
     // SmartPanel properties (required for panel behavior)
-    readonly property var geometryPlaceholder: panelContainer
+    readonly property Rectangle geometryPlaceholder: panelContainer
     readonly property bool allowAttach: true
 
-    readonly property real contentPreferredWidth: 450 * Style.uiScaleRatio
-    readonly property real contentPreferredHeight: 180 * Style.uiScaleRatio
-
-    readonly property bool available: pluginCore?.available ?? false
-    readonly property bool busy: pluginCore?.busy ?? false
-
-    readonly property string currentIcon: pluginCore?.getModeIcon(pluginCore?.mode) ?? ""
-    readonly property string currentLabel: pluginCore?.getModeLabel(pluginCore?.mode) ?? ""
-
-    readonly property int pendingAction: pluginCore?.pendingAction ?? Main.SGFXAction.Nothing
-    readonly property int pendingMode: pluginCore?.pendingMode ?? Main.SGFXMode.None
+    readonly property int contentPreferredWidth: 420 * Style.uiScaleRatio
+    readonly property int contentPreferredHeight: 170 * Style.uiScaleRatio
 
     anchors.fill: parent
 
@@ -51,11 +42,9 @@ Item {
         readonly property bool _supported: root.pluginCore?.isModeSupported(mode) ?? false
 
         readonly property bool _hovered: mouse.hovered
-        readonly property string text: root.pluginCore?.getModeLabel(mode) ?? ""
-        readonly property string icon: root.pluginCore?.getModeIcon(mode) ?? ""
 
         readonly property bool _enabled: {
-            const available = root.available && !root.busy;
+            const available = root.pluginCore?.available && !root.pluginCore?.busy;
             return available && _supported;
         }
 
@@ -65,7 +54,7 @@ Item {
             // the switch
             // TODO: investigate how supergfxctl behaves after switching back and
             // forth without performing necessary steps (pending action) to apply the mode switch
-            const active = _current && root.pluginCore.pendingMode === Main.SGFXMode.None;
+            const active = _current && root.pluginCore?.pendingMode === Main.SGFXMode.None;
 
             return _enabled && !_pending && !active;
         }
@@ -74,7 +63,7 @@ Item {
             // instead of using _enabled
             // retain text color if busy
             // lower opacity will signal the button is currently disabled
-            if (!root.available || !_supported) {
+            if (!root.pluginCore?.available || !_supported) {
                 return Color.mOutline;
             }
 
@@ -96,7 +85,7 @@ Item {
         readonly property color backgroundColor: {
             // retain background color if busy
             // opacity will signal the button is currently disabled
-            if (!root.available || !_supported) {
+            if (!root.pluginCore?.available || !_supported) {
                 return Qt.lighter(Color.mSurfaceVariant, 1.2);
             }
 
@@ -157,8 +146,9 @@ Item {
             anchors.centerIn: parent
             spacing: Style.marginXS
 
+            // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NIcon.qml
             NIcon {
-                icon: gpuButton.icon
+                icon: root.pluginCore?.getModeIcon(mode) ?? ""
                 pointSize: Style.fontSizeL
                 color: gpuButton.textColor
 
@@ -167,8 +157,9 @@ Item {
                 }
             }
 
+            // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NText.qml
             NText {
-                text: gpuButton.text
+                text: root.pluginCore?.getModeLabel(mode) ?? ""
                 pointSize: Style.fontSizeM
                 font.weight: Style.fontWeightBold
                 color: gpuButton.textColor
@@ -198,44 +189,46 @@ Item {
         Layout.fillWidth: true
         Layout.preferredHeight: headerRow.implicitHeight + Style.marginM * 2
 
-        readonly property string _pendingActionIcon: root.pluginCore?.getActionIcon(root.pendingAction) ?? ""
-        readonly property string _pendingActionLabel: root.pluginCore?.getActionLabel(root.pendingAction) ?? ""
-        readonly property string _label: root.pluginApi?.tr("gpu") ?? ""
-
         RowLayout {
             id: headerRow
             anchors.fill: parent
             anchors.margins: Style.marginM
             spacing: Style.marginM
 
+            // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NIcon.qml
             NIcon {
-                icon: root.currentIcon
+                icon: root.pluginCore?.getModeIcon(pluginCore?.mode) ?? ""
                 pointSize: Style.fontSizeXXL
                 color: Color.mPrimary
             }
 
+            // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NText.qml
             NText {
-                text: header._label
+                Layout.fillWidth: true
+                text: root.pluginApi?.tr("gpu") ?? ""
                 pointSize: Style.fontSizeL
                 font.weight: Style.fontWeightBold
                 color: Color.mOnSurface
-                Layout.fillWidth: true
             }
 
-            NIcon {
-                icon: header._pendingActionIcon
-                // baseSize: Style.baseWidgetSize * 0.8
-                color: Color.mTertiary
-                // tooltipText: header._pendingActionLabel
+            // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NIconButton.qml
+            NIconButton {
+                icon: root.pluginCore?.getActionIcon(root.pluginCore?.pendingAction) ?? ""
+                tooltipText: root.pluginCore?.getActionLabel(root.pluginCore?.pendingAction) ?? ""
+                baseSize: Style.baseWidgetSize * 0.8
                 visible: root.pluginCore?.hasPendingAction ?? false
+                // TODO: why does screen simply work here?
+                // shouldnt we call pluginApi.withCurrentScreen?
+                onClicked: PanelService.getPanel("sessionMenuPanel", screen)?.toggle()
             }
 
+            // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NIconButton.qml
             NIconButton {
                 id: refreshButton
                 icon: "refresh"
                 tooltipText: I18n.tr("tooltips.refresh")
                 baseSize: Style.baseWidgetSize * 0.8
-                enabled: root.available && !root.busy
+                enabled: root.pluginCore?.available && !root.pluginCore?.busy
                 onClicked: root.pluginCore?.refresh()
 
                 RotationAnimation {
@@ -245,32 +238,34 @@ Item {
                     to: 360
                     duration: 2000
                     loops: Animation.Infinite
-                    running: root.busy
+                    running: root.pluginCore?.busy
                 }
             }
 
+            // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NIconButton.qml
             NIconButton {
                 icon: "close"
                 tooltipText: I18n.tr("tooltips.close")
                 baseSize: Style.baseWidgetSize * 0.8
-                onClicked: root.pluginApi?.closePanel(root.screen)
+                onClicked: root.pluginApi?.withCurrentScreen(screen => {
+                    root.pluginApi?.closePanel(screen);
+                })
             }
         }
     }
 
     Rectangle {
         id: panelContainer
-        anchors.fill: parent
+        x: Style.marginM
+        y: Style.marginM
         color: Color.transparent
 
         ColumnLayout {
-            anchors.fill: parent
-            anchors.margins: Style.marginM
+            spacing: Style.marginM
 
             Header {}
 
             RowLayout {
-                Layout.fillWidth: true
                 spacing: Style.marginM
 
                 GPUButton {
@@ -285,7 +280,6 @@ Item {
             }
 
             RowLayout {
-                Layout.fillWidth: true
                 spacing: Style.marginM
 
                 GPUButton {

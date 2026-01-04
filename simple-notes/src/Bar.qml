@@ -14,11 +14,19 @@ import qs.Modules.Bar.Extras
 import qs.Services.UI
 import qs.Services.Noctalia
 
+/**
+	Bar widget for showing the current GPU mode, with an optional badge when a pending
+	action is available.
+
+	Left click to open the plugin panel
+	Right click to open a context menu
+ */
 Item {
     id: root
 
     // Plugin API (injected by PluginPanelSlot)
-    property var pluginApi: null
+    property QtObject pluginApi: null
+    readonly property QtObject pluginCore: pluginApi?.mainInstance
 
     // Required properties for bar widgets
     property ShellScreen screen
@@ -27,35 +35,37 @@ Item {
     property int sectionWidgetIndex: -1
     property int sectionWidgetsCount: 0
 
-    readonly property var pluginCore: pluginApi?.mainInstance
-
     readonly property string currentIcon: pluginCore?.getModeIcon(pluginCore.mode) ?? ""
     readonly property string currentLabel: pluginCore?.getModeLabel(pluginCore.mode) ?? ""
-    readonly property real currentIconOpacity: pluginCore?.available ? 1.0 : 0.5
-
-    readonly property string pendingActionLabel: pluginCore?.hasPendingAction ? pluginCore?.getActionLabel(pluginCore.pendingAction) : ""
 
     implicitWidth: pill.width
     implicitHeight: pill.height
 
+    // https://github.com/noctalia-dev/noctalia-shell/blob/main/Modules/Bar/Extras/BarPill.qml
     BarPill {
         id: pill
-        opacity: root.currentIconOpacity
+
         screen: root.screen
         oppositeDirection: BarService.getPillDirection(root)
-        icon: root.currentIcon
         autoHide: false
+
+        // makes the tooltip delay shorter
+        forceClose: true
+
+        opacity: pluginCore?.available ? 1.0 : 0.5
+        icon: root.currentIcon
         tooltipText: {
-            if (!pluginCore?.hasPendingAction) {
-                return currentLabel;
+            if (!root.pluginCore?.hasPendingAction) {
+                return root.currentLabel;
             }
-            return currentLabel + " | " + root.pendingActionLabel;
+            const pendingActionLabel = root.pluginCore?.hasPendingAction ? pluginCore?.getActionLabel(pluginCore.pendingAction) : "";
+            return root.currentLabel + " | " + pendingActionLabel;
         }
 
         onClicked: root.pluginApi?.openPanel(root.screen)
 
         onRightClicked: {
-            var popupMenuWindow = PanelService.getPopupMenuWindow(root.screen);
+            const popupMenuWindow = PanelService.getPopupMenuWindow(root.screen);
             if (popupMenuWindow) {
                 popupMenuWindow.showContextMenu(contextMenu);
                 contextMenu.openAtItem(pill, root.screen);
@@ -79,6 +89,7 @@ Item {
         }
     }
 
+    // https://github.com/noctalia-dev/noctalia-shell/blob/main/Widgets/NPopupContextMenu.qml
     NPopupContextMenu {
         id: contextMenu
 
@@ -103,9 +114,10 @@ Item {
         ]
 
         onTriggered: action => {
-            var popupMenuWindow = PanelService.getPopupMenuWindow(root.screen);
+            const popupMenuWindow = PanelService.getPopupMenuWindow(root.screen);
             if (popupMenuWindow) {
                 popupMenuWindow.close();
+                return;
             }
 
             switch (action) {
@@ -113,7 +125,7 @@ Item {
                 root.pluginCore?.refresh();
                 break;
             case "widget-settings":
-                // unsupported for now
+                // TODO: unsupported for now
                 break;
             }
         }

@@ -1,25 +1,32 @@
 {
-  "id": "simple-notes",
-  "name": "Simple Notes",
-  "version": "1.0.0",
-  "minNoctaliaVersion": "3.7.1",
-  "author": "fusuyfusuy",
-  "license": "MIT",
-  "repository": "",
-  "description": "A simple note taking plugin for Noctalia Shell.",
-  "entryPoints": {
-    "main": "Main.qml",
-    "barWidget": "BarWidget.qml",
-    "panel": "Panel.qml",
-    "settings": "Settings.qml"
-  },
-  "dependencies": {
-    "plugins": []
-  },
-  "metadata": {
-    "defaultSettings": {
-      "notes": [],
-      "showCountInBar": true
-    }
-  }
+	"id": "noctalia-supergfxctl",
+	"name": "SuperGFX Control",
+	"version": "0.0.1",
+	"minNoctaliaVersion": "3.7.5",
+	"author": "cod3d <cod3ddot@proton.me>",
+	"license": "MIT",
+	"repository": "https://github.com/cod3ddot/noctalia-supergfxctl",
+	"description": "GPU control with supergfxctl for noctalia.",
+	"entryPoints": {
+		"main": "src/Main.qml",
+		"barWidget": "src/Bar.qml",
+		"settings": "src/Settings.qml",
+		"panel": "src/Panel.qml"
+	},
+	"dependencies": {
+		"plugins": []
+	},
+	"metadata": {
+		"defaultSettings": {
+			"debug": false,
+			"supergfxctl": {
+				"patchPending": true,
+				"polling": false,
+				"pollingInterval": 3000
+			},
+			"rogcc": {
+				"listenToNotifications": false
+			}
+		}
+	}
 }

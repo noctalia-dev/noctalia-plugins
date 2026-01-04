@@ -1,32 +1,41 @@
 {
-  "bar_widget": {
-    "tooltip": "Простые заметки"
-  },
-  "panel": {
-    "confirm": {
-      "delete_message": "Вы уверены, что хотите удалить эту заметку?",
-      "delete_title": "Удалить заметку?"
-    },
-    "editor": {
-      "cancel_button": "Отменить",
-      "content_placeholder": "Напишите свои мысли здесь...",
-      "delete_button": "Удалить",
-      "save_button": "Сохранить",
-      "title_placeholder": "Заголовок заметки"
-    },
-    "header": {
-      "add_button": "Новая заметка",
-      "title": "Примечания"
-    },
-    "list": {
-      "empty_message": "Пока нет заметок. Создайте!",
-      "last_modified": "Последнее изменение:"
-    }
-  },
-  "settings": {
-    "show_count": {
-      "description": "Показать количество нот в виджете такта",
-      "label": "Показать количество заметок"
-    }
-  }
+	"gpu": "Видеокарта",
+	"unknown": "Неизвестно",
+	"settings": {
+		"debug": {
+			"label": "Режим отладки",
+			"description": "Выводит доп. информацию в консоль."
+		},
+		"supergfxctl": {
+			"patchPending": {
+				"label": "Угадывать необходимое действие",
+				"description": "Угадывать необходимое действие вместо использования вывода supergfxctl."
+			},
+			"polling": {
+				"label": "Опрос",
+				"description": "Периодически опрашивать процесс supergfxctl для обновления состояния."
+			}
+		},
+		"rogcc": {
+			"listenToNotifications": {
+				"label": "Слушать уведомления о смене режима",
+				"description": "Реагировать на уведомления о смене режима видеокарты от rog-control-center."
+			}
+		}
+	},
+	"context-menu": {
+		"refresh": "Обновить статус"
+	},
+	"action": {
+		"SwitchToIntegrated": "Сначала переключитесь на интегрированную видеокарту.",
+		"AsusEgpuDisable": "Сначала отключите ASUS eGPU."
+	},
+	"mode": {
+		"Integrated": "Интегрированная",
+		"Hybrid": "Гибрид",
+		"NvidiaNoModeset": "Nvidia без modeset",
+		"Vfio": "VFIO Passthrough",
+		"AsusEgpu": "Asus eGPU",
+		"AsusMuxDgpu": "Asus MUX dGPU"
+	}
 }

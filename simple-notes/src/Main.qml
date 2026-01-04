@@ -10,7 +10,7 @@ import Quickshell.Services.Notifications
 
 import qs.Commons
 
-Item {
+QtObject {
     id: root
 
     enum SGFXMode {
@@ -31,24 +31,32 @@ Item {
         Nothing
     }
 
-    property var pluginApi: null
+    property QtObject pluginApi: null
     readonly property string pluginId: pluginApi?.pluginId
     readonly property string pluginVersion: pluginApi?.manifest.version ?? "???"
 
-    // make the settings public
-    readonly property QtObject pluginSettings: pluginSettings
+    readonly property QtObject pluginSettings: QtObject {
+        readonly property var _manifest: root.pluginApi?.manifest.metadata.defaultSettings ?? {}
+        readonly property var _user: root.pluginApi?.pluginSettings ?? {}
 
-    // TODO: make access read-only
-    QtObject {
-        id: pluginSettings
+        property bool debug: _user.debug ?? _manifest.debug ?? false
 
-        readonly property var manifest: root.pluginApi?.manifest.defaultSettings
-        readonly property var user: root.pluginApi?.pluginSettings
+        // rog-control-center
+        readonly property QtObject rogcc: QtObject {
+            readonly property var _manifest: root.pluginApi?.manifest.metadata.defaultSettings.rogcc ?? {}
+            readonly property var _user: root.pluginApi?.pluginSettings.rogcc ?? {}
 
-        property bool debug: user.debug ?? manifest.debug ?? false
-        property bool polling: user.polling ?? manifest.polling ?? true
-        property int pollingInterval: user.pollingInterval ?? manifest.pollingInterval ?? 3000
-        property bool listenToNotifications: user.listenToNotifications ?? manifest.listenToNotifications ?? true
+            property bool listenToNotifications: _user.listenToNotifications ?? _manifest.listenToNotifications ?? false
+        }
+
+        readonly property QtObject supergfxctl: QtObject {
+            readonly property var _manifest: root.pluginApi?.manifest.metadata.defaultSettings.supergfxctl ?? {}
+            readonly property var _user: root.pluginApi?.pluginSettings.supergfxctl ?? {}
+
+            property bool patchPending: _user.patchPending ?? _manifest.patchPending ?? true
+            property bool polling: _user.polling ?? _manifest.polling ?? false
+            property int pollingInterval: _user.pollingInterval ?? _manifest.pollingInterval ?? 3000
+        }
     }
 
     readonly property bool available: sgfx.available
@@ -164,7 +172,7 @@ Item {
         }
     }
 
-    Process {
+    readonly property Process refreshProc: Process {
         id: refreshProc
         running: false
         command: ["supergfxctl", "--version", "--get", "--supported", "--pend-action", "--pend-mode"]
@@ -180,11 +188,10 @@ Item {
         }
     }
 
-    Timer {
-        id: pollingTimer
-        interval: root.pluginSettings.pollingInterval
+    readonly property Timer pollingTimer: Timer {
+        interval: root.pluginSettings.supergfxctl.pollingInterval
         repeat: true
-        running: root.pluginSettings.available && root.pluginSettings.polling && !root.busy
+        running: root.available && !root.busy && root.pluginSettings.supergfxctl.polling
 
         onTriggered: {
             if (root.busy) {
@@ -196,7 +203,7 @@ Item {
         }
     }
 
-    Connections {
+    readonly property Connections notificationListener: Connections {
         target: NotificationServer {
             onNotification: notification => {
                 root.log(notification);
@@ -204,8 +211,7 @@ Item {
         }
     }
 
-    Process {
-        id: setModeProc
+    readonly property Process setModeProc: Process {
         stderr: StdioCollector {
             onStreamFinished: {
                 if (root.debug && text) {
@@ -215,16 +221,20 @@ Item {
         }
         onExited: exitCode => {
             // pending mode has been set manually in sgfx.setMode
-            if (exitCode === 0) {
-                sgfx.pendingAction = sgfx.requiredAction(sgfx.pendingMode, sgfx.mode);
-            } else {
-                sgfx.pendingMode = Main.SGFXMode.None;
+            // if process exited successfully, set pending action
+            // if not, clear pending mode
+            if (root.pluginSettings.supergfxctl.patchPending) {
+                if (exitCode === 0) {
+                    root.sgfx.pendingAction = root.sgfx.requiredAction(root.sgfx.pendingMode, root.sgfx.mode);
+                } else {
+                    root.sgfx.pendingMode = Main.SGFXMode.None;
+                }
             }
 
-            // per asusctl/rog-control-center, supergfxctl output after mode switch is unreliable
+            // per asusctl/rog-control-center, supergfxctl output after mode switch is unreliable, and requires reboot
             // (see https://gitlab.com/asus-linux/asusctl/-/blob/main/rog-control-center/src/notify.rs?ref_type=heads#L361)
             //
-            // it is unclear whether thats actually true, since per supergfxctl readme
+            // it is unclear whether thats actually true (the unreliable part, and the reboot part), since per supergfxctl readme
             // (see https://gitlab.com/asus-linux/supergfxctl)
             // 			If rebootless switch fails: you may need the following:
             // 			sudo sed -i 's/#KillUserProcesses=no/KillUserProcesses=yes/' /etc/systemd/logind.conf
@@ -233,23 +243,24 @@ Item {
             // 			Switching to/from Hybrid mode requires a logout only. (no reboot)
             // 			Switching between integrated/vfio is instant. (no logout or reboot)
             //
-            // after some testing on my machine, both seem to be incorrect:
+            // after some testing on my machine, both seem to be incorrect as to what action needs to be taken:
             // integrated <-> hybrid: reboot
             // integrated -> dgpu: just works
             // dgpu <- integrated: reboot      // !!!!
             // hybrid <-> dgpu: logout
             //
-            // which is close to the *supposed* supergfxctl behaviour
-            // BUT IT IS NOT
-            // supergfxctl --pend-mode --pend-action reports absolute nonsense
-            sgfx.refresh();
+            // most of the time
+            // supergfxctl --pend-mode --pend-action
+            // reports absolute nonsense, saying no action is required, or no mode is pending after switch
+            //
+            // for now, we provide the user with 2 options:
+            // guess the required action ourselves or rely on supergfxctl
+            root.sgfx.refresh();
         }
     }
 
     // internal helper dealing with supergfxctl
-    QtObject {
-        id: sgfx
-
+    readonly property QtObject sgfx: QtObject {
         property bool available: false
         property string version: "???"
         property int mode: Main.SGFXMode.None
@@ -261,6 +272,7 @@ Item {
             return modeEnumReversed.hasOwnProperty(v);
         }
 
+        // TODO: perf of QJSVlue vs a switch statement
         readonly property var modeEnum: ({
                 "Integrated": Main.SGFXMode.Integrated,
                 "Hybrid": Main.SGFXMode.Hybrid,
@@ -273,13 +285,22 @@ Item {
 
         readonly property var modeEnumReversed: Object.entries(modeEnum).reduce((obj, item) => (obj[item[1]] = item[0]) && obj, {})
 
-        readonly property var actionEnum: ({
-                "Logout required to complete mode change": Main.SGFXAction.Logout,
-                "Reboot required to complete mode change": Main.SGFXAction.Reboot,
-                "You must switch to Integrated first": Main.SGFXAction.SwitchToIntegrated,
-                "The mode must be switched to Integrated or Hybrid first": Main.SGFXAction.AsusEgpuDisable,
-                "No action required": Main.SGFXAction.Nothing
-            })
+        function actionFromString(message: string): int {
+            switch (message) {
+            case "Logout required to complete mode change":
+                return Main.SGFXAction.Logout;
+            case "Reboot required to complete mode change":
+                return Main.SGFXAction.Reboot;
+            case "You must switch to Integrated first":
+                return Main.SGFXAction.SwitchToIntegrated;
+            case "The mode must be switched to Integrated or Hybrid first":
+                return Main.SGFXAction.AsusEgpuDisable;
+            case "No action required":
+                return Main.SGFXAction.Nothing;
+            default:
+                return Main.SGFXAction.Nothing;
+            }
+        }
 
         // patched up version of pending actions for mode switch
         // TODO: this WILL differ depending on hardware (maybe fw versions?)
@@ -329,8 +350,12 @@ Item {
                 return false;
             }
 
+            // manually set pending mode
+            // pending action will be set on process exit if it was successfull
+            if (root.pluginSettings.supergfxctl.patchPending) {
+                pendingMode = modeEnum;
+            }
             setModeProc.command = ["supergfxctl", "--mode", modeEnumReversed[modeEnum]];
-            pendingMode = modeEnum;
             setModeProc.running = true;
 
             if (root.debug) {
@@ -385,7 +410,8 @@ Item {
             }
 
             const newMode = modeEnum[lineMode] ?? Main.SGFXMode.None;
-            const newPendMode = modeEnum[linePendMode] ?? Main.SGFXMode.None;
+            const newPendingMode = modeEnum[linePendMode] ?? Main.SGFXMode.None;
+            const newPendingAction = actionFromString(linePendAction);
 
             let newSupportedMask = 0;
             if (lineSupported.length > 2) {
@@ -411,19 +437,26 @@ Item {
                 root.warn("[parseOutput] no supported modes reported");
             }
 
-            const newPendingAction = actionEnum[linePendAction] ?? Main.SGFXAction.Nothing;
-
-            // does not work reliably on refresh, so
-            // only set if pending mode has not been set manually
-            if (pendingMode === Main.SGFXMode.None) {
-                mode = newMode;
-                pendingMode = newPendMode;
-                pendingAction = requiredAction(sgfx.mode, newPendMode);
-                root.log("[parseOutput] state updated:", `mode=${mode}, pendingMode=${pendingMode}, pendingAction=${pendingAction}`);
-            } else {
-                root.log("[parseOutput] pending mode already set manually, skipping mode update");
-            }
             supportedModesMask = newSupportedMask;
+
+            if (!root.pluginSettings.supergfxctl.patchPending) {
+                mode = newMode;
+                pendingMode = newPendingMode;
+                pendingAction = newPendingAction;
+            } else {
+                // only set if pending mode has not been set manually
+                // generally, this is the case when launch supergfxctl for the first time
+                // and there is a pending mode
+                if (pendingMode === Main.SGFXMode.None) {
+                    mode = newMode;
+                    pendingMode = newPendingMode;
+                    pendingAction = requiredAction(root.sgfx.mode, newPendingMode);
+                    root.log("[parseOutput] state updated:", `mode=${mode}, pendingMode=${pendingMode}, pendingAction=${pendingAction}`);
+                } else {
+                    root.log("[parseOutput] pending mode already set manually, skipping mode update");
+                }
+            }
+
             available = true;
 
             root.log(`[parseOutput] completed successfully (available=${available}, supportedMask=0x${newSupportedMask.toString(16)})`);

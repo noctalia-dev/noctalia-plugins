@@ -1,24 +1,64 @@
-# Simple Notes Plugin
+[![noctalia-supergfxctl](./preview.webp)](https://github.com/cod3ddot/noctalia-supergfxctl)
 
-A simple note-taking plugin for [Noctalia Shell](https://github.com/noctalia-dev/noctalia-shell).
+# noctalia-supergfxctl
 
-## Features
-- **Quick Notes**: Create, edit, and delete notes quickly from your desktop panel.
-- **Persistence**: Notes are automatically saved.
-- **Bar Widget**: Shows an icon and the current note count in your status bar.
+Minimum noctalia version: `3.7.5`
 
-## Installation
+Brings GPU control to your noctalia shell.  
+Available modes are detected automatically. Current mode is highlighted in the main color, pending mode will be in tertiary.
 
-1. Clone or download this repository into your Noctalia plugins directory.
-2. Restart Noctalia Shell.
-3. Enable "Simple Notes" in the Noctalia settings if not enabled by default.
-4. Add the widget to your bar or desktop.
+> [!IMPORTANT]
+> `supergfxctl` may not always report reliable information about the pending mode or the action required to apply it.
+> The plugin can optionally **guess the needed action** (generally logout, reboot, or none) required after switching GPU modes. This behavior is controlled by the **`Guess fallback action`** option.
 
-## Usage
+Made possible by [supergfxctl](https://gitlab.com/asus-linux/supergfxctl).  
+Thanks [asusctl](https://gitlab.com/asus-linux/asusctl), [rog-control-center](https://gitlab.com/asus-linux/asusctl/-/tree/main/rog-control-center) for code inspiration.
+Check out [noctalia](https://github.com/noctalia-dev/noctalia-shell) for a great shell.
 
-- **Bar Widget**: Click the note icon to open the panel.
-- **Panel**:
-    - Click "New Note" to start writing.
-    - Click an existing note to edit it.
-    - Use the "Save" button to persist changes.
-    - Use the "Delete" button to remove a note.
+## Quick development setup
+
+Follow [plugin development overview](https://docs.noctalia.dev/development/plugins/overview/).
+
+## Project Structure
+
+```
+├── LICENCES/               # REUSE licenses (See README)
+├── i18n/					# Translations
+├── src/
+│   ├── Bar.qml				# Bar widget UI
+│   ├── Main.qml			# Entrypoint, common logic
+│   ├── Panel.qml			# Panel UI
+│   └── Settings.qml        # Settings UI
+├── CHANGES.md              # Changelog
+├── COPYING                 # MIT (See README)
+├── manifest.json           # https://docs.noctalia.dev/plugins/manifest/
+└── README.md               # This file
+```
+
+## License
+
+This project strives to be [REUSE](https://reuse.software/) compliant.
+
+Generally:
+- Documentation is under CC-BY-NC-SA-4.0
+- Code is under MIT
+- Config and translation files are under CC0-1.0
+
+```
+Copyright (c) 2025 cod3dddot@proton.me
+	
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+	
+The above copyright notice and this permission notice shall be included in all copies or substantial
+portions of the Software.
+	
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+```

@@ -1,32 +1,41 @@
 {
-  "bar_widget": {
-    "tooltip": "Прості нотатки"
-  },
-  "panel": {
-    "confirm": {
-      "delete_message": "Ви впевнені, що хочете видалити цю нотатку?",
-      "delete_title": "Видалити нотатку?"
-    },
-    "editor": {
-      "cancel_button": "Скасувати",
-      "content_placeholder": "Напишіть тут свої думки...",
-      "delete_button": "Видалити",
-      "save_button": "Зберегти",
-      "title_placeholder": "Назва нотатки"
-    },
-    "header": {
-      "add_button": "Нова нотатка",
-      "title": "Примітки"
-    },
-    "list": {
-      "empty_message": "Поки що немає нотаток. Створіть!",
-      "last_modified": "Останнє редагування:"
-    }
-  },
-  "settings": {
-    "show_count": {
-      "description": "Показати кількість нот у віджеті такту",
-      "label": "Показати кількість нотаток"
-    }
-  }
+	"gpu": "Відеокарта",
+	"unknown": "Невідомо",
+	"settings": {
+		"debug": {
+			"label": "Режим налагодження",
+			"description": "Виводить доп. інформацію в консоль."
+		},
+		"supergfxctl": {
+			"patchPending": {
+				"label": "Вгадувати дію",
+				"description": "Вгадувати необхідну дію замість використання виводу supergfxctl."
+			},
+			"polling": {
+				"label": "Опитування",
+				"description": "Періодично опитувати supergfxctl для оновлення стану."
+			}
+		},
+		"rogcc": {
+			"listenToNotifications": {
+				"label": "Слухати сповіщення про зміну режиму",
+				"description": "Реагувати на сповіщення про зміну режиму відеокарти від rog-control-center."
+			}
+		}
+	},
+	"context-menu": {
+		"refresh": "Оновити стан"
+	},
+	"action": {
+		"SwitchToIntegrated": "Спочатку перемкните на інтегровану відеокарту.",
+		"AsusEgpuDisable": "Спочатку вимкните ASUS eGPU."
+	},
+	"mode": {
+		"Integrated": "Інтегрована",
+		"Hybrid": "Гібрид",
+		"NvidiaNoModeset": "NVIDIA без modeset",
+		"Vfio": "VFIO Passthrough",
+		"AsusEgpu": "Asus eGPU",
+		"AsusMuxDgpu": "Asus MUX dGPU"
+	}
 }
