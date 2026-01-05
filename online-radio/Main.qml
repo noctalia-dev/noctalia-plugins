@@ -5,11 +5,11 @@ Item {
     id: root
     property var pluginApi: null
     
-    // Основные свойства для управления воспроизведением
+    // Basic properties for playback control
     property string currentPlayingStation: ""
-    property string currentPlayingProcessState: "" // "start" или ""
+    property string currentPlayingProcessState: ""
     
-    // FileView для работы с JSON файлом
+    // FileView for working with a JSON file
     FileView {
         id: jsonFile
         path: pluginApi.pluginSettings.stations_json
@@ -20,29 +20,29 @@ Item {
                 try {
                     var jsonData = JSON.parse(jsonFile.text());
                     
-                    // Сохраняем текущую играющую станцию перед очисткой
+                    // Saving the current playing station before cleaning
                     var savedStation = currentPlayingStation || "";
                     var savedState = currentPlayingProcessState || "";
                     
-                    // Очищаем предыдущие данные
+                    // Clearing the previous data
                     for (var key in pluginApi.pluginSettings) {
                         if (key.startsWith("station_")) {
                             delete pluginApi.pluginSettings[key];
                         }
                     }
                     
-                    // Сохраняем каждую станцию как station_X_name и station_X_url
+                    // Saving each station as station_X_name and station_X_url
                     if (Array.isArray(jsonData)) {
                         for (var i = 0; i < jsonData.length; i++) {
                             var station = jsonData[i];
                             pluginApi.pluginSettings["station_" + i + "_name"] = station.name || "";
                             pluginApi.pluginSettings["station_" + i + "_url"] = station.url || "";
                         }
-                        // Сохраняем количество станций
+                        // Saving the number of stations
                         pluginApi.pluginSettings.station_count = jsonData.length;
                     }
                     
-                    // Восстанавливаем текущую станцию, если она все еще существует
+                    // Restoring the current station, if it still exists
                     var stationStillExists = false;
                     if (savedStation && Array.isArray(jsonData)) {
                         for (var j = 0; j < jsonData.length; j++) {
@@ -70,7 +70,7 @@ Item {
     }
     
     Component.onCompleted: {
-        // Восстанавливаем состояние из настроек
+        // Restoring the state from the settings
         if (pluginApi && pluginApi.pluginSettings) {
             currentPlayingStation = pluginApi.pluginSettings.currentPlayingStation || "";
             currentPlayingProcessState = pluginApi.pluginSettings.currentPlayingProcessState || "";
@@ -81,12 +81,12 @@ Item {
         }
     }
     
-    // Функция для запуска станции
+    // Function to start the station
     function playStation(stationName, stationUrl) {
-        // Останавливаем текущее воспроизведение
+        // Stopping the current playback
         stopPlayback();
         
-        // Сохраняем состояние
+        // Saving the state
         currentPlayingStation = stationName;
         currentPlayingProcessState = "start";
         
@@ -108,9 +108,9 @@ Item {
         process.startDetached();
     }
     
-    // Функция для остановки воспроизведения
+    // Function to stop playback
     function stopPlayback() {
-        // Убиваем все процессы VLC
+        // Killing all VLC processes
         var killProcess = Qt.createQmlObject('import QtQuick; import Quickshell.Io; Process {}', root);
         killProcess.command = ["sh", "-c", "kill -9 $(ps aux | grep -E '[c]vlc|[v]lc' | awk '{print $2}') 2>/dev/null || true"];
         
@@ -120,7 +120,7 @@ Item {
         
         killProcess.startDetached();
         
-        // Очищаем состояние
+        // Clearing the state
         currentPlayingStation = "";
         currentPlayingProcessState = "";
         
@@ -131,7 +131,7 @@ Item {
         }
     }
     
-    // Функция для получения списка станций
+    // Function for getting a list of stations
     function getStations() {
         var stations = [];
         

@@ -11,7 +11,7 @@ Item {
     property var pluginApi: null
     property ShellScreen screen
 
-    // Свойство для иконки из настроек
+   
     property string currentIconName: pluginApi?.pluginSettings?.currentIconName || pluginApi?.manifest?.metadata?.defaultSettings?.currentIconName
     property string currentPlayingStation: pluginApi?.pluginSettings?.currentPlayingStation
 

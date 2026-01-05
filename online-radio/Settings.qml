@@ -19,7 +19,6 @@ ColumnLayout {
     property string stationFile: "" 
     property int currentNumber: pluginApi?.pluginSettings?.station_count
 
-    // Блок: Выбор иконки
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 140
@@ -33,7 +32,6 @@ ColumnLayout {
             anchors.margins: Style.marginL
             spacing: Style.marginM
             
-            // Заголовок
             NText {
                 text: pluginApi?.tr("iconLabel")
                 color: Color.mPrimary
@@ -93,7 +91,6 @@ ColumnLayout {
         }
     }
 
-    // Блок: Выбор файла
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 120
@@ -178,11 +175,10 @@ ColumnLayout {
         }
         
         onCancelled: {
-            // Файл не выбран
+            // File not selected
         }
     }
 
-    // Блок: Добавить станцию
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 250
@@ -196,7 +192,7 @@ ColumnLayout {
             anchors.margins: Style.marginL
             spacing: Style.marginM
             
-            // Заголовок
+            
             NText {
                 text: pluginApi?.tr("addTitle")
                 color: Color.mPrimary
@@ -235,7 +231,7 @@ ColumnLayout {
         }
     }
 
-    // Функция сохранения настроек
+    // The function of saving settings
     function saveSettings() {
         if (!pluginApi) {
             return;
