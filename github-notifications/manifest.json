@@ -1,0 +1,31 @@
+{
+  "id": "github-notifications",
+  "name": "GitHub Notifications",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "Lokize",
+  "license": "MIT",
+  "repository": "https://github.com/lokize/noctalia-plugins",
+  "description": "Monitor GitHub notifications with unread count and mark as read",
+  "tags": [
+    "Productivity",
+    "Development"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml",
+    "settings": "Settings.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "githubToken": "",
+      "checkInterval": 300,
+      "showOnlyUnread": false,
+      "maxNotifications": 30,
+      "reasonFilters": []
+    }
+  }
+}
