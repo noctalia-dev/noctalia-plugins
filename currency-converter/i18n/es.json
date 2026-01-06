@@ -26,7 +26,8 @@
     "from": "De",
     "to": "A",
     "swap": "Intercambiar monedas",
-    "refresh": "Actualizar tasas"
+    "refresh": "Actualizar tasas",
+    "no-data": "No hay datos disponibles"
   },
   "settings.title": "Configuración del Conversor de Monedas",
   "settings.from-currency.label": "Moneda de Origen",

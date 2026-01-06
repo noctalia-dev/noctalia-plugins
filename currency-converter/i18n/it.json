@@ -26,7 +26,8 @@
     "from": "Da",
     "to": "A",
     "swap": "Scambia valute",
-    "refresh": "Aggiorna tassi"
+    "refresh": "Aggiorna tassi",
+    "no-data": "Nessun dato disponibile"
   },
   "settings.title": "Impostazioni del Convertitore di Valuta",
   "settings.from-currency.label": "Valuta di Origine",

@@ -26,7 +26,8 @@
     "from": "Kaynak",
     "to": "Hedef",
     "swap": "Para birimlerini değiştir",
-    "refresh": "Kurları yenile"
+    "refresh": "Kurları yenile",
+    "no-data": "Kullanılabilir veri yok"
   },
   "settings.title": "Para Birimi Dönüştürücü Ayarları",
   "settings.from-currency.label": "Kaynak Para Birimi",

@@ -26,7 +26,8 @@
     "from": "源",
     "to": "目标",
     "swap": "交换货币",
-    "refresh": "刷新汇率"
+    "refresh": "刷新汇率",
+    "no-data": "无可用数据"
   },
   "settings.title": "货币转换器设置",
   "settings.from-currency.label": "源货币",

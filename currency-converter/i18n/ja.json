@@ -26,7 +26,8 @@
     "from": "から",
     "to": "まで",
     "swap": "通貨を交換",
-    "refresh": "レートを更新"
+    "refresh": "レートを更新",
+    "no-data": "利用可能なデータがありません"
   },
   "settings.title": "通貨コンバーター設定",
   "settings.from-currency.label": "元通貨",

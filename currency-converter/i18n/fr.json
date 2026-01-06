@@ -26,7 +26,8 @@
     "from": "De",
     "to": "Vers",
     "swap": "Échanger les devises",
-    "refresh": "Actualiser les taux"
+    "refresh": "Actualiser les taux",
+    "no-data": "Aucune donnée disponible"
   },
   "settings.title": "Paramètres du Convertisseur de Devises",
   "settings.from-currency.label": "Devise Source",

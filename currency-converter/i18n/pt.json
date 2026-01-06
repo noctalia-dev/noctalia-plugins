@@ -26,7 +26,8 @@
     "from": "De",
     "to": "Para",
     "swap": "Trocar moedas",
-    "refresh": "Atualizar cotações"
+    "refresh": "Atualizar taxas",
+    "no-data": "Sem dados disponíveis"
   },
   "bar.widget-settings.currency-converter.from-currency.label": "Moeda de Origem",
   "bar.widget-settings.currency-converter.from-currency.description": "Selecione a moeda de origem para conversão",

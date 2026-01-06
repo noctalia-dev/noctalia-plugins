@@ -120,18 +120,25 @@ Item {
   Rectangle {
     id: panelContainer
     anchors.fill: parent
-    color: Color.transparent
+    color: "transparent"
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.leftMargin: Style.marginM
-      anchors.rightMargin: Style.marginL
-      anchors.topMargin: Style.marginM
-      anchors.bottomMargin: Style.marginM
-      spacing: Style.marginM
+      spacing: Style.marginL
 
-      // Header
-      NBox {
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        color: Color.mSurfaceVariant
+        radius: Style.radiusL
+
+        ColumnLayout {
+          anchors.fill: parent
+          anchors.margins: Style.marginL
+          spacing: Style.marginM
+
+          // Header
+          NBox {
         Layout.fillWidth: true
         Layout.preferredHeight: headerContent.implicitHeight + Style.marginL * 2
         color: Color.mSurfaceVariant
@@ -172,28 +179,17 @@ Item {
         }
       }
 
-      // Converter content
-      NBox {
+      // From section
+      ColumnLayout {
         Layout.fillWidth: true
-        Layout.fillHeight: true
-        color: Color.mSurface
+        spacing: Style.marginS
 
-        ColumnLayout {
-          anchors.fill: parent
-          anchors.margins: Style.marginM
-          spacing: Style.marginS
-
-          // From section
-          ColumnLayout {
-            Layout.fillWidth: true
-            spacing: Style.marginS
-
-            NText {
-              text: pluginApi?.tr("currency-converter.from") || "From"
-              color: Color.mOnSurface
-              pointSize: Style.fontSizeM
-              font.weight: Style.fontWeightBold
-            }
+        NText {
+          text: pluginApi?.tr("currency-converter.from") || "From"
+          color: Color.mOnSurface
+          pointSize: Style.fontSizeM
+          font.weight: Style.fontWeightBold
+        }
 
             RowLayout {
               Layout.fillWidth: true
@@ -324,8 +320,8 @@ Item {
           Item {
             Layout.fillWidth: true
             Layout.preferredHeight: Style.baseWidgetSize * 1.0
-            Layout.topMargin: Style.marginXL
-            Layout.bottomMargin: Style.marginXS
+            Layout.topMargin: Style.marginM
+            Layout.bottomMargin: Style.marginM
             
             NIconButton {
               anchors.centerIn: parent
@@ -341,6 +337,7 @@ Item {
           // To section
           ColumnLayout {
             Layout.fillWidth: true
+            Layout.topMargin: -Style.marginL
             spacing: Style.marginS
 
             NText {
@@ -468,33 +465,33 @@ Item {
               }
             }
           }
+        }
+      }
 
-          // Exchange rate info
-          Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: rateInfoText.implicitHeight + Style.marginM * 2
-            Layout.topMargin: Style.marginS
-            color: Color.mSurfaceVariant
-            radius: Style.iRadiusM
+      // Exchange rate info
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: rateInfoText.implicitHeight + Style.marginM * 2
+        Layout.topMargin: Style.marginS
+        color: Color.mSurfaceVariant
+        radius: Style.iRadiusM
 
-            NText {
-              id: rateInfoText
-              anchors.fill: parent
-              anchors.margins: Style.marginM
-              horizontalAlignment: Text.AlignHCenter
-              verticalAlignment: Text.AlignVCenter
-              color: Color.mOnSurfaceVariant
-              pointSize: Style.fontSizeS
-              text: {
-                if (!availableRates || Object.keys(availableRates).length === 0) {
-                  return "Sem dados disponíveis";
-                }
-                var baseRate = availableRates[fromCurrency] || 1;
-                var targetRate = availableRates[toCurrency] || 1;
-                var rate = (targetRate / baseRate).toFixed(4);
-                return `1 ${fromCurrency} = ${rate} ${toCurrency}`;
-              }
+        NText {
+          id: rateInfoText
+          anchors.fill: parent
+          anchors.margins: Style.marginM
+          horizontalAlignment: Text.AlignHCenter
+          verticalAlignment: Text.AlignVCenter
+          color: Color.mOnSurfaceVariant
+          pointSize: Style.fontSizeS
+          text: {
+            if (!availableRates || Object.keys(availableRates).length === 0) {
+              return pluginApi?.tr("currency-converter.no-data") || "No data available";
             }
+            var baseRate = availableRates[fromCurrency] || 1;
+            var targetRate = availableRates[toCurrency] || 1;
+            var rate = (targetRate / baseRate).toFixed(4);
+            return `1 ${fromCurrency} = ${rate} ${toCurrency}`;
           }
         }
       }

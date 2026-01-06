@@ -26,7 +26,8 @@
     "from": "Van",
     "to": "Naar",
     "swap": "Valuta's wisselen",
-    "refresh": "Koersen bijwerken"
+    "refresh": "Koersen bijwerken",
+    "no-data": "Geen gegevens beschikbaar"
   },
   "settings.title": "Valutaconverter Instellingen",
   "settings.from-currency.label": "Bronvaluta",

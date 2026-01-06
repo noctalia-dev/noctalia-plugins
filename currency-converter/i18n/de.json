@@ -26,7 +26,8 @@
     "from": "Von",
     "to": "Nach",
     "swap": "Währungen tauschen",
-    "refresh": "Kurse aktualisieren"
+    "refresh": "Kurse aktualisieren",
+    "no-data": "Keine Daten verfügbar"
   },
   "bar.widget-settings.currency-converter.from-currency.label": "Ausgangswährung",
   "bar.widget-settings.currency-converter.from-currency.description": "Wählen Sie die Ausgangswährung für die Konvertierung",

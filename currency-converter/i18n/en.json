@@ -26,7 +26,8 @@
     "from": "From",
     "to": "To",
     "swap": "Swap currencies",
-    "refresh": "Refresh rates"
+    "refresh": "Refresh rates",
+    "no-data": "No data available"
   },
   "bar.widget-settings.currency-converter.from-currency.label": "From Currency",
   "bar.widget-settings.currency-converter.from-currency.description": "Select the source currency for conversion",
