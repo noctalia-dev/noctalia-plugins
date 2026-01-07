@@ -197,14 +197,15 @@ Rectangle {
   }
 
   function fetchAndAddWishlistGame(appId, gameName) {
-    var process = Qt.createQmlObject(\`
+    var cleanName = gameName.replace(/"/g, '\\"').replace(/\n/g, ' ');
+    var qmlCode = '
       import Quickshell.Io
       Process {
         running: true
-        command: ["curl", "-s", "https://store.steampowered.com/api/appdetails?appids=\${appId}&cc=\${root.currency}"]
+        command: ["curl", "-s", "https://store.steampowered.com/api/appdetails?appids=' + appId + '&cc=' + root.currency + '"]
         stdout: StdioCollector {}
-        property int gameAppId: \${appId}
-        property string gameNameStr: "\${gameName.replace(/"/g, '\\\\"').replace(/\\n/g, ' ')}"
+        property int gameAppId: ' + appId + '
+        property string gameNameStr: "' + cleanName + '"
 
         onExited: (exitCode) => {
           if (exitCode === 0) {
@@ -214,7 +215,7 @@ Rectangle {
 
               if (appData && appData.success && appData.data && appData.data.price_overview) {
                 var currentPrice = appData.data.price_overview.final / 100;
-                var targetPrice = currentPrice * 0.8; // 20% discount
+                var targetPrice = currentPrice * 0.8;
 
                 var game = {
                   appId: gameAppId,
@@ -224,7 +225,6 @@ Rectangle {
                   fromWishlist: true
                 };
 
-                // Add to watchlist
                 var temp = root.watchlist.slice();
                 temp.push(game);
                 root.pluginApi.pluginSettings.watchlist = temp;
@@ -239,7 +239,8 @@ Rectangle {
           destroy();
         }
       }
-    \`, root, "wishlistGameFetch");
+    ';
+    var process = Qt.createQmlObject(qmlCode, root, "wishlistGameFetch");
   }
 
   property int pendingChecks: 0
