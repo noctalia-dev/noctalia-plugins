@@ -10,16 +10,5 @@
     "steam_launched": "Steam launched",
     "no_windows_found": "No Steam windows found",
     "ipc_received": "IPC toggle received"
-  },
-  "bar_widget": {
-    "tooltip": "Steam Overlay",
-    "tooltip_active": "Steam Overlay (Active)",
-    "tooltip_inactive": "Steam Overlay (Click to activate)"
-  },
-  "notifications": {
-    "steam_launching": "Launching Steam...",
-    "steam_not_running": "Steam is not running",
-    "overlay_shown": "Steam overlay shown",
-    "overlay_hidden": "Steam overlay hidden"
   }
 }

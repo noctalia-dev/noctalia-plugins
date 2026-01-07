@@ -10,16 +10,5 @@
     "steam_launched": "Steam запущено",
     "no_windows_found": "Вікна Steam не знайдено",
     "ipc_received": "Отримано перемикання IPC"
-  },
-  "bar_widget": {
-    "tooltip": "Оверлей Steam",
-    "tooltip_active": "Оверлей Steam (Активний)",
-    "tooltip_inactive": "Оверлей Steam (Натисніть для активації)"
-  },
-  "notifications": {
-    "steam_launching": "Запуск Steam...",
-    "steam_not_running": "Steam не запущено",
-    "overlay_shown": "Оверлей Steam показано",
-    "overlay_hidden": "Оверлей Steam приховано"
   }
 }

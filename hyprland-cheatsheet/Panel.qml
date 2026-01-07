@@ -317,16 +317,16 @@ Item {
   }
   
   function getKeyColor(keyName) {
-    // Różne kolory dla różnych typów klawiszy
+    // Different colors for different key types
     if (keyName === "Super") return Color.mPrimary;
     if (keyName === "Ctrl") return Color.mSecondary;
     if (keyName === "Shift") return Color.mTertiary;
-    if (keyName === "Alt") return "#FF6B6B"; // Czerwonawy
-    if (keyName.startsWith("XF86")) return "#4ECDC4"; // Turkusowy dla multimediów
-    if (keyName === "PRINT") return "#95E1D3"; // Jasny turkus dla print screen
-    if (keyName.match(/^[0-9]$/)) return "#A8DADC"; // Jasnoniebieski dla cyfr
-    if (keyName.includes("MOUSE")) return "#F38181"; // Różowy dla myszy
-    // Domyślny kolor dla innych klawiszy (litery, strzałki, itp.)
+    if (keyName === "Alt") return "#FF6B6B"; // Reddish
+    if (keyName.startsWith("XF86")) return "#4ECDC4"; // Turquoise for multimedia
+    if (keyName === "PRINT") return "#95E1D3"; // Light turquoise for print screen
+    if (keyName.match(/^[0-9]$/)) return "#A8DADC"; // Light blue for numbers
+    if (keyName.includes("MOUSE")) return "#F38181"; // Pink for mouse
+    // Default color for other keys (letters, arrows, etc.)
     return Color.mPrimaryContainer || "#6C757D";
   }
 
@@ -339,9 +339,9 @@ Item {
       if (catIndex >= categories.length) continue;
 
       var cat = categories[catIndex];
-      // Dodaj nagłówek
+      // Add header
       result.push({ type: "header", title: cat.title });
-      // Dodaj wszystkie bindy
+      // Add all keybinds
       for (var j = 0; j < cat.binds.length; j++) {
         result.push({
           type: "bind",
@@ -349,7 +349,7 @@ Item {
           desc: cat.binds[j].desc
         });
       }
-      // Dodaj spacer po kategorii (oprócz ostatniej w kolumnie)
+      // Add spacer after category (except for last in column)
       if (i < categoryIndices.length - 1) {
         result.push({ type: "spacer" });
       }
@@ -364,7 +364,7 @@ Item {
     for (var i = 0; i < cats.length; i++) {
       var cat = cats[i];
 
-      // Podziel duże kategorie (>12 itemów)
+      // Split large categories (>12 items)
       if (cat.binds && cat.binds.length > 12 && cat.title.includes("OBSZARY ROBOCZE")) {
         var switching = [];
         var moving = [];
@@ -374,7 +374,9 @@ Item {
           var bind = cat.binds[j];
           if (bind.keys.includes("MOUSE")) {
             mouse.push(bind);
-          } else if (bind.desc.includes("Wyślij") || bind.desc.includes("wyślij")) {
+          } else if (bind.desc.includes("Send") || bind.desc.includes("send") ||
+                     bind.desc.includes("Move") || bind.desc.includes("move") ||
+                     bind.desc.includes("Wyślij") || bind.desc.includes("wyślij")) {
             moving.push(bind);
           } else {
             switching.push(bind);
@@ -408,7 +410,7 @@ Item {
   }
 
   function distributeCategories() {
-    // Oblicz wagę każdej kategorii (nagłówek + bindy + spacer)
+    // Calculate weight of each category (header + binds + spacer)
     var weights = [];
     var totalWeight = 0;
     for (var i = 0; i < categories.length; i++) {
@@ -421,7 +423,7 @@ Item {
     var columns = [[], [], []];
     var columnWeights = [0, 0, 0];
 
-    // Greedy algorithm: przypisz każdą kategorię do kolumny z najmniejszą wagą
+    // Greedy algorithm: assign each category to column with smallest weight
     for (var i = 0; i < categories.length; i++) {
       var minCol = 0;
       for (var c = 1; c < 3; c++) {

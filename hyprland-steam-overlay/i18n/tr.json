@@ -10,16 +10,5 @@
     "steam_launched": "Steam başlatıldı",
     "no_windows_found": "Steam penceresi bulunamadı",
     "ipc_received": "IPC değiştirme alındı"
-  },
-  "bar_widget": {
-    "tooltip": "Steam Katmanı",
-    "tooltip_active": "Steam Katmanı (Aktif)",
-    "tooltip_inactive": "Steam Katmanı (Etkinleştirmek için tıklayın)"
-  },
-  "notifications": {
-    "steam_launching": "Steam başlatılıyor...",
-    "steam_not_running": "Steam çalışmıyor",
-    "overlay_shown": "Steam katmanı gösterildi",
-    "overlay_hidden": "Steam katmanı gizlendi"
   }
 }

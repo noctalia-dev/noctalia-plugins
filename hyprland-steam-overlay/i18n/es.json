@@ -10,16 +10,5 @@
     "steam_launched": "Steam iniciado",
     "no_windows_found": "No se encontraron ventanas de Steam",
     "ipc_received": "Alternancia IPC recibida"
-  },
-  "bar_widget": {
-    "tooltip": "Superposición de Steam",
-    "tooltip_active": "Superposición de Steam (Activa)",
-    "tooltip_inactive": "Superposición de Steam (Clic para activar)"
-  },
-  "notifications": {
-    "steam_launching": "Iniciando Steam...",
-    "steam_not_running": "Steam no está en ejecución",
-    "overlay_shown": "Superposición de Steam mostrada",
-    "overlay_hidden": "Superposición de Steam ocultada"
   }
 }

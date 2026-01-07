@@ -10,16 +10,5 @@
     "steam_launched": "Steam uruchomiony",
     "no_windows_found": "Nie znaleziono okien Steam",
     "ipc_received": "Otrzymano przełącznik IPC"
-  },
-  "bar_widget": {
-    "tooltip": "Nakładka Steam",
-    "tooltip_active": "Nakładka Steam (Aktywna)",
-    "tooltip_inactive": "Nakładka Steam (Kliknij aby aktywować)"
-  },
-  "notifications": {
-    "steam_launching": "Uruchamianie Steam...",
-    "steam_not_running": "Steam nie jest uruchomiony",
-    "overlay_shown": "Nakładka Steam pokazana",
-    "overlay_hidden": "Nakładka Steam ukryta"
   }
 }

@@ -10,16 +10,5 @@
     "steam_launched": "Steam iniciado",
     "no_windows_found": "Nenhuma janela do Steam encontrada",
     "ipc_received": "Alternância IPC recebida"
-  },
-  "bar_widget": {
-    "tooltip": "Sobreposição do Steam",
-    "tooltip_active": "Sobreposição do Steam (Ativa)",
-    "tooltip_inactive": "Sobreposição do Steam (Clique para ativar)"
-  },
-  "notifications": {
-    "steam_launching": "Iniciando Steam...",
-    "steam_not_running": "Steam não está em execução",
-    "overlay_shown": "Sobreposição do Steam mostrada",
-    "overlay_hidden": "Sobreposição do Steam ocultada"
   }
 }
