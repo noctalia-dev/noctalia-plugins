@@ -37,8 +37,8 @@ Rectangle {
   implicitWidth: Math.max(60, isVertical ? (Style.capsuleHeight || 32) : contentWidth)
   implicitHeight: Math.max(32, isVertical ? contentHeight : (Style.capsuleHeight || 32))
   radius: Style.radiusM || 8
-  color: Style.capsuleColor || "#1E1E1E"
-  border.color: Style.capsuleBorderColor || "#2E2E2E"
+  color: Style.capsuleColor
+  border.color: Style.capsuleBorderColor
   border.width: Style.capsuleBorderWidth || 1
 
   readonly property real contentWidth: {
@@ -274,7 +274,7 @@ Rectangle {
       NIcon {
         anchors.fill: parent
         icon: loading ? "loader" : "package"
-        color: hasNotifications ? (Color.mPrimary || "#2196F3") : (Color.mOnSurface || "#FFFFFF")
+        color: hasNotifications ? Color.mPrimary : Color.mOnSurface
         pointSize: parent.iconSize
         
         RotationAnimator on rotation {
@@ -292,7 +292,7 @@ Rectangle {
         width: 8
         height: 8
         radius: 4
-        color: Color.mError || "#F44336"
+        color: Color.mError
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.rightMargin: -2
@@ -305,7 +305,7 @@ Rectangle {
     NText {
       id: gamesText
       text: displayText
-      color: hasNotifications ? (Color.mPrimary || "#2196F3") : (Color.mOnSurface || "#FFFFFF")
+      color: hasNotifications ? Color.mPrimary : Color.mOnSurface
       pointSize: Style.barFontSize || 11
       applyUiScale: false
       Layout.alignment: Qt.AlignVCenter

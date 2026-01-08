@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import qs.Commons
+import qs.Services.UI
 import qs.Widgets
 
 Item {
@@ -212,7 +213,7 @@ Item {
   Rectangle {
     id: panelContainer
     anchors.fill: parent
-    color: Color.transparent
+    color: "transparent"
 
     ColumnLayout {
       anchors.fill: parent
@@ -350,8 +351,10 @@ Item {
             NBox {
               Layout.fillWidth: true
               implicitHeight: gameContent.implicitHeight + Style.marginM * 2
-              color: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
-                Color.mPrimary : Color.mSurfaceVariant
+              color: Color.mSurfaceVariant
+              border.color: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
+                Color.mPrimary : "transparent"
+              border.width: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 2 : 0
 
               RowLayout {
                 id: gameContent
@@ -405,8 +408,7 @@ Item {
 
                   NText {
                     text: modelData.name
-                    color: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
-                      Color.mOnPrimary : Color.mOnSurface
+                    color: Color.mOnSurface
                     pointSize: Style.fontSizeL
                     font.weight: Style.fontWeightBold
                     Layout.fillWidth: true
@@ -440,8 +442,7 @@ Item {
                   text: modelData.addedDate ? 
                     `📅 ${new Date(modelData.addedDate).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}` :
                     `🔢 App ID: ${modelData.appId}`
-                  color: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
-                    Color.mOnPrimary : Color.mOnSurfaceVariant
+                  color: Color.mOnSurfaceVariant
                   pointSize: Style.fontSizeXS
                   opacity: 0.8
                 }
@@ -449,8 +450,7 @@ Item {
                 Rectangle {
                   Layout.fillWidth: true
                   Layout.preferredHeight: 1
-                  color: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
-                    Color.mOnPrimary : Color.mOutline
+                  color: Color.mOutline
                   opacity: 0.3
                 }
 
@@ -464,16 +464,14 @@ Item {
                   // Preço alvo
                   NText {
                     text: pluginApi?.tr("steam-price-watcher.target-price") || "🎯 Target:"
-                    color: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
-                      Color.mOnPrimary : Color.mOnSurfaceVariant
+                    color: Color.mOnSurfaceVariant
                     pointSize: Style.fontSizeS
                     font.weight: Style.fontWeightMedium
                   }
 
                   NText {
                     text: `${root.currencySymbol} ${modelData.targetPrice.toFixed(2)}`
-                    color: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
-                      Color.mOnPrimary : Color.mPrimary
+                    color: Color.mPrimary
                     pointSize: Style.fontSizeXL
                     font.weight: Style.fontWeightBold
                   }
@@ -483,8 +481,7 @@ Item {
                   // Preço atual
                   NText {
                     text: pluginApi?.tr("steam-price-watcher.current-price") || "💰 Current:"
-                    color: modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
-                      Color.mOnPrimary : Color.mOnSurfaceVariant
+                    color: Color.mOnSurfaceVariant
                     pointSize: Style.fontSizeS
                     font.weight: Style.fontWeightMedium
                   }
@@ -497,9 +494,7 @@ Item {
                         modelData.currentPrice !== undefined ? 
                           `${root.currencySymbol} ${modelData.currentPrice.toFixed(2)}` :
                           "..."
-                      color: modelData.error ? Color.mError : 
-                        modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? 
-                          Color.mOnPrimary : Color.mOnSurface
+                      color: modelData.error ? Color.mError : Color.mOnSurface
                       pointSize: Style.fontSizeXL
                       font.weight: Style.fontWeightBold
                     }
@@ -522,9 +517,7 @@ Item {
                             return `↑ ${above}% ${aboveText}`
                           }
                         }
-                        color: modelData.currentPrice <= modelData.targetPrice ? 
-                          (modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice ? Color.mOnPrimary : Color.mPrimary) :
-                          Color.mError
+                        color: modelData.currentPrice <= modelData.targetPrice ? Color.mPrimary : Color.mError
                         pointSize: Style.fontSizeXS
                         font.weight: Style.fontWeightMedium
                       }

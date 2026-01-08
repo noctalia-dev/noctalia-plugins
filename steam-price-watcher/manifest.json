@@ -1,7 +1,7 @@
 {
   "id": "steam-price-watcher",
   "name": "Steam Price Watcher",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Lokize",
   "description": "Monitor Steam game prices and get notified when they reach your target price",
   "license": "MIT",
