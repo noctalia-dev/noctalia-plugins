@@ -835,7 +835,7 @@ Item {
             }
         }
 
-        function setUsername(newUsername) {
+        function setUsername(newUsername: string) {
             if (pluginApi && newUsername) {
                 pluginApi.pluginSettings.username = newUsername
                 pluginApi.saveSettings()
