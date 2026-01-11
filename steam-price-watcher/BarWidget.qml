@@ -320,8 +320,33 @@ Rectangle {
     acceptedButtons: Qt.LeftButton
 
     onClicked: {
-      if (pluginApi) {
-        pluginApi.openPanel(screen);
+      // Try to find an existing panel with this plugin
+      for (var slot = 1; slot <= 2; slot++) {
+        var panel = PanelService.getPanel("pluginPanel" + slot, screen)
+        if (panel && panel.currentPluginId === "steam-price-watcher") {
+          panel.toggle(root)
+          return
+        }
+      }
+
+      // Try to open in an empty panel
+      for (var slot = 1; slot <= 2; slot++) {
+        var panel = PanelService.getPanel("pluginPanel" + slot, screen)
+        if (panel && panel.currentPluginId === "") {
+          panel.currentPluginId = "steam-price-watcher"
+          panel.loadPluginPanel("steam-price-watcher")
+          panel.open(root)
+          return
+        }
+      }
+
+      // Fallback: open in panel1
+      var panel1 = PanelService.getPanel("pluginPanel1", screen)
+      if (panel1) {
+        panel1.unloadPluginPanel()
+        panel1.currentPluginId = "steam-price-watcher"
+        panel1.loadPluginPanel("steam-price-watcher")
+        panel1.open(root)
       }
     }
 

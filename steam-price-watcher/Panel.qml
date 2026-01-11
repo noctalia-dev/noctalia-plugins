@@ -546,6 +546,15 @@ Item {
                 }
               }
             }
+
+            MouseArea {
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              acceptedButtons: Qt.LeftButton
+              onClicked: {
+                Qt.openUrlExternally(`https://store.steampowered.com/app/${modelData.appId}`)
+              }
+            }
           }
         }
       }
