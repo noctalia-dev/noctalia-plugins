@@ -1,14 +1,14 @@
 [
   {
     "name": "yay",
-    "cmdCheck": "command -v yay >/dev/null 2>&1",
-    "cmdGetNumUpdates": "yay -Qu 2>/dev/null | wc -l",
+    "cmdCheck": "command -v checkupdates >/dev/null 2>&1 && command -v yay >/dev/null 2>&1",
+    "cmdGetNumUpdates": "(checkupdates 2>/dev/null; yay -Qua 2>/dev/null) | wc -l",
     "cmdDoSystemUpdate": "yay -Syu"
   },
   {
     "name": "paru",
-    "cmdCheck": "command -v paru >/dev/null 2>&1",
-    "cmdGetNumUpdates": "paru -Qu 2>/dev/null | wc -l",
+    "cmdCheck": "command -v checkupdates >/dev/null 2>&1 && command -v paru >/dev/null 2>&1",
+    "cmdGetNumUpdates": "(checkupdates 2>/dev/null; paru -Qua 2>/dev/null) | wc -l",
     "cmdDoSystemUpdate": "paru -Syu"
   },
   {

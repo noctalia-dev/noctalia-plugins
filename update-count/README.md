@@ -36,6 +36,7 @@ Configure the plugin in Noctalia settings:
 
 - **Noctalia Shell**: 3.6.0 or later.
 - **Update backend**: one of the supported package managers defined in `updaterConfigs.json` (recommended, but not required).
+  - **Paru/Yay**: Default `updaterConfigs.json` requires `checkupdates`
 
 ## Technical Details
 
