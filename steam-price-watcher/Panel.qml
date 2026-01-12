@@ -251,6 +251,19 @@ Item {
             }
 
             NIconButton {
+              icon: "settings"
+              tooltipText: pluginApi?.tr("steam-price-watcher.settings.open-settings") || "Otwórz ustawienia"
+              baseSize: Style.baseWidgetSize * 0.8
+              onClicked: {
+                if (pluginApi && pluginApi.withCurrentScreen) {
+                  pluginApi.withCurrentScreen(function(screen) {
+                    BarService.openPluginSettings(screen, pluginApi.manifest);
+                  });
+                }
+              }
+            }
+
+            NIconButton {
               icon: "refresh"
               tooltipText: pluginApi?.tr("steam-price-watcher.refresh") || "Atualizar preços"
               baseSize: Style.baseWidgetSize * 0.8
