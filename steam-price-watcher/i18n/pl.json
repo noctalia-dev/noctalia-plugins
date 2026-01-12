@@ -51,7 +51,8 @@
       "current-price-label": "Aktualna cena:",
       "target-price-label": "Cena docelowa ($):",
       "target-price-hint": "💡 Sugerujemy 20% poniżej aktualnej ceny dla dobrych okazji.",
-      "settings-saved": "Ustawienia wtyczki zostały zapisane."
+      "settings-saved": "Ustawienia wtyczki zostały zapisane.",
+      "open-settings": "Otwórz ustawienia"
     }
   }
 }
