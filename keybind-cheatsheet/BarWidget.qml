@@ -16,7 +16,7 @@ Rectangle {
 
   NIcon {
     anchors.centerIn: parent
-    icon: "keyboard" 
+    icon: "keyboard"
     applyUiScale: false
   }
 
