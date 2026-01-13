@@ -95,7 +95,7 @@ Item {
               }
             }
           } catch (e) {
-            console.error("Error parsing Steam API response:", e);
+            Logger.e("steam-price-watcher", "Error parsing Steam API response:", e);
             gameData.error = "Erro ao buscar preço";
             root.addGameWithPrice(gameData);
           }
@@ -257,6 +257,30 @@ Item {
               enabled: !loading
               onClicked: refreshPrices()
             }
+
+            NIconButton {
+              icon: "settings"
+              tooltipText: pluginApi?.tr("steam-price-watcher.settings.open-settings")
+              baseSize: Style.baseWidgetSize * 0.8
+              onClicked: {
+                // Close this panel first, then open the plugin settings on the same screen
+                var screen = pluginApi?.panelOpenScreen;
+                if (screen) {
+                  pluginApi.closePanel(screen);
+                  Qt.callLater(function() {
+                    BarService.openPluginSettings(screen, pluginApi.manifest);
+                  });
+                } else if (pluginApi && pluginApi.withCurrentScreen) {
+                  // Fallback for contexts where panelOpenScreen isn't available
+                  pluginApi.withCurrentScreen(function(s) {
+                    pluginApi.closePanel(s);
+                    Qt.callLater(function() {
+                      BarService.openPluginSettings(s, pluginApi.manifest);
+                    });
+                  });
+                }
+              }
+            }
           }
         }
       }
@@ -316,10 +340,14 @@ Item {
               Layout.preferredHeight: separatorContent.implicitHeight + Style.marginM * 2
               visible: {
                 if (index === 0) return false;
-                var currentAtTarget = modelData.currentPrice && modelData.currentPrice <= modelData.targetPrice;
-                var previousAtTarget = root.gamesWithPrices[index - 1].currentPrice && 
-                                      root.gamesWithPrices[index - 1].currentPrice <= root.gamesWithPrices[index - 1].targetPrice;
-                return previousAtTarget && !currentAtTarget;
+                var currentAtTarget = modelData.currentPrice !== undefined && modelData.currentPrice <= modelData.targetPrice;
+                if (index > 0 && root.gamesWithPrices[index - 1]) {
+                  var previousGame = root.gamesWithPrices[index - 1];
+                  var previousAtTarget = previousGame.currentPrice !== undefined && 
+                                        previousGame.currentPrice <= previousGame.targetPrice;
+                  return previousAtTarget && !currentAtTarget;
+                }
+                return false;
               }
 
               ColumnLayout {
@@ -387,7 +415,7 @@ Item {
                     
                     NIcon {
                       anchors.centerIn: parent
-                      icon: "gamepad"
+                      icon: "package"
                       color: Color.mOnSurfaceVariant
                       pointSize: 24
                     }
@@ -544,6 +572,15 @@ Item {
 
                   Item { Layout.fillWidth: true }
                 }
+              }
+            }
+
+            MouseArea {
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              acceptedButtons: Qt.LeftButton
+              onClicked: {
+                Qt.openUrlExternally(`https://store.steampowered.com/app/${modelData.appId}`)
               }
             }
           }

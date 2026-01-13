@@ -41,9 +41,14 @@
       "search-hint": "Zoek games op naam of Steam App ID. Je kunt de App ID vinden in de URL van de game pagina.",
       "search-placeholder": "Voer App ID in (bijv. 730 voor CS2)",
       "searching": "Zoeken...",
-      "settings-saved": "Plugin-instellingen opgeslagen.",
+      "current-watchlist": "Huidige watchlist",
+      "and-more": "en meer",
+      "add-to-watchlist": "Toevoegen aan watchlist",
+      "current-price-label": "Huidige prijs:",
+      "target-price-label": "Doelprijs ($):",
       "target-price-hint": "💡 We raden 20% onder de huidige prijs aan voor goede deals.",
-      "target-price-label": "Doelprijs ($):"
+      "open-settings": "Instellingen openen",
+      "settings-saved": "Plugin-instellingen opgeslagen."
     },
     "target-price": "🎯 Doel:",
     "target-reached": "Doelprijs bereikt!",

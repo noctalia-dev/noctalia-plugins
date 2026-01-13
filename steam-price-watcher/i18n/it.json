@@ -41,9 +41,14 @@
       "search-hint": "Cerca giochi per nome o App ID Steam. Puoi trovare l'App ID nell'URL della pagina del gioco.",
       "search-placeholder": "Inserisci App ID (es: 730 per CS2)",
       "searching": "Ricerca in corso...",
-      "settings-saved": "Impostazioni del plugin salvate.",
+      "current-watchlist": "Watchlist attuale",
+      "and-more": "e altro",
+      "add-to-watchlist": "Aggiungi alla watchlist",
+      "current-price-label": "Prezzo attuale:",
+      "target-price-label": "Prezzo obiettivo ($):",
       "target-price-hint": "💡 Suggeriamo il 20% sotto il prezzo attuale per buone offerte.",
-      "target-price-label": "Prezzo obiettivo ($):"
+      "open-settings": "Apri impostazioni",
+      "settings-saved": "Impostazioni del plugin salvate."
     },
     "target-price": "🎯 Obiettivo:",
     "target-reached": "Prezzo obiettivo raggiunto!",

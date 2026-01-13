@@ -299,7 +299,7 @@ ColumnLayout {
                     
                     NIcon {
                       anchors.centerIn: parent
-                      icon: "gamepad"
+                      icon: "package"
                       color: Color.mOnSurfaceVariant
                       pointSize: 20
                     }
@@ -451,7 +451,7 @@ ColumnLayout {
                       
                       NIcon {
                         anchors.centerIn: parent
-                        icon: "gamepad"
+                        icon: "package"
                         color: Color.mOnSurfaceVariant
                         pointSize: 16
                       }
@@ -677,7 +677,7 @@ ColumnLayout {
                 root.searching = false;
               }
             } catch (e) {
-              console.error("Error parsing search results:", e);
+              Logger.e("steam-price-watcher", "Error parsing search results:", e);
               root.searchResults = [];
               root.searching = false;
             }
@@ -726,7 +726,7 @@ ColumnLayout {
                 root.searchResults = temp;
               }
             } catch (e) {
-              console.error("Error parsing Steam API response:", e);
+              Logger.e("steam-price-watcher", "Error parsing Steam API response:", e);
             }
           }
           

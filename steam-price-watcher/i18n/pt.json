@@ -43,7 +43,9 @@
       "searching": "Pesquisando...",
       "settings-saved": "Configurações do plugin salvas.",
       "target-price-hint": "💡 Sugerimos 20% abaixo do preço atual para bons negócios.",
-      "target-price-label": "Preço-alvo (R$):"
+      "target-price-label": "Preço-alvo (R$):",
+      "open-settings": "Abrir configurações",
+      "settings-saved": "Configurações do plugin salvas."
     },
     "target-price": "🎯 Alvo:",
     "target-reached": "Preço-alvo atingido!",

@@ -43,13 +43,15 @@
       "searching": "Recherche en cours...",
       "settings-saved": "Paramètres du plugin enregistrés.",
       "target-price-hint": "💡 Nous suggérons 20% en dessous du prix actuel pour de bonnes affaires.",
-      "target-price-label": "Prix cible ($):"
+      "target-price-label": "Prix cible ($):",
+      "open-settings": "Ouvrir les paramètres",
+      "settings-saved": "Paramètres du plugin enregistrés."
     },
     "target-price": "🎯 Cible:",
     "target-reached": "Prix cible atteint!",
     "tooltip": {
       "click": "Cliquez pour les détails",
-      "monitoring": "Surveillance",
+      "monitoring": "Monitoring",
       "no-games": "Aucun jeu ajouté",
       "on-target": "Jeux au prix cible:"
     }
