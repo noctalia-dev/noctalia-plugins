@@ -43,7 +43,9 @@
       "searching": "Searching...",
       "settings-saved": "Plugin settings saved.",
       "target-price-hint": "💡 We suggest 20% below current price for good deals.",
-      "target-price-label": "Target price ($):"
+      "target-price-label": "Target price ($):",
+      "open-settings": "Open settings",
+      "settings-saved": "Plugin settings saved."
     },
     "target-price": "🎯 Target:",
     "target-reached": "Target price reached!",

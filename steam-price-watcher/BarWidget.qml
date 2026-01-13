@@ -34,25 +34,25 @@ Rectangle {
   property bool loading: false
   property bool hasNotifications: gamesOnTarget.length > 0
 
-  implicitWidth: Math.max(60, isVertical ? (Style.capsuleHeight || 32) : contentWidth)
-  implicitHeight: Math.max(32, isVertical ? contentHeight : (Style.capsuleHeight || 32))
-  radius: Style.radiusM || 8
+  implicitWidth: Math.max(60, isVertical ? Style.capsuleHeight : contentWidth)
+  implicitHeight: Math.max(32, isVertical ? contentHeight : Style.capsuleHeight)
+  radius: Style.radiusM
   color: Style.capsuleColor
   border.color: Style.capsuleBorderColor
-  border.width: Style.capsuleBorderWidth || 1
+  border.width: Style.capsuleBorderWidth
 
   readonly property real contentWidth: {
-    if (isVertical) return Style.capsuleHeight || 32;
+    if (isVertical) return Style.capsuleHeight;
     var iconWidth = Style.toOdd ? Style.toOdd(Style.capsuleHeight * 0.6) : 20;
-    var textWidth = gamesText ? (gamesText.implicitWidth + (Style.marginS || 4)) : 60;
-    return iconWidth + textWidth + (Style.marginM || 8) * 2 + 24;
+    var textWidth = gamesText ? (gamesText.implicitWidth + Style.marginS) : 60;
+    return iconWidth + textWidth + Style.marginM * 2 + 24;
   }
 
   readonly property real contentHeight: {
-    if (!isVertical) return Style.capsuleHeight || 32;
+    if (!isVertical) return Style.capsuleHeight;
     var iconHeight = Style.toOdd ? Style.toOdd(Style.capsuleHeight * 0.6) : 20;
     var textHeight = gamesText ? gamesText.implicitHeight : 16;
-    return Math.max(iconHeight, textHeight) + (Style.marginS || 4) * 2;
+    return Math.max(iconHeight, textHeight) + Style.marginS * 2;
   }
 
   // Update timer
@@ -84,7 +84,7 @@ Rectangle {
     if (loading || watchlist.length === 0) return;
     loading = true;
     
-    // Limpar lista de jogos que atingiram o alvo para revalidar
+    // Clear list of games that reached target to revalidate
     gamesOnTarget = [];
     
     var games = [];
@@ -124,7 +124,7 @@ Rectangle {
               }
             }
           } catch (e) {
-            console.error("Error parsing Steam API response:", e);
+            Logger.e("steam-price-watcher", "Error parsing Steam API response:", e);
           }
         }
         
@@ -194,7 +194,7 @@ Rectangle {
     
     var symbol = root.currencySymbol;
     
-    // Usar variável de ambiente HOME
+    // Use HOME environment variable
     var homeProcess = Qt.createQmlObject(`
       import Quickshell.Io
       Process {
@@ -257,11 +257,11 @@ Rectangle {
 
   RowLayout {
     anchors.fill: parent
-    anchors.leftMargin: isVertical ? 0 : (Style.marginM || 8)
+    anchors.leftMargin: isVertical ? 0 : Style.marginM
     anchors.rightMargin: isVertical ? 0 : 32
-    anchors.topMargin: isVertical ? (Style.marginS || 4) : 0
-    anchors.bottomMargin: isVertical ? (Style.marginS || 4) : 0
-    spacing: Style.marginS || 4
+    anchors.topMargin: isVertical ? Style.marginS : 0
+    anchors.bottomMargin: isVertical ? Style.marginS : 0
+    spacing: Style.marginS
     visible: !isVertical
 
     Item {
@@ -306,13 +306,12 @@ Rectangle {
       id: gamesText
       text: displayText
       color: hasNotifications ? Color.mPrimary : Color.mOnSurface
-      pointSize: Style.barFontSize || 11
+      pointSize: Style.barFontSize
       applyUiScale: false
       Layout.alignment: Qt.AlignVCenter
     }
   }
 
-  // Mouse interaction
   MouseArea {
     anchors.fill: parent
     hoverEnabled: true
@@ -320,12 +319,10 @@ Rectangle {
     acceptedButtons: Qt.LeftButton
 
     onClicked: {
-      if (pluginApi) {
-        pluginApi.openPanel(screen);
-      }
+      // Open plugin panel near this widget
+      pluginApi.openPanel(root.screen, root)
     }
-
-    onEntered: {
+     onEntered: {
       if (tooltipText) {
         TooltipService.show(root, tooltipText, BarService.getTooltipDirection());
       }

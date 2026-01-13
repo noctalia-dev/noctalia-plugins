@@ -41,9 +41,14 @@
       "search-hint": "通过名称或Steam App ID搜索游戏。您可以在游戏页面的URL中找到App ID。",
       "search-placeholder": "输入App ID（例如：CS2为730）",
       "searching": "搜索中...",
-      "settings-saved": "插件设置已保存。",
+      "current-watchlist": "当前监视列表",
+      "and-more": "和更多",
+      "add-to-watchlist": "添加到监视列表",
+      "current-price-label": "当前价格:",
+      "target-price-label": "目标价格 ($):",
       "target-price-hint": "💡 我们建议设置为当前价格的80%以获得好价格。",
-      "target-price-label": "目标价格 ($):"
+      "open-settings": "打开设置",
+      "settings-saved": "插件设置已保存。"
     },
     "target-price": "🎯 目标:",
     "target-reached": "已达到目标价格!",

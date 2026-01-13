@@ -191,7 +191,7 @@ ColumnLayout {
           if (pluginApi && pluginApi.pluginSettings) {
             pluginApi.pluginSettings.currency = key;
             
-            // Define o símbolo da moeda
+            // Set currency symbol
             var symbols = {
               "ar": "ARS$", "au": "A$", "br": "R$", "ca": "CA$", "ch": "CHF",
               "cl": "CLP$", "cn": "¥", "co": "COL$", "cr": "₡", "cz": "Kč",
@@ -338,7 +338,7 @@ ColumnLayout {
                     
                     NIcon {
                       anchors.centerIn: parent
-                      icon: "gamepad"
+                      icon: "package"
                       color: Color.mOnSurfaceVariant
                       pointSize: 20
                     }
@@ -490,7 +490,7 @@ ColumnLayout {
                       
                       NIcon {
                         anchors.centerIn: parent
-                        icon: "gamepad"
+                        icon: "package"
                         color: Color.mOnSurfaceVariant
                         pointSize: 16
                       }
@@ -716,7 +716,7 @@ ColumnLayout {
                 root.searching = false;
               }
             } catch (e) {
-              console.error("Error parsing search results:", e);
+              Logger.e("steam-price-watcher", "Error parsing search results:", e);
               root.searchResults = [];
               root.searching = false;
             }
@@ -765,7 +765,7 @@ ColumnLayout {
                 root.searchResults = temp;
               }
             } catch (e) {
-              console.error("Error parsing Steam API response:", e);
+              Logger.e("steam-price-watcher", "Error parsing Steam API response:", e);
             }
           }
           
@@ -814,7 +814,7 @@ ColumnLayout {
       var temp = watchlist.slice();
       var removed = temp.splice(index, 1);
       
-      // Remover jogo da lista de notificados
+      // Remove game from notified list
       if (removed.length > 0) {
         var appId = removed[0].appId;
         var notifiedGames = pluginApi.pluginSettings.notifiedGames || [];

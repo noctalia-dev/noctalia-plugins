@@ -43,7 +43,9 @@
       "searching": "Aranıyor...",
       "settings-saved": "Eklenti ayarları kaydedildi.",
       "target-price-hint": "💡 İyi fırsatlar için güncel fiyatın %80'ini öneriyoruz.",
-      "target-price-label": "Hedef fiyat ($):"
+      "target-price-label": "Hedef fiyat ($):",
+      "open-settings": "Ayarları aç",
+      "settings-saved": "Eklenti ayarları kaydedildi."
     },
     "target-price": "🎯 Hedef:",
     "target-reached": "Hedef fiyata ulaşıldı!",
