@@ -2,7 +2,7 @@
   "id": "dns-switcher",
   "name": "DNS Switcher",
   "version": "2.2.0",
-  "description": "Professional DNS Manager",
+  "description": "DNS Manager",
   "author": "Ronin-CK",
   "license": "MIT",
   "minNoctaliaVersion": "4.0.0",
