@@ -1,7 +1,7 @@
 {
   "id": "dns-switcher",
   "name": "DNS Switcher",
-  "version": "2.2.0",
+  "version": "1.0.0",
   "description": "DNS Manager",
   "author": "Ronin-CK",
   "license": "MIT",
