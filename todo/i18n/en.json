@@ -44,6 +44,18 @@
     "show_completed": {
       "description": "Display completed todo items in the panel",
       "label": "Show Completed Todos"
+    },
+    "pages": {
+      "label": "Manage Pages",
+      "placeholder": "Enter new page name",
+      "add_button": "Add Page",
+      "empty_name": "Page name cannot be empty",
+      "name_exists": "Page name already exists",
+      "cannot_delete_last": "Cannot delete the last page",
+      "confirm_delete_title": "Confirm Delete",
+      "confirm_delete_message": "Are you sure you want to delete page '{pageName}'?\n\nAll todos in this page will be transferred to the first page.",
+      "rename_button_tooltip": "Rename",
+      "delete_button_tooltip": "Delete"
     }
   }
 }
