@@ -387,7 +387,7 @@
       "id": "mpris-lyric",
       "name": "MPRIS Lyric",
       "version": "1.0.0",
-      "author": "dbeidachazi",
+      "author": "DBeidachazi",
       "description": "Display synchronized lyrics from MPRIS-compatible music players (e.g., go-musicfox) in the bar.",
       "repository": "https://github.com/noctalia-dev/noctalia-plugins",
       "minNoctaliaVersion": "3.8.0",
