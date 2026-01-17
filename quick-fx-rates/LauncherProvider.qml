@@ -33,7 +33,9 @@ Item {
   property bool loading: false
   property bool loaded: false
   property real lastFetch: 0
+  property real lastFetchAttempt: 0
   property int cacheMinutes: 5
+  property int retryDelaySeconds: 10
 
   // Supported currencies (frankfurter.app)
   property var currencyNames: ({
@@ -82,7 +84,9 @@ Item {
 
     command: [
       "curl",
-      "-s",
+      "-sf",
+      "--connect-timeout", "5",
+      "--max-time", "10",
       "https://api.frankfurter.app/latest?from=USD"
     ]
 
@@ -99,28 +103,33 @@ Item {
             cachedRates = response.rates;
             loaded = true;
             lastFetch = Date.now();
-            Logger.i("FXLauncher", "Rates loaded:", Object.keys(cachedRates).length, "currencies");
-            if (launcher) {
-              launcher.updateResults();
-            }
+            Logger.i("QuickFX", "Rates loaded:", Object.keys(cachedRates).length, "currencies");
           }
         } catch (e) {
-          Logger.e("FXLauncher", "Failed to parse rates:", e);
+          Logger.e("QuickFX", "Failed to parse rates:", e);
         }
       } else {
-        Logger.e("FXLauncher", "Failed to fetch rates, exit code:", exitCode);
+        Logger.e("QuickFX", "Failed to fetch rates, exit code:", exitCode);
+      }
+      // Always update UI after fetch completes (success or failure)
+      if (launcher) {
+        launcher.updateResults();
       }
     }
   }
 
-  function fetchRates() {
+  function fetchRates(forceRetry) {
     var now = Date.now();
     var cacheMs = cacheMinutes * 60 * 1000;
+    var retryMs = retryDelaySeconds * 1000;
 
     if (loading) return;
     if (loaded && (now - lastFetch) < cacheMs) return;
+    // Don't auto-retry too soon after a failed attempt (unless forced)
+    if (!forceRetry && !loaded && lastFetchAttempt > 0 && (now - lastFetchAttempt) < retryMs) return;
 
     loading = true;
+    lastFetchAttempt = now;
     apiProcess.running = true;
   }
 
@@ -149,7 +158,7 @@ Item {
     // Ensure rates are loaded
     fetchRates();
 
-    if (loading && !loaded) {
+    if (loading) {
       return [{
         "name": "Loading exchange rates...",
         "description": "Fetching from frankfurter.app",
@@ -160,16 +169,15 @@ Item {
       }];
     }
 
-    if (!loaded) {
+    if (!loading && !loaded) {
       return [{
         "name": "Could not load rates",
-        "description": "Click to retry",
+        "description": "Check your internet connection. Click to retry.",
         "icon": icon("alert-circle", "dialog-warning"),
         "isTablerIcon": iconMode === "tabler",
         "isImage": false,
         "onActivate": function() {
-          loaded = false;
-          fetchRates();
+          fetchRates(true);
         }
       }];
     }
