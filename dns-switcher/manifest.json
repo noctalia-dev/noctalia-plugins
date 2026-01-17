@@ -1,0 +1,15 @@
+{
+  "id": "dns-switcher",
+  "name": "DNS Switcher",
+  "version": "1.0.0",
+  "description": "DNS Manager",
+  "author": "Ronin-CK",
+  "license": "MIT",
+  "minNoctaliaVersion": "4.0.0",
+  "entryPoints": {
+    "main": "Main.qml",
+    "panel": "Panel.qml",
+    "barWidget": "BarWidget.qml",
+    "controlCenterWidget": "ControlCenterWidget.qml"
+  }
+}
