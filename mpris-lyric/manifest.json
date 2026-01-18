@@ -1,0 +1,29 @@
+{
+  "id": "mpris-lyric",
+  "name": "MPRIS Lyric",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.8.0",
+  "author": "DBeidachazi",
+  "license": "MIT",
+  "description": "Display synchronized lyrics from MPRIS-compatible music players (e.g., go-musicfox) in the bar.",
+  "tags": [
+    "Bar",
+    "Music",
+    "Lyrics"
+  ],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "settings": "Settings.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "playerName": "musicfox",
+      "updateInterval": 200,
+      "width": 300
+    }
+  }
+}

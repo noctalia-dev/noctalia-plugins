@@ -1,0 +1,16 @@
+{
+  "menu": {
+    "play": "Play",
+    "pause": "Pause",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "settings": {
+    "player-name": "Player Name",
+    "player-name-desc": "MPRIS player name (e.g., musicfox, spotify, firefox)",
+    "update-interval": "Update Interval",
+    "update-interval-desc": "How often to update lyrics (in milliseconds)",
+    "width": "Width",
+    "width-desc": "Width of the lyric widget in pixels"
+  }
+}

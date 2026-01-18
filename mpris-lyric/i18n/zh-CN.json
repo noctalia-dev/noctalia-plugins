@@ -1,0 +1,16 @@
+{
+  "menu": {
+    "play": "播放",
+    "pause": "暂停",
+    "previous": "上一首",
+    "next": "下一首"
+  },
+  "settings": {
+    "player-name": "播放器名称",
+    "player-name-desc": "MPRIS 播放器名称（如 musicfox、spotify、firefox）",
+    "update-interval": "更新间隔",
+    "update-interval-desc": "歌词更新频率（毫秒）",
+    "width": "宽度",
+    "width-desc": "歌词组件的宽度（像素）"
+  }
+}

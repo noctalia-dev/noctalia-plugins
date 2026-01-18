@@ -390,6 +390,22 @@
       "license": "MIT",
       "tags": [],
       "lastUpdated": "2026-01-07T22:55:41-03:00"
+    },
+    {
+      "id": "mpris-lyric",
+      "name": "MPRIS Lyric",
+      "version": "1.0.0",
+      "author": "DBeidachazi",
+      "description": "Display synchronized lyrics from MPRIS-compatible music players (e.g., go-musicfox) in the bar.",
+      "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+      "minNoctaliaVersion": "3.8.0",
+      "license": "MIT",
+      "tags": [
+        "Bar",
+        "Music",
+        "Lyrics"
+      ],
+      "lastUpdated": "2026-01-17T11:45:00+08:00"
     }
   ]
 }
