@@ -1,0 +1,25 @@
+{
+  "id": "quick-fx-rates",
+  "name": "Quick FX Rates",
+  "version": "1.0.0",
+  "description": "Quick currency conversion from the launcher",
+  "tags": ["Launcher", "Utility"],
+  "minNoctaliaVersion": "4.0.0",
+  "author": "balor",
+  "license": "MIT",
+  "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+  "entryPoints": {
+    "main": "Main.qml",
+    "launcherProvider": "LauncherProvider.qml",
+    "settings": "Settings.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "defaultSourceCurrency": "",
+      "defaultTargetCurrency": "USD"
+    }
+  }
+}
