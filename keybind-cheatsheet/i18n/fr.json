@@ -1,15 +1,7 @@
 {
   "keybind-cheatsheet": {
     "panel": {
-      "title": "Raccourcis Clavier",
-      "open-settings": "Parametres",
-      "loading": "Chargement...",
-      "no-data": "Aucun raccourci clavier trouve",
-      "no-categories": "Aucune categorie trouvee dans le fichier de configuration",
-      "no-compositor": "Aucun compositeur compatible detecte",
-      "error-read-file": "Impossible de lire le fichier de configuration",
-      "refresh": "Actualiser",
-      "no-description": "Pas de description"
+      "loading": "Chargement..."
     },
     "settings": {
       "title": "Parametres des Raccourcis Clavier",
@@ -23,9 +15,9 @@
       "columns": "Nombre de colonnes:",
       "columns-hint": "Plus de colonnes fonctionnent mieux avec des fenetres plus larges.",
       "config-paths": "Fichiers de Configuration",
-      "config-paths-description": "Specifiez des chemins personnalises vers vos fichiers de configuration de raccourcis.",
-      "hyprland-format-hint": "Format attendu: bind = $mod, KEY, action #\"description\"",
-      "niri-format-hint": "Le plugin trouvera et analysera automatiquement le bloc 'binds { }'.",
+      "config-paths-description": "Specifiez des chemins personnalises vers vos fichiers de configuration de raccourcis. Le plugin suivra automatiquement toutes les directives include/source.",
+      "hyprland-format-hint": "Format attendu: bind = $mod, KEY, action #\"description\"\nCategories: # 1. NOM DE CATEGORIE",
+      "niri-format-hint": "Les categories sont creees avec: // #\"Nom de categorie\"\nDescriptions: hotkey-overlay-title=\"description\"",
       "actions": "Actions",
       "refresh-keybinds": "Actualiser les Raccourcis",
       "refresh-message": "Les raccourcis seront recharges a l'ouverture du panneau.",

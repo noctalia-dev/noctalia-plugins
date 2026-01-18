@@ -1,15 +1,7 @@
 {
   "keybind-cheatsheet": {
     "panel": {
-      "title": "キーバインド一覧",
-      "open-settings": "設定",
-      "loading": "読み込み中...",
-      "no-data": "キーバインドが見つかりません",
-      "no-categories": "設定ファイルにカテゴリが見つかりません",
-      "no-compositor": "サポートされているコンポジターが検出されません",
-      "error-read-file": "設定ファイルを読み取れません",
-      "refresh": "更新",
-      "no-description": "説明なし"
+      "loading": "読み込み中..."
     },
     "settings": {
       "title": "キーバインド一覧の設定",
@@ -23,9 +15,9 @@
       "columns": "列数:",
       "columns-hint": "列が多いほど、幅の広いウィンドウで効果的です。",
       "config-paths": "設定ファイル",
-      "config-paths-description": "キーバインド設定ファイルへのカスタムパスを指定します。",
-      "hyprland-format-hint": "期待される形式: bind = $mod, KEY, action #\"説明\"",
-      "niri-format-hint": "プラグインは自動的に 'binds { }' ブロックを検索して解析します。",
+      "config-paths-description": "キーバインド設定ファイルへのカスタムパスを指定します。プラグインは自動的にすべてのinclude/sourceディレクティブに従います。",
+      "hyprland-format-hint": "期待される形式: bind = $mod, KEY, action #\"説明\"\nカテゴリ: # 1. カテゴリ名",
+      "niri-format-hint": "カテゴリは次の形式で作成: // #\"カテゴリ名\"\n説明: hotkey-overlay-title=\"説明\"",
       "actions": "アクション",
       "refresh-keybinds": "キーバインドを更新",
       "refresh-message": "パネルを開くとキーバインドが再読み込みされます。",

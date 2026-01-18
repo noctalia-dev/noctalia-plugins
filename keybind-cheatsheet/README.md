@@ -1,22 +1,24 @@
 # Keybind Cheatsheet for Noctalia
 
-Universal keyboard shortcuts cheatsheet plugin for Noctalia that **automatically detects** your compositor (Hyprland or Niri) and displays your keybindings.
+Universal keyboard shortcuts cheatsheet plugin for Noctalia that **automatically detects** your compositor (Hyprland or Niri) and displays your keybindings with **recursive config parsing**.
 
 ## Features
 
 - **Automatic compositor detection** (Hyprland or Niri)
-- **Dual parser support** - reads both config formats
-- Smart categorization of keybindings
-- Color-coded modifier keys (Super, Ctrl, Shift, Alt)
-- Three-column balanced layout
-- IPC support for global hotkey toggle
-- Automatic refresh on config changes
+- **Recursive config parsing** - follows all `source` (Hyprland) and `include` (Niri) directives
+- **Glob pattern support** - parses `~/.config/hypr/*.conf` style includes
+- **Configurable paths** - set custom config file locations in settings
+- **Smart key formatting** - XF86 keys display as readable names (Vol Up, Bright Down, etc.)
+- **Color-coded modifier keys** (Super, Ctrl, Shift, Alt)
+- **Flexible column layout** (1-4 columns)
+- **Auto-height** - adjusts to content automatically
+- **IPC support** - global hotkey toggle
 
 ## Supported Compositors
 
-| Compositor | Config File | Format |
-|------------|-------------|--------|
-| **Hyprland** | `~/.config/hypr/keybind.conf` | Custom Hyprland format |
+| Compositor | Default Config | Format |
+|------------|----------------|--------|
+| **Hyprland** | `~/.config/hypr/hyprland.conf` | Hyprland config format |
 | **Niri** | `~/.config/niri/config.kdl` | KDL format |
 
 ## Installation
@@ -28,37 +30,31 @@ cp -r keybind-cheatsheet ~/.config/noctalia/plugins/
 ## Usage
 
 ### Bar Widget
-Add the plugin to your bar configuration in Noctalia settings. The widget will automatically detect your compositor.
+Add the plugin to your bar configuration in Noctalia settings. Click the keyboard icon to open the cheatsheet.
 
 ### Global Hotkey
 
-#### For Hyprland
-Add to your `~/.config/hypr/keybind.conf`:
-
+#### Hyprland
+Add to your config:
 ```bash
-bind = $mod, F1, exec, qs -c noctalia-shell ipc call plugin:keybind-cheatsheet toggle
+bind = $mod, F1, exec, qs -c "noctalia-shell" ipc call "keybind-cheatsheet" "toggle"
 ```
 
-#### For Niri
-Add to your `~/.config/niri/config.kdl`:
-
+#### Niri
+Add to your config:
 ```kdl
 binds {
-    Mod+F1 { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "plugin:keybind-cheatsheet" "toggle"; }
+    Mod+F1 { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "keybind-cheatsheet" "toggle"; }
 }
-```
-
-### Manual Toggle
-```bash
-qs -c noctalia-shell ipc call plugin:keybind-cheatsheet toggle
 ```
 
 ## Config Format
 
-### Hyprland Format
+### Hyprland
 
-The plugin expects keybindings with descriptions in `#"..."` format:
+The plugin recursively parses your main config and all `source` includes.
 
+**Keybind format:**
 ```bash
 # 1. APPLICATIONS
 bind = $mod, T, exec, alacritty #"Terminal"
@@ -69,128 +65,118 @@ bind = $mod, Q, killactive, #"Close window"
 bind = $mod, F, fullscreen, #"Toggle fullscreen"
 
 # 3. WORKSPACES
-bind = $mod, 1, workspace, 1 #"Switch to workspace 1"
-bind = $mod SHIFT, 1, movetoworkspace, 1 #"Move window to workspace 1"
+bind = $mod, 1, workspace, 1 #"Workspace 1"
+bind = $mod SHIFT, 1, movetoworkspace, 1 #"Move to workspace 1"
 ```
 
-**Format requirements:**
-- Categories must start with `# N.` where N is a number
-- Keybind descriptions must be in `#"description"` at the end of the line
-- Use `$mod` for Super key
+**Requirements:**
+- Categories: `# N. CATEGORY NAME` (where N is a number)
+- Descriptions: `#"description"` at end of bind line
+- Modifiers: `$mod`, `SHIFT`, `CTRL`, `ALT`
 
-### Niri Format
+**Source directives (automatically followed):**
+```bash
+source = ~/.config/hypr/keybinds.conf
+source = ~/.config/hypr/apps/*.conf
+```
 
-The plugin parses KDL config format from the `binds` block:
+### Niri
 
+The plugin parses the `binds { }` block and follows all `include` directives.
+
+**Keybind format:**
 ```kdl
 binds {
-    // Applications
-    Mod+T { spawn "alacritty"; }
-    Mod+B { spawn "firefox"; }
+    // #"Applications"
+    Mod+T hotkey-overlay-title="Terminal" { spawn "alacritty"; }
+    Mod+B hotkey-overlay-title="Browser" { spawn "firefox"; }
 
-    // Window Management
-    Mod+Q { close-window; }
-    Mod+F { fullscreen-window; }
+    // #"Window Management"
+    Mod+Q hotkey-overlay-title="Close window" { close-window; }
+    Mod+F hotkey-overlay-title="Fullscreen" { fullscreen-window; }
 
-    // Navigation
-    Mod+Left { focus-column-left; }
-    Mod+Right { focus-column-right; }
-    Mod+Up { focus-window-up; }
-    Mod+Down { focus-window-down; }
-
-    // Workspaces
+    // #"Workspaces"
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
-
-    // Media Keys
-    XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
 }
 ```
 
-**Format requirements:**
-- Use `//` comments for custom category names
-- Without comments, actions are auto-categorized by type
-- Supports all Niri modifiers: `Mod`, `Super`, `Ctrl`, `Alt`, `Shift`
+**Requirements:**
+- Categories: `// #"Category Name"` (must use this exact format)
+- Descriptions: `hotkey-overlay-title="description"` attribute
+- Without descriptions, actions are auto-categorized by type
+
+**Include directives (automatically followed):**
+```kdl
+include "~/.config/niri/binds.kdl"
+```
 
 ## Auto-Categorization (Niri)
 
-When no comment category is provided, Niri keybindings are automatically grouped:
+When no category comment is provided, keybindings are grouped by action:
 
 | Action prefix | Category |
-|--------------|----------|
+|---------------|----------|
 | `spawn` | Applications |
 | `focus-column-*` | Column Navigation |
 | `focus-window-*` | Window Focus |
 | `focus-workspace-*` | Workspace Navigation |
 | `move-column-*` | Move Columns |
 | `move-window-*` | Move Windows |
-| `close-window`, `fullscreen-window`, `consume-window`, `expel-window` | Window Management |
+| `close-window`, `fullscreen-window` | Window Management |
 | `maximize-column` | Column Management |
-| `set-column-width`, `switch-preset-column-width` | Column Width |
-| `reset-window-height` | Window Size |
+| `set-column-width` | Column Width |
 | `screenshot*` | Screenshots |
 | `power-off-monitors` | Power |
 | `quit` | System |
-| `toggle-animation` | Animations |
 
-## Compositor Detection
+## Special Key Formatting
 
-The plugin automatically detects your compositor using:
+XF86 and other special keys are automatically formatted:
 
-1. **Environment variables** (primary method):
-   - Hyprland: `$HYPRLAND_INSTANCE_SIGNATURE`
-   - Niri: `$NIRI_SOCKET`
+| Raw Key | Display |
+|---------|---------|
+| `XF86AudioRaiseVolume` | Vol Up |
+| `XF86AudioLowerVolume` | Vol Down |
+| `XF86AudioMute` | Mute |
+| `XF86MonBrightnessUp` | Bright Up |
+| `XF86MonBrightnessDown` | Bright Down |
+| `Print` | PrtSc |
+| `Prior` / `Next` | PgUp / PgDn |
 
-2. **Process detection** (fallback):
-   - Checks for running `hyprland` or `niri` processes
+## Settings
 
-Detection happens on:
-- Plugin initialization
-- Panel open
-- Manual IPC toggle
+Access settings via the gear icon in the panel header:
+
+- **Window width** - 400-3000px
+- **Height** - Auto or manual (300-2000px)
+- **Columns** - 1-4 columns
+- **Config paths** - Custom paths for Hyprland/Niri configs
+- **Refresh** - Force reload keybindings
 
 ## Troubleshooting
 
-### "No supported compositor detected"
+### "Loading..." stays forever
 
-**Solution:**
-1. Verify your compositor is running: `pgrep -x hyprland` or `pgrep -x niri`
-2. Check environment variables: `echo $HYPRLAND_INSTANCE_SIGNATURE` or `echo $NIRI_SOCKET`
-3. Restart Noctalia shell
+1. Check compositor is detected: look for logs with `[KeybindCheatsheet]`
+2. Verify config file exists at the configured path
+3. Ensure keybinds have proper format with descriptions
 
-### "Cannot read config file"
+### No categories found
 
-**Hyprland:**
-- Ensure `~/.config/hypr/keybind.conf` exists
-- Check file permissions: `ls -la ~/.config/hypr/keybind.conf`
+**Hyprland:** Categories must start with `# 1.`, `# 2.`, etc.
 
-**Niri:**
-- Ensure `~/.config/niri/config.kdl` exists
-- Check file permissions: `ls -la ~/.config/niri/config.kdl`
+**Niri:** Use `// #"Category Name"` format for custom categories.
 
-### "No keybindings found"
+### Keybinds from included files not showing
 
-**Hyprland:**
-- Verify your keybinds have descriptions: `bind = $mod, T, exec, cmd #"Description"`
-- Categories must start with `# 1.`, `# 2.`, etc.
-
-**Niri:**
-- Ensure keybinds are inside the `binds { }` block
-- Check syntax: `Mod+Key { action; }`
+The plugin follows `source` (Hyprland) and `include` (Niri) directives automatically. Check logs to see which files are being parsed.
 
 ## Requirements
 
 - Noctalia Shell 3.6.0+
-- One of the supported compositors:
-  - Hyprland (any recent version)
-  - Niri (v25.01+)
+- Hyprland or Niri compositor
 
 ## License
 
 MIT
-
-## Credits
-
-- Original Hyprland Cheatsheet concept
-- Adapted to support multiple compositors with automatic detection

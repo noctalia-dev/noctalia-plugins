@@ -1,15 +1,7 @@
 {
   "keybind-cheatsheet": {
     "panel": {
-      "title": "Klavye Kisayollari",
-      "open-settings": "Ayarlar",
-      "loading": "Yukleniyor...",
-      "no-data": "Klavye kisayolu bulunamadi",
-      "no-categories": "Yapilandirma dosyasinda kategori bulunamadi",
-      "no-compositor": "Desteklenen compositor algilanamadi",
-      "error-read-file": "Yapilandirma dosyasi okunamiyor",
-      "refresh": "Yenile",
-      "no-description": "Aciklama yok"
+      "loading": "Yukleniyor..."
     },
     "settings": {
       "title": "Klavye Kisayollari Ayarlari",
@@ -23,9 +15,9 @@
       "columns": "Sutun sayisi:",
       "columns-hint": "Daha fazla sutun daha genis pencerelerle daha iyi calisir.",
       "config-paths": "Yapilandirma Dosyalari",
-      "config-paths-description": "Klavye kisayolu yapilandirma dosyalariniza ozel yollar belirtin.",
-      "hyprland-format-hint": "Beklenen format: bind = $mod, KEY, action #\"aciklama\"",
-      "niri-format-hint": "Eklenti 'binds { }' blogunu otomatik olarak bulup analiz edecektir.",
+      "config-paths-description": "Klavye kisayolu yapilandirma dosyalariniza ozel yollar belirtin. Eklenti otomatik olarak tum include/source yonergelerini takip eder.",
+      "hyprland-format-hint": "Beklenen format: bind = $mod, KEY, action #\"aciklama\"\nKategoriler: # 1. KATEGORI ADI",
+      "niri-format-hint": "Kategoriler su sekilde olusturulur: // #\"Kategori adi\"\nAciklamalar: hotkey-overlay-title=\"aciklama\"",
       "actions": "Islemler",
       "refresh-keybinds": "Kisayollari Yenile",
       "refresh-message": "Paneli actinizda kisayollar yeniden yuklenecektir.",

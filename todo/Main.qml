@@ -7,12 +7,35 @@ Item {
 
   Component.onCompleted: {
     if (pluginApi) {
+      if (!pluginApi.pluginSettings.pages) {
+        pluginApi.pluginSettings.pages = [
+          {
+            id: 0,
+            name: "General"
+          }
+        ];
+        pluginApi.pluginSettings.current_page_id = 0;
+      }
+
       if (!pluginApi.pluginSettings.todos) {
         pluginApi.pluginSettings.todos = [];
         pluginApi.pluginSettings.count = 0;
         pluginApi.pluginSettings.completedCount = 0;
-        pluginApi.saveSettings();
       }
+
+      if (pluginApi.pluginSettings.isExpanded === undefined) {
+        pluginApi.pluginSettings.isExpanded = false;
+      }
+
+      // Ensure all existing todos have a pageId
+      var todos = pluginApi.pluginSettings.todos;
+      for (var i = 0; i < todos.length; i++) {
+        if (todos[i].pageId === undefined) {
+          todos[i].pageId = 0;
+        }
+      }
+
+      pluginApi.saveSettings();
     }
   }
 
@@ -30,10 +53,11 @@ Item {
         var todos = pluginApi.pluginSettings.todos || [];
 
         var newTodo = {
-          id: Date.now(), // Use timestamp as simple ID
+          id: Date.now(),
           text: text,
           completed: false,
-          createdAt: new Date().toISOString()
+          createdAt: new Date().toISOString(),
+          pageId: 0
         };
 
         todos.push(newTodo);

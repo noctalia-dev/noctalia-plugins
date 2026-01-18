@@ -1,15 +1,7 @@
 {
   "keybind-cheatsheet": {
     "panel": {
-      "title": "Skroty Klawiszowe",
-      "open-settings": "Ustawienia",
-      "loading": "Ladowanie...",
-      "no-data": "Nie znaleziono skrotow klawiszowych",
-      "no-categories": "Nie znaleziono kategorii w pliku konfiguracyjnym",
-      "no-compositor": "Nie wykryto obslugowanego kompozytora",
-      "error-read-file": "Nie mozna odczytac pliku konfiguracyjnego",
-      "refresh": "Odswiez",
-      "no-description": "Brak opisu"
+      "loading": "Ladowanie..."
     },
     "settings": {
       "title": "Ustawienia Skrotow Klawiszowych",
@@ -23,9 +15,9 @@
       "columns": "Liczba kolumn:",
       "columns-hint": "Wiecej kolumn dziala lepiej z szerszymi oknami.",
       "config-paths": "Pliki Konfiguracyjne",
-      "config-paths-description": "Okresl wlasne sciezki do plikow konfiguracyjnych skrotow klawiszowych. Plugin automatycznie przetworzy odpowiedni plik na podstawie Twojego kompozytora.",
-      "hyprland-format-hint": "Oczekiwany format: bind = $mod, KEY, action #\"opis\"",
-      "niri-format-hint": "Plugin automatycznie znajdzie i przetworzy blok 'binds { }'.",
+      "config-paths-description": "Okresl wlasne sciezki do plikow konfiguracyjnych skrotow klawiszowych. Plugin automatycznie przetworzy odpowiedni plik na podstawie Twojego kompozytora i podazy za dyrektywami include/source.",
+      "hyprland-format-hint": "Oczekiwany format: bind = $mod, KEY, action #\"opis\"\nKategorie: # 1. NAZWA KATEGORII",
+      "niri-format-hint": "Kategorie tworzy sie przez: // #\"Nazwa kategorii\"\nOpisy: hotkey-overlay-title=\"opis\"",
       "actions": "Akcje",
       "refresh-keybinds": "Odswiez Skroty",
       "refresh-message": "Skroty zostana przeladowane po otwarciu panelu.",

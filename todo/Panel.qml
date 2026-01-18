@@ -29,37 +29,52 @@ Item {
     if (!pluginApi) return;
 
     var todos = pluginApi.pluginSettings.todos || [];
-    var todoIndex = -1;
+    var currentPageId = pluginApi?.pluginSettings?.current_page_id || 0;
+
+    // Find the todo to move
+    var todoToMove = null;
+    var todoGlobalIndex = -1;
 
     for (var i = 0; i < todos.length; i++) {
       if (todos[i].id === todoId) {
-        todoIndex = i;
+        todoToMove = todos[i];
+        todoGlobalIndex = i;
         break;
       }
     }
 
-    if (todoIndex !== -1) {
-      var movedTodo = todos[todoIndex];
+    if (todoToMove && todoGlobalIndex !== -1) {
+      // Remove the todo from its current position
+      todos.splice(todoGlobalIndex, 1);
 
-      todos.splice(todoIndex, 1);
-
-      if (movedTodo.completed) {
-        var insertIndex = todos.length;
-        for (var j = todos.length - 1; j >= 0; j--) {
-          if (todos[j].completed) {
-            insertIndex = j + 1;
-            break;
+      // Only reorder within the same page
+      if (todoToMove.pageId === currentPageId) {
+        // Find the correct position within the same page
+        if (todoToMove.completed) {
+          // Place completed items at the end of the page
+          var insertIndex = todos.length;
+          for (var j = todos.length - 1; j >= 0; j--) {
+            if (todos[j].pageId === currentPageId && todos[j].completed) {
+              insertIndex = j + 1;
+              break;
+            }
           }
+          todos.splice(insertIndex, 0, todoToMove);
+        } else {
+          // Place uncompleted items at the beginning of the page
+          var insertIndex = 0;
+          for (; insertIndex < todos.length; insertIndex++) {
+            if (todos[insertIndex].pageId === currentPageId) {
+              if (todos[insertIndex].completed) {
+                break;
+              }
+            }
+          }
+          todos.splice(insertIndex, 0, todoToMove);
         }
-        todos.splice(insertIndex, 0, movedTodo);
       } else {
-        var insertIndex = 0;
-        for (; insertIndex < todos.length; insertIndex++) {
-          if (todos[insertIndex].completed) {
-            break;
-          }
-        }
-        todos.splice(insertIndex, 0, movedTodo);
+        // If the todo is not on the current page, just add it back to its original position
+        todos.splice(todoGlobalIndex, 0, todoToMove);
       }
 
       pluginApi.pluginSettings.todos = todos;
@@ -85,24 +100,29 @@ Item {
     filteredTodosModel.clear();
 
     var pluginTodos = root.rawTodos;
+    var currentPageId = pluginApi?.pluginSettings?.current_page_id || 0;
 
-    for (var i = 0; i < pluginTodos.length; i++) {
-      todosModel.append({
-                          id: pluginTodos[i].id,
-                          text: pluginTodos[i].text,
-                          completed: pluginTodos[i].completed === true,
-                          createdAt: pluginTodos[i].createdAt
-                        });
-    }
+    // Filter todos for the current page
+    var pageTodos = pluginTodos.filter(function(todo) {
+      return todo.pageId === currentPageId;
+    });
 
-    for (var k = 0; k < pluginTodos.length; k++) {
-      if (showCompleted || !pluginTodos[k].completed) {
-        filteredTodosModel.append({
-                                    id: pluginTodos[k].id,
-                                    text: pluginTodos[k].text,
-                                    completed: pluginTodos[k].completed === true,
-                                    createdAt: pluginTodos[k].createdAt
-                                  });
+    // Populate both models in a single loop
+    for (var i = 0; i < pageTodos.length; i++) {
+      var todoItem = {
+        id: pageTodos[i].id,
+        text: pageTodos[i].text,
+        completed: pageTodos[i].completed === true,
+        createdAt: pageTodos[i].createdAt,
+        pageId: pageTodos[i].pageId
+      };
+
+      // Add to full model
+      todosModel.append(todoItem);
+
+      // Add to filtered model if it meets criteria
+      if (showCompleted || !pageTodos[i].completed) {
+        filteredTodosModel.append(todoItem);
       }
     }
 
@@ -193,16 +213,78 @@ Item {
               onClicked: {
                 if (pluginApi) {
                   var todos = pluginApi.pluginSettings.todos || [];
-                  var activeTodos = todos.filter(todo => !todo.completed);
+                  var currentPageId = pluginApi.pluginSettings.current_page_id || 0;
+
+                  // Only clear completed todos for the current page
+                  var activeTodos = todos.filter(function(todo) {
+                    return !(todo.completed && todo.pageId === currentPageId);
+                  });
+
                   pluginApi.pluginSettings.todos = activeTodos;
+
+                  // Update counts
+                  var newCompletedCount = 0;
+                  for (var j = 0; j < activeTodos.length; j++) {
+                    if (activeTodos[j].completed) {
+                      newCompletedCount++;
+                    }
+                  }
+                  pluginApi.pluginSettings.completedCount = newCompletedCount;
                   pluginApi.pluginSettings.count = activeTodos.length;
-                  pluginApi.pluginSettings.completedCount = 0;
+
                   pluginApi.saveSettings();
                   loadTodos();
                 }
               }
             }
           }
+
+          // Page selector using tab components
+          NTabBar {
+            id: tabBar
+            Layout.fillWidth: true
+            Layout.topMargin: Style.marginS
+            distributeEvenly: true
+            currentIndex: currentPageIndex
+
+            // Track current page index
+            property int currentPageIndex: {
+              var pages = pluginApi?.pluginSettings?.pages || [];
+              var currentId = pluginApi?.pluginSettings?.current_page_id || 0;
+              for (var i = 0; i < pages.length; i++) {
+                if (pages[i].id === currentId) {
+                  return i;
+                }
+              }
+              return 0;
+            }
+
+            // Dynamically create tabs based on pages
+            Repeater {
+              model: pluginApi?.pluginSettings?.pages || []
+
+              delegate: NTabButton {
+                id: tabButton
+                text: modelData.name
+                tabIndex: index
+                checked: index === tabBar.currentIndex
+
+                Component.onCompleted: {
+                  topLeftRadius = Style.iRadiusM;
+                  bottomLeftRadius = Style.iRadiusM;
+                  topRightRadius = Style.iRadiusM;
+                  bottomRightRadius = Style.iRadiusM;
+                }
+
+                onClicked: {
+                  pluginApi.pluginSettings.current_page_id = modelData.id;
+                  pluginApi.saveSettings();
+                  loadTodos();
+                }
+              }
+            }
+          }
+
 
           ColumnLayout {
             Layout.fillWidth: true
@@ -238,7 +320,7 @@ Item {
               delegate: Item {
                 id: delegateItem
                 width: ListView.view.width
-                height: Style.baseWidgetSize
+                height: Style.baseWidgetSize + Style.marginS
 
                 required property int index
                 required property var modelData
@@ -611,7 +693,7 @@ Item {
                           anchors.verticalCenter: parent.verticalCenter
                           anchors.rightMargin: Style.marginM
 
-                          scale: 0.7  // Reduce the button size with scaling
+                          scale: 0.7
                           colorBg: "transparent"
                           colorBgHover: "transparent"
                           colorFg: Color.mOnSurface
@@ -845,17 +927,22 @@ Item {
               preferredHighlightBegin: 0
               preferredHighlightEnd: 0
 
-              header: Item {
-                width: ListView.view.width
-                height: root.todosModel.count === 0 ? contentText.implicitHeight + Style.marginL * 2 : 0
+              header: null
+            }
 
-                NText {
-                  id: contentText
-                  anchors.centerIn: parent
-                  text: root.todosModel.count === 0 ? pluginApi?.tr("panel.empty_state.message") : ""
-                  color: Color.mOnSurfaceVariant
-                  pointSize: Style.fontSizeM
-                }
+            // Empty state overlay - using a separate container that doesn't interfere with layout
+            Item {
+              Layout.fillWidth: true
+              Layout.fillHeight: true
+              Layout.alignment: Qt.AlignCenter
+              visible: root.filteredTodosModel.count === 0
+
+              NText {
+                anchors.centerIn: parent
+                text: pluginApi?.tr("panel.empty_state.message") || "No todo items yet"
+                color: Color.mOnSurfaceVariant
+                font.pointSize: Style.fontSizeM
+                font.weight: Font.Normal
               }
             }
           }
@@ -869,13 +956,15 @@ Item {
     if (newTodoInput.text.trim() !== "") {
       if (pluginApi) {
         var todos = pluginApi.pluginSettings.todos || [];
+        var currentPageId = pluginApi.pluginSettings.current_page_id || 0;
 
         var newTodo = {
           id: Date.now()
               ,
           text: newTodoInput.text.trim(),
           completed: false,
-          createdAt: new Date().toISOString()
+          createdAt: new Date().toISOString(),
+          pageId: currentPageId
         };
 
         todos.unshift(newTodo);
@@ -895,15 +984,91 @@ Item {
   function moveTodoItem(fromIndex, toIndex) {
     if (fromIndex === toIndex)
       return;
-    if (fromIndex < 0 || fromIndex >= root.rawTodos.length)
+
+    var currentPageId = pluginApi?.pluginSettings?.current_page_id || 0;
+    var pluginTodos = root.rawTodos;
+
+    // Filter todos for the current page
+    var pageTodos = pluginTodos.filter(function(todo) {
+      return todo.pageId === currentPageId;
+    });
+
+    if (fromIndex < 0 || fromIndex >= pageTodos.length)
       return;
-    if (toIndex < 0 || toIndex >= root.rawTodos.length)
+    if (toIndex < 0 || toIndex >= pageTodos.length)
       return;
 
-    // Create a new array with item moved
-    var newTodos = root.rawTodos.slice();
-    var item = newTodos.splice(fromIndex, 1)[0];
-    newTodos.splice(toIndex, 0, item);
+    // Create a copy of the full todos array
+    var newTodos = pluginTodos.slice();
+
+    // Find the item in the full array using the fromIndex from the pageTodos
+    var itemToMove = pageTodos[fromIndex];
+
+    // Find the index of this item in the full array
+    var fromGlobalIndex = -1;
+    for (var i = 0; i < newTodos.length; i++) {
+      if (newTodos[i].id === itemToMove.id) {
+        fromGlobalIndex = i;
+        break;
+      }
+    }
+
+    if (fromGlobalIndex === -1) return;
+
+    // Remove the item from its current position
+    var movedItem = newTodos.splice(fromGlobalIndex, 1)[0];
+
+    // Find the target position in the full array
+    var toGlobalIndex = -1;
+    var targetItem = pageTodos[toIndex];
+
+    // If moving down, we need to account for the item being removed
+    if (fromIndex < toIndex) {
+      // Adjust target index since we removed an item before the target
+      var adjustedPageIndex = toIndex;
+      var count = 0;
+      for (var i = 0; i < newTodos.length; i++) {
+        if (newTodos[i].pageId === currentPageId) {
+          if (count === adjustedPageIndex) {
+            toGlobalIndex = i;
+            break;
+          }
+          count++;
+        }
+      }
+    } else {
+      // Moving up, target position stays the same relative to global array
+      var count = 0;
+      for (var i = 0; i < newTodos.length; i++) {
+        if (newTodos[i].pageId === currentPageId) {
+          if (count === toIndex) {
+            toGlobalIndex = i;
+            break;
+          }
+          count++;
+        }
+      }
+    }
+
+    // Insert the item at the new position
+    if (toGlobalIndex === -1) {
+      // If target index is at the end of the page's items
+      var lastPageIndex = -1;
+      var count = 0;
+      for (var i = 0; i < newTodos.length; i++) {
+        if (newTodos[i].pageId === currentPageId) {
+          lastPageIndex = i;
+          count++;
+        }
+      }
+      if (count === toIndex + 1) {
+        toGlobalIndex = lastPageIndex + 1;
+      } else {
+        return;
+      }
+    }
+
+    newTodos.splice(toGlobalIndex, 0, movedItem);
 
     // Update the plugin settings
     if (pluginApi) {

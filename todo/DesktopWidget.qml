@@ -9,7 +9,7 @@ DraggableDesktopWidget {
   id: root
 
   property var pluginApi: null
-  property bool expanded: false
+  property bool expanded: pluginApi?.pluginSettings?.isExpanded !== undefined ? pluginApi.pluginSettings.isExpanded : (pluginApi?.manifest?.metadata?.defaultSettings?.isExpanded || false)
   property bool showCompleted: pluginApi?.pluginSettings?.showCompleted !== undefined ? pluginApi.pluginSettings.showCompleted : pluginApi?.manifest?.metadata?.defaultSettings?.showCompleted
   property ListModel filteredTodosModel: ListModel {}
 
@@ -17,6 +17,7 @@ DraggableDesktopWidget {
     if (!pluginApi) return;
 
     var todos = pluginApi.pluginSettings.todos || [];
+    var currentPageId = pluginApi?.pluginSettings?.current_page_id || 0;
     var todoIndex = -1;
 
     for (var i = 0; i < todos.length; i++) {
@@ -31,23 +32,33 @@ DraggableDesktopWidget {
 
       todos.splice(todoIndex, 1);
 
-      if (movedTodo.completed) {
-        var insertIndex = todos.length;
-        for (var j = todos.length - 1; j >= 0; j--) {
-          if (todos[j].completed) {
-            insertIndex = j + 1;
-            break;
+      // Only reorder within the same page
+      if (movedTodo.pageId === currentPageId) {
+        if (movedTodo.completed) {
+          // Place completed items at the end of the page
+          var insertIndex = todos.length;
+          for (var j = todos.length - 1; j >= 0; j--) {
+            if (todos[j].pageId === currentPageId && todos[j].completed) {
+              insertIndex = j + 1;
+              break;
+            }
           }
+          todos.splice(insertIndex, 0, movedTodo);
+        } else {
+          // Place uncompleted items at the beginning of the page
+          var insertIndex = 0;
+          for (; insertIndex < todos.length; insertIndex++) {
+            if (todos[insertIndex].pageId === currentPageId) {
+              if (todos[insertIndex].completed) {
+                break;
+              }
+            }
+          }
+          todos.splice(insertIndex, 0, movedTodo);
         }
-        todos.splice(insertIndex, 0, movedTodo);
       } else {
-        var insertIndex = 0;
-        for (; insertIndex < todos.length; insertIndex++) {
-          if (todos[insertIndex].completed) {
-            break;
-          }
-        }
-        todos.splice(insertIndex, 0, movedTodo);
+        // If the todo is not on the current page, just add it back to its original position
+        todos.splice(todoIndex, 0, movedTodo);
       }
 
       pluginApi.pluginSettings.todos = todos;
@@ -78,11 +89,13 @@ DraggableDesktopWidget {
     if (!expanded)
       return headerHeight;
 
+    // Add the height of the tab bar when expanded
+    var tabBarHeight = scaledBaseWidgetSize * 0.8;
     var todosCount = root.filteredTodosModel.count;
     var contentHeight = (todosCount === 0) ? scaledBaseWidgetSize : (scaledBaseWidgetSize * todosCount + scaledMarginS * (todosCount - 1));
 
-    var totalHeight = contentHeight + scaledMarginM * 2 + headerHeight;
-    return Math.min(totalHeight, headerHeight + Math.round(400 * widgetScale)); // Max 400px of content (scaled)
+    var totalHeight = contentHeight + headerHeight + tabBarHeight + scaledMarginS + scaledMarginM * 4;
+    return Math.min(totalHeight, headerHeight + tabBarHeight + Math.round(400 * widgetScale));
   }
 
   function getCurrentTodos() {
@@ -101,10 +114,17 @@ DraggableDesktopWidget {
 
     var pluginTodos = getCurrentTodos();
     var currentShowCompleted = getCurrentShowCompleted();
-    var filtered = pluginTodos;
+    var currentPageId = pluginApi?.pluginSettings?.current_page_id || 0;
+
+    // Filter todos for the current page
+    var pageTodos = pluginTodos.filter(function(todo) {
+      return todo.pageId === currentPageId;
+    });
+
+    var filtered = pageTodos;
 
     if (!currentShowCompleted) {
-      filtered = pluginTodos.filter(function (todo) {
+      filtered = pageTodos.filter(function (todo) {
         return !todo.completed;
       });
     }
@@ -113,7 +133,8 @@ DraggableDesktopWidget {
       filteredTodosModel.append({
                                   id: filtered[i].id,
                                   text: filtered[i].text,
-                                  completed: filtered[i].completed
+                                  completed: filtered[i].completed,
+                                  pageId: filtered[i].pageId || 0
                                 });
     }
   }
@@ -154,6 +175,10 @@ DraggableDesktopWidget {
         anchors.fill: parent
         onClicked: {
           root.expanded = !root.expanded;
+          if (pluginApi) {
+            pluginApi.pluginSettings.isExpanded = root.expanded;
+            pluginApi.saveSettings();
+          }
         }
       }
 
@@ -198,6 +223,61 @@ DraggableDesktopWidget {
       }
     }
 
+    // Page selector using tab components - only visible when expanded
+    NTabBar {
+      id: tabBar
+      Layout.fillWidth: true
+      visible: expanded
+      Layout.topMargin: scaledMarginS
+      distributeEvenly: true
+      currentIndex: currentPageIndex
+      color: "transparent"
+      border.width: 0
+
+      // Track current page index
+      property int currentPageIndex: {
+        var pages = pluginApi?.pluginSettings?.pages || [];
+        var currentId = pluginApi?.pluginSettings?.current_page_id || 0;
+        for (var i = 0; i < pages.length; i++) {
+          if (pages[i].id === currentId) {
+            return i;
+          }
+        }
+        return 0;
+      }
+
+      // Dynamically create tabs based on pages
+      Repeater {
+        model: pluginApi?.pluginSettings?.pages || []
+
+        delegate: NTabButton {
+          text: modelData.name
+          tabIndex: index
+          checked: index === tabBar.currentPageIndex
+
+          color: showBackground ?
+                 (isHovered ? Color.mHover : (checked ? Color.mPrimary : Color.mOnPrimary)) :
+                 (isHovered ? Color.mHover : (checked ? "transparent" : "transparent"))
+
+          border.width: showBackground ? 0 : (checked ? 1 : 0)
+          border.color: Color.mPrimary
+
+          Component.onCompleted: {
+            topLeftRadius = Style.iRadiusM;
+            bottomLeftRadius = Style.iRadiusM;
+            topRightRadius = Style.iRadiusM;
+            bottomRightRadius = Style.iRadiusM;
+          }
+
+          onClicked: {
+            pluginApi.pluginSettings.current_page_id = modelData.id;
+            pluginApi.saveSettings();
+            updateFilteredTodos();
+          }
+        }
+      }
+    }
+
     Item {
       Layout.fillWidth: true
       Layout.fillHeight: true
@@ -209,36 +289,40 @@ DraggableDesktopWidget {
         anchors.fill: parent
         color: root.todoBg
         radius: scaledRadiusM
-        border.color: showBackground ? Color.mOutline : "transparent"
-        border.width: showBackground ? 1 : 0
+        // border.color: showBackground ? Color.mOutline : "transparent"
+        // border.width: showBackground ? 1 : 0
       }
 
       // Inner container that is fully inset from the border area
       Item {
         id: innerContentArea
         anchors.fill: parent
-        anchors.margins: showBackground ? 2 : 0  // Use 2px margin to ensure we're clear of 1px border
+        anchors.margins: showBackground ? (backgroundRect.border.width + 1) : 0
 
         // Scrollable area for the todo items
         Flickable {
           id: todoFlickable
           anchors.fill: parent
-          topMargin: scaledMarginM
-          bottomMargin: scaledMarginM
+
           leftMargin: scaledMarginM
           rightMargin: scaledMarginM
-          contentWidth: width - (leftMargin + rightMargin)  // Account for margins in content width
+          topMargin: scaledMarginM
+          bottomMargin: scaledMarginM
+
+          contentWidth: width
           contentHeight: columnLayout.implicitHeight
+
           flickableDirection: Flickable.VerticalFlick
-          clip: true  // Critical: ensures content doesn't render outside bounds
-          boundsBehavior: Flickable.StopAtBounds  // Completely stop at bounds, no overscroll
+          clip: true
+          boundsBehavior: Flickable.DragOverBounds
           interactive: true
-          // Increase pressDelay to give child TapHandler priority for short taps
-          pressDelay: 150  // Longer delay to distinguish between tap and flick
+          pressDelay: 150
 
           Column {
             id: columnLayout
-            width: parent.width
+            width: todoFlickable.width
+                   - todoFlickable.leftMargin
+                   - todoFlickable.rightMargin
             spacing: scaledMarginS
 
             Repeater {
@@ -279,7 +363,7 @@ DraggableDesktopWidget {
                         NIcon {
                           visible: model.completed
                           anchors.centerIn: parent
-                          anchors.horizontalCenterOffset: 0  // Center the checkmark properly
+                          anchors.horizontalCenterOffset: 0
                           icon: "check"
                           color: showBackground ? Color.mOnPrimary : Color.mPrimary
                           pointSize: Math.max(Style.fontSizeXS, width * 0.5)
@@ -288,7 +372,7 @@ DraggableDesktopWidget {
                         // MouseArea for the checkbox
                         MouseArea {
                           anchors.fill: parent
-                          hoverEnabled: false  // Disable hover to prevent cursor flickering
+                          hoverEnabled: false
 
                           onClicked: {
                             if (pluginApi) {
@@ -296,7 +380,14 @@ DraggableDesktopWidget {
 
                               for (var i = 0; i < todos.length; i++) {
                                 if (todos[i].id === model.id) {
-                                  todos[i].completed = !todos[i].completed;  // Toggle the completed status
+                                  // Preserve all properties including pageId when updating
+                                  todos[i] = {
+                                    id: todos[i].id,
+                                    text: todos[i].text,
+                                    completed: !todos[i].completed,
+                                    createdAt: todos[i].createdAt,
+                                    pageId: todos[i].pageId || 0
+                                  };
                                   break;
                                 }
                               }
@@ -314,7 +405,7 @@ DraggableDesktopWidget {
                               moveTodoToCorrectPosition(model.id);
 
                               pluginApi.saveSettings();
-                              updateFilteredTodos(); // Refresh the display
+                              updateFilteredTodos();
                             }
                           }
                         }
@@ -330,6 +421,7 @@ DraggableDesktopWidget {
                       anchors.left: customCheckboxContainer.right
                       anchors.leftMargin: scaledMarginS
                       anchors.right: parent.right
+                      anchors.rightMargin: scaledMarginM
                       anchors.verticalCenter: parent.verticalCenter
                       font.pointSize: scaledFontSizeS
                     }

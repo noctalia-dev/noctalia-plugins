@@ -1,15 +1,7 @@
 {
   "keybind-cheatsheet": {
     "panel": {
-      "title": "Sneltoetsen Overzicht",
-      "open-settings": "Instellingen",
-      "loading": "Laden...",
-      "no-data": "Geen sneltoetsen gevonden",
-      "no-categories": "Geen categorieen gevonden in configuratiebestand",
-      "no-compositor": "Geen ondersteunde compositor gedetecteerd",
-      "error-read-file": "Kan configuratiebestand niet lezen",
-      "refresh": "Vernieuwen",
-      "no-description": "Geen beschrijving"
+      "loading": "Laden..."
     },
     "settings": {
       "title": "Sneltoetsen Overzicht Instellingen",
@@ -23,9 +15,9 @@
       "columns": "Aantal kolommen:",
       "columns-hint": "Meer kolommen werken beter met bredere vensters.",
       "config-paths": "Configuratiebestanden",
-      "config-paths-description": "Geef aangepaste paden op naar uw sneltoetsen configuratiebestanden.",
-      "hyprland-format-hint": "Verwacht formaat: bind = $mod, KEY, action #\"beschrijving\"",
-      "niri-format-hint": "De plugin vindt en analyseert automatisch het 'binds { }' blok.",
+      "config-paths-description": "Geef aangepaste paden op naar uw sneltoetsen configuratiebestanden. De plugin volgt automatisch alle include/source richtlijnen.",
+      "hyprland-format-hint": "Verwacht formaat: bind = $mod, KEY, action #\"beschrijving\"\nCategorieen: # 1. CATEGORIENAAM",
+      "niri-format-hint": "Categorieen worden aangemaakt met: // #\"Categorienaam\"\nBeschrijvingen: hotkey-overlay-title=\"beschrijving\"",
       "actions": "Acties",
       "refresh-keybinds": "Sneltoetsen Vernieuwen",
       "refresh-message": "Sneltoetsen worden opnieuw geladen wanneer u het paneel opent.",

@@ -1,15 +1,7 @@
 {
   "keybind-cheatsheet": {
     "panel": {
-      "title": "Tastenkurzel-Ubersicht",
-      "open-settings": "Einstellungen",
-      "loading": "Laden...",
-      "no-data": "Keine Tastenkurzel gefunden",
-      "no-categories": "Keine Kategorien in der Konfigurationsdatei gefunden",
-      "no-compositor": "Kein unterstutzter Compositor erkannt",
-      "error-read-file": "Konfigurationsdatei kann nicht gelesen werden",
-      "refresh": "Aktualisieren",
-      "no-description": "Keine Beschreibung"
+      "loading": "Laden..."
     },
     "settings": {
       "title": "Tastenkurzel-Ubersicht Einstellungen",
@@ -23,9 +15,9 @@
       "columns": "Anzahl der Spalten:",
       "columns-hint": "Mehr Spalten funktionieren besser mit breiteren Fenstern.",
       "config-paths": "Konfigurationsdateien",
-      "config-paths-description": "Geben Sie benutzerdefinierte Pfade zu Ihren Tastenkurzel-Konfigurationsdateien an.",
-      "hyprland-format-hint": "Erwartetes Format: bind = $mod, KEY, action #\"beschreibung\"",
-      "niri-format-hint": "Das Plugin findet und analysiert den 'binds { }' Block automatisch.",
+      "config-paths-description": "Geben Sie benutzerdefinierte Pfade zu Ihren Tastenkurzel-Konfigurationsdateien an. Das Plugin folgt automatisch allen include/source Direktiven.",
+      "hyprland-format-hint": "Erwartetes Format: bind = $mod, KEY, action #\"beschreibung\"\nKategorien: # 1. KATEGORIENAME",
+      "niri-format-hint": "Kategorien werden erstellt mit: // #\"Kategoriename\"\nBeschreibungen: hotkey-overlay-title=\"beschreibung\"",
       "actions": "Aktionen",
       "refresh-keybinds": "Tastenkurzel aktualisieren",
       "refresh-message": "Tastenkurzel werden beim Offnen des Panels neu geladen.",

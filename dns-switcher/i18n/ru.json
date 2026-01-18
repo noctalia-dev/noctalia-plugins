@@ -1,0 +1,21 @@
+{
+    "plugin": {
+        "title": "Переключатель DNS",
+        "short_title": "DNS"
+    },
+    "status": {
+        "checking": "Проверка...",
+        "switching": "Переключение...",
+        "default": "По умолчанию (ISP)",
+        "custom": "Польз. ({ip})",
+        "unknown": "Неизвестно"
+    },
+    "panel": {
+        "add_server": "Добавить сервер",
+        "cancel": "Отмена",
+        "save": "Сохранить",
+        "reset": "Сброс (ISP)",
+        "name_placeholder": "Название",
+        "ip_placeholder": "IP"
+    }
+}

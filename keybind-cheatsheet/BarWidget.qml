@@ -51,7 +51,9 @@ Rectangle {
 
     onClicked: {
       if (pluginApi) {
-        pluginApi.openPanel(root.screen);
+        // Set flag to trigger parser in Main.qml
+        pluginApi.pluginSettings.triggerToggle = Date.now();
+        pluginApi.saveSettings();
       }
     }
   }

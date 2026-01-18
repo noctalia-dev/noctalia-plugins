@@ -1,0 +1,21 @@
+{
+    "plugin": {
+        "title": "DNS-Wechsler",
+        "short_title": "DNS"
+    },
+    "status": {
+        "checking": "Prüfen...",
+        "switching": "Wechseln...",
+        "default": "Standard (ISP)",
+        "custom": "Benutzerdefiniert ({ip})",
+        "unknown": "Unbekannt"
+    },
+    "panel": {
+        "add_server": "Server hinzufügen",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "reset": "Zurücksetzen (ISP)",
+        "name_placeholder": "Name",
+        "ip_placeholder": "IP"
+    }
+}

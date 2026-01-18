@@ -1,0 +1,21 @@
+{
+    "plugin": {
+        "title": "Cambiador de DNS",
+        "short_title": "DNS"
+    },
+    "status": {
+        "checking": "Comprobando...",
+        "switching": "Cambiando...",
+        "default": "Predeterminado (ISP)",
+        "custom": "Personalizado ({ip})",
+        "unknown": "Desconocido"
+    },
+    "panel": {
+        "add_server": "Añadir Servidor",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "reset": "Restablecer a ISP",
+        "name_placeholder": "Nombre",
+        "ip_placeholder": "IP"
+    }
+}

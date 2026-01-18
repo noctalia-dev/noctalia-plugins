@@ -1,15 +1,7 @@
 {
   "keybind-cheatsheet": {
     "panel": {
-      "title": "Atalhos de Teclado",
-      "open-settings": "Configuracoes",
-      "loading": "Carregando...",
-      "no-data": "Nenhum atalho de teclado encontrado",
-      "no-categories": "Nenhuma categoria encontrada no arquivo de configuracao",
-      "no-compositor": "Nenhum compositor compativel detectado",
-      "error-read-file": "Nao foi possivel ler o arquivo de configuracao",
-      "refresh": "Atualizar",
-      "no-description": "Sem descricao"
+      "loading": "Carregando..."
     },
     "settings": {
       "title": "Configuracoes de Atalhos de Teclado",
@@ -23,9 +15,9 @@
       "columns": "Numero de colunas:",
       "columns-hint": "Mais colunas funcionam melhor com janelas mais largas.",
       "config-paths": "Arquivos de Configuracao",
-      "config-paths-description": "Especifique caminhos personalizados para seus arquivos de configuracao de atalhos.",
-      "hyprland-format-hint": "Formato esperado: bind = $mod, KEY, action #\"descricao\"",
-      "niri-format-hint": "O plugin encontrara e analisara automaticamente o bloco 'binds { }'.",
+      "config-paths-description": "Especifique caminhos personalizados para seus arquivos de configuracao de atalhos. O plugin seguira automaticamente todas as diretivas include/source.",
+      "hyprland-format-hint": "Formato esperado: bind = $mod, KEY, action #\"descricao\"\nCategorias: # 1. NOME DA CATEGORIA",
+      "niri-format-hint": "Categorias sao criadas com: // #\"Nome da categoria\"\nDescricoes: hotkey-overlay-title=\"descricao\"",
       "actions": "Acoes",
       "refresh-keybinds": "Atualizar Atalhos",
       "refresh-message": "Os atalhos serao recarregados ao abrir o painel.",

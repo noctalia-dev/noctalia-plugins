@@ -1,0 +1,21 @@
+{
+    "plugin": {
+        "title": "Перемикач DNS",
+        "short_title": "DNS"
+    },
+    "status": {
+        "checking": "Перевірка...",
+        "switching": "Перемикання...",
+        "default": "За замовчуванням (ISP)",
+        "custom": "Власний ({ip})",
+        "unknown": "Невідомо"
+    },
+    "panel": {
+        "add_server": "Додати сервер",
+        "cancel": "Скасувати",
+        "save": "Зберегти",
+        "reset": "Скинути (ISP)",
+        "name_placeholder": "Назва",
+        "ip_placeholder": "IP"
+    }
+}

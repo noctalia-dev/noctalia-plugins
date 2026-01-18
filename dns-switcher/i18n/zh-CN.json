@@ -1,0 +1,21 @@
+{
+    "plugin": {
+        "title": "DNS 切换器",
+        "short_title": "DNS"
+    },
+    "status": {
+        "checking": "检查中...",
+        "switching": "切换中...",
+        "default": "默认 (ISP)",
+        "custom": "自定义 ({ip})",
+        "unknown": "未知"
+    },
+    "panel": {
+        "add_server": "添加自定义服务器",
+        "cancel": "取消",
+        "save": "保存",
+        "reset": "重置为默认 (ISP)",
+        "name_placeholder": "名称",
+        "ip_placeholder": "IP地址"
+    }
+}

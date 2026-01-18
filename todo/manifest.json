@@ -1,7 +1,7 @@
 {
   "id": "todo",
   "name": "Todo List",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "minNoctaliaVersion": "3.7.1",
   "author": "lonerOrz <lonerOrz@qq.com>",
   "license": "MIT",
@@ -21,10 +21,18 @@
   "metadata": {
     "defaultSettings": {
       "todos": [],
+      "pages": [
+        {
+          "id": 0,
+          "name": "General"
+        }
+      ],
+      "current_page_id": 0,
       "count": 0,
       "completedCount": 0,
       "showCompleted": true,
-      "showBackground": true
+      "showBackground": true,
+      "isExpanded": false
     }
   }
 }

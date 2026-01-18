@@ -1,15 +1,7 @@
 {
   "keybind-cheatsheet": {
     "panel": {
-      "title": "快捷键速查表",
-      "open-settings": "设置",
-      "loading": "加载中...",
-      "no-data": "未找到快捷键",
-      "no-categories": "配置文件中未找到类别",
-      "no-compositor": "未检测到支持的合成器",
-      "error-read-file": "无法读取配置文件",
-      "refresh": "刷新",
-      "no-description": "无描述"
+      "loading": "加载中..."
     },
     "settings": {
       "title": "快捷键速查表设置",
@@ -23,9 +15,9 @@
       "columns": "列数:",
       "columns-hint": "更多列在较宽的窗口中效果更好。",
       "config-paths": "配置文件",
-      "config-paths-description": "指定快捷键配置文件的自定义路径。",
-      "hyprland-format-hint": "预期格式: bind = $mod, KEY, action #\"描述\"",
-      "niri-format-hint": "插件将自动查找并解析 'binds { }' 块。",
+      "config-paths-description": "指定快捷键配置文件的自定义路径。插件会自动跟随所有include/source指令。",
+      "hyprland-format-hint": "预期格式: bind = $mod, KEY, action #\"描述\"\n类别: # 1. 类别名称",
+      "niri-format-hint": "类别使用以下格式创建: // #\"类别名称\"\n描述: hotkey-overlay-title=\"描述\"",
       "actions": "操作",
       "refresh-keybinds": "刷新快捷键",
       "refresh-message": "打开面板时将重新加载快捷键。",

@@ -1,0 +1,21 @@
+{
+    "plugin": {
+        "title": "Alternador de DNS",
+        "short_title": "DNS"
+    },
+    "status": {
+        "checking": "Verificando...",
+        "switching": "Alternando...",
+        "default": "Padrão (ISP)",
+        "custom": "Personalizado ({ip})",
+        "unknown": "Desconhecido"
+    },
+    "panel": {
+        "add_server": "Adicionar Servidor",
+        "cancel": "Cancelar",
+        "save": "Salvar",
+        "reset": "Restaurar Padrão (ISP)",
+        "name_placeholder": "Nome",
+        "ip_placeholder": "IP"
+    }
+}

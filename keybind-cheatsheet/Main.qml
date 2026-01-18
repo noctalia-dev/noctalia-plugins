@@ -9,6 +9,24 @@ Item {
   property var pluginApi: null
   property string compositor: ""
 
+  Component.onCompleted: {
+    console.log("[KeybindCheatsheet] Main.qml Component.onCompleted, pluginApi:", pluginApi);
+    if (pluginApi && !parserStarted) {
+      parserStarted = true;
+      logInfo("Component.onCompleted, detecting compositor");
+      detectCompositor();
+    }
+  }
+
+  onPluginApiChanged: {
+    console.log("[KeybindCheatsheet] pluginApi changed to:", pluginApi);
+    if (pluginApi && !parserStarted) {
+      parserStarted = true;
+      logInfo("pluginApi loaded, detecting compositor");
+      detectCompositor();
+    }
+  }
+
   // Logger helper functions
   function logDebug(msg) {
     if (typeof Logger !== 'undefined') Logger.d("KeybindCheatsheet", msg);
@@ -30,17 +48,19 @@ Item {
     else console.error("[KeybindCheatsheet] " + msg);
   }
 
-  onPluginApiChanged: {
-    if (pluginApi) {
-      logInfo("pluginApi loaded, detecting compositor");
-      detectCompositor();
-    }
-  }
+  property bool parserStarted: false
 
-  Component.onCompleted: {
-    if (pluginApi) {
-      logDebug("Component.onCompleted, detecting compositor");
-      detectCompositor();
+  // Watch for toggle trigger from BarWidget
+  property var triggerToggle: pluginApi?.pluginSettings?.triggerToggle || 0
+  onTriggerToggleChanged: {
+    if (triggerToggle > 0 && pluginApi) {
+      logInfo("Toggle triggered from bar widget");
+      if (!compositor) {
+        detectCompositor();
+      } else {
+        runParser();
+      }
+      pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen));
     }
   }
 
@@ -106,10 +126,15 @@ Item {
     detectProcess.running = true;
   }
 
-  property string configContent: ""
+  // Recursive parsing support
+  property var filesToParse: []
+  property var parsedFiles: ({})
+  property var accumulatedLines: []
+  property var currentLines: []
+  property var collectedBinds: ({})  // Collect keybinds from all files
 
   function runParser() {
-    logDebug("=== START PARSER for " + compositor + " ===");
+    logInfo("=== START PARSER for " + compositor + " ===");
 
     var homeDir = Quickshell.env("HOME");
     if (!homeDir) {
@@ -121,62 +146,348 @@ Item {
       return;
     }
 
+    // Reset recursive state
+    filesToParse = [];
+    parsedFiles = {};
+    accumulatedLines = [];
+    collectedBinds = {};
+
     var filePath;
     if (compositor === "hyprland") {
-      filePath = homeDir + "/.config/hypr/keybind.conf";
+      filePath = pluginApi?.pluginSettings?.hyprlandConfigPath || (homeDir + "/.config/hypr/hyprland.conf");
+      filePath = filePath.replace(/^~/, homeDir);
     } else if (compositor === "niri") {
-      filePath = homeDir + "/.config/niri/config.kdl";
+      filePath = pluginApi?.pluginSettings?.niriConfigPath || (homeDir + "/.config/niri/config.kdl");
+      filePath = filePath.replace(/^~/, homeDir);
     } else {
       logError("Unknown compositor: " + compositor);
       return;
     }
 
-    logDebug("Config path = " + filePath);
-    configContent = "";
-    readConfigProcess.command = ["cat", filePath];
-    readConfigProcess.running = true;
+    logInfo("Starting with main config: " + filePath);
+    filesToParse = [filePath];
+
+    if (compositor === "hyprland") {
+      parseNextHyprlandFile();
+    } else {
+      parseNextNiriFile();
+    }
+  }
+
+  function getDirectoryFromPath(filePath) {
+    var lastSlash = filePath.lastIndexOf('/');
+    return lastSlash >= 0 ? filePath.substring(0, lastSlash) : ".";
+  }
+
+  function resolveRelativePath(basePath, relativePath) {
+    var homeDir = Quickshell.env("HOME") || "";
+    var resolved = relativePath.replace(/^~/, homeDir);
+    if (resolved.startsWith('/')) return resolved;
+    return getDirectoryFromPath(basePath) + "/" + resolved;
+  }
+
+  function isGlobPattern(path) {
+    return path.indexOf('*') !== -1 || path.indexOf('?') !== -1;
+  }
+
+  // ========== NIRI RECURSIVE PARSING ==========
+  function parseNextNiriFile() {
+    if (filesToParse.length === 0) {
+      logInfo("All Niri files parsed, converting " + Object.keys(collectedBinds).length + " categories");
+      finalizeNiriBinds();
+      return;
+    }
+
+    var nextFile = filesToParse.shift();
+
+    // Handle glob patterns
+    if (isGlobPattern(nextFile)) {
+      niriGlobProcess.command = ["sh", "-c", "for f in " + nextFile + "; do [ -f \"$f\" ] && echo \"$f\"; done"];
+      niriGlobProcess.running = true;
+      return;
+    }
+
+    if (parsedFiles[nextFile]) {
+      parseNextNiriFile();
+      return;
+    }
+
+    parsedFiles[nextFile] = true;
+    logInfo("Parsing Niri file: " + nextFile);
+
+    currentLines = [];
+    niriReadProcess.currentFilePath = nextFile;
+    niriReadProcess.command = ["cat", nextFile];
+    niriReadProcess.running = true;
   }
 
   Process {
-    id: readConfigProcess
+    id: niriGlobProcess
+    property var expandedFiles: []
     running: false
 
     stdout: SplitParser {
-      splitMarker: ""
       onRead: data => {
-        root.configContent += data;
+        var trimmed = data.trim();
+        if (trimmed.length > 0) niriGlobProcess.expandedFiles.push(trimmed);
       }
     }
 
-    onExited: (exitCode, exitStatus) => {
-      logDebug("Process finished. ExitCode: " + exitCode);
-
-      if (exitCode !== 0) {
-        logError("Read error! Code: " + exitCode);
-        saveToDb([{
-          "title": "READ ERROR",
-          "binds": [
-            { "keys": "EXIT CODE", "desc": exitCode.toString() }
-          ]
-        }]);
-        return;
-      }
-
-      logDebug("Content length: " + root.configContent.length);
-
-      if (root.configContent.length > 0) {
-        if (root.compositor === "hyprland") {
-          parseHyprlandConfig(root.configContent);
-        } else if (root.compositor === "niri") {
-          parseNiriConfig(root.configContent);
+    onExited: {
+      for (var i = 0; i < expandedFiles.length; i++) {
+        var path = expandedFiles[i];
+        if (!root.parsedFiles[path] && root.filesToParse.indexOf(path) === -1) {
+          root.filesToParse.push(path);
         }
-      } else {
-        logWarn("File is empty!");
-        saveToDb([{
-          "title": "FILE EMPTY",
-          "binds": [{ "keys": "INFO", "desc": "File contains no data" }]
-        }]);
       }
+      expandedFiles = [];
+      root.parseNextNiriFile();
+    }
+  }
+
+  Process {
+    id: niriReadProcess
+    property string currentFilePath: ""
+    running: false
+
+    stdout: SplitParser {
+      onRead: data => { root.currentLines.push(data); }
+    }
+
+    onExited: (exitCode, exitStatus) => {
+      logInfo("niriReadProcess exited, code: " + exitCode + ", lines: " + root.currentLines.length);
+      if (exitCode === 0 && root.currentLines.length > 0) {
+        // First pass: find includes
+        for (var i = 0; i < root.currentLines.length; i++) {
+          var line = root.currentLines[i];
+          var includeMatch = line.match(/(?:include|source)\s+"([^"]+)"/i);
+          if (includeMatch) {
+            var includePath = includeMatch[1];
+            var resolvedPath = root.resolveRelativePath(currentFilePath, includePath);
+            logInfo("Found include: " + includePath + " -> " + resolvedPath);
+            if (!root.parsedFiles[resolvedPath] && root.filesToParse.indexOf(resolvedPath) === -1) {
+              root.filesToParse.push(resolvedPath);
+            }
+          }
+        }
+        // Second pass: parse keybinds from this file
+        root.parseNiriFileContent(root.currentLines.join("\n"));
+      }
+      root.currentLines = [];
+      root.parseNextNiriFile();
+    }
+  }
+
+  function parseNiriFileContent(text) {
+    logInfo("parseNiriFileContent called, text length: " + text.length);
+    var lines = text.split('\n');
+    var inBindsBlock = false;
+    var braceDepth = 0;
+    var currentCategory = null;
+    var bindsFoundInFile = 0;
+
+    var actionCategories = {
+      "spawn": "Applications",
+      "focus-column": "Column Navigation",
+      "focus-window": "Window Focus",
+      "focus-workspace": "Workspace Navigation",
+      "move-column": "Move Columns",
+      "move-window": "Move Windows",
+      "consume-window": "Window Management",
+      "expel-window": "Window Management",
+      "close-window": "Window Management",
+      "fullscreen-window": "Window Management",
+      "maximize-column": "Column Management",
+      "set-column-width": "Column Width",
+      "switch-preset-column-width": "Column Width",
+      "reset-window-height": "Window Size",
+      "screenshot": "Screenshots",
+      "power-off-monitors": "Power",
+      "quit": "System",
+      "toggle-animation": "Animations"
+    };
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i].trim();
+
+      // Find binds block
+      if (line.startsWith("binds") && line.includes("{")) {
+        inBindsBlock = true;
+        braceDepth = 1;
+        logInfo("Entered binds block");
+        continue;
+      }
+
+      if (!inBindsBlock) continue;
+
+      // Track brace depth
+      for (var j = 0; j < line.length; j++) {
+        if (line[j] === '{') braceDepth++;
+        else if (line[j] === '}') braceDepth--;
+      }
+
+      if (braceDepth <= 0) {
+        logInfo("Exiting binds block, found " + bindsFoundInFile + " binds");
+        inBindsBlock = false;
+        continue;
+      }
+
+      // Category markers: // #"Category Name" - only these create categories
+      if (line.startsWith("//")) {
+        var categoryMatch = line.match(/\/\/\s*#"([^"]+)"/);
+        if (categoryMatch) {
+          currentCategory = categoryMatch[1];
+        }
+        continue;
+      }
+
+      if (line.length === 0) continue;
+
+      // Parse keybind
+      var bindMatch = line.match(/^([A-Za-z0-9_+]+)\s*(.*?)\{\s*([^}]+)\s*\}/);
+      if (bindMatch) {
+        bindsFoundInFile++;
+        var keyCombo = bindMatch[1];
+        var attributes = bindMatch[2].trim();
+        var action = bindMatch[3].trim().replace(/;$/, '');
+
+        var hotkeyTitle = null;
+        var titleMatch = attributes.match(/hotkey-overlay-title="([^"]+)"/);
+        if (titleMatch) hotkeyTitle = titleMatch[1];
+
+        var formattedKeys = formatNiriKeyCombo(keyCombo);
+        var category = currentCategory || getNiriCategory(action, actionCategories);
+        var description = hotkeyTitle || formatNiriAction(action);
+
+        if (!collectedBinds[category]) {
+          collectedBinds[category] = [];
+        }
+        collectedBinds[category].push({
+          "keys": formattedKeys,
+          "desc": description
+        });
+      }
+    }
+    logInfo("File parsing done, bindsFoundInFile: " + bindsFoundInFile);
+  }
+
+  function finalizeNiriBinds() {
+    var categoryOrder = [
+      "Applications", "Window Management", "Column Navigation",
+      "Window Focus", "Workspace Navigation", "Move Columns",
+      "Move Windows", "Column Management", "Column Width",
+      "Window Size", "Screenshots", "Power", "System", "Animations"
+    ];
+
+    var categories = [];
+    for (var k = 0; k < categoryOrder.length; k++) {
+      var catName = categoryOrder[k];
+      if (collectedBinds[catName] && collectedBinds[catName].length > 0) {
+        categories.push({ "title": catName, "binds": collectedBinds[catName] });
+      }
+    }
+
+    // Add remaining categories
+    for (var cat in collectedBinds) {
+      if (categoryOrder.indexOf(cat) === -1 && collectedBinds[cat].length > 0) {
+        categories.push({ "title": cat, "binds": collectedBinds[cat] });
+      }
+    }
+
+    logInfo("Found " + categories.length + " categories total");
+    saveToDb(categories);
+  }
+
+  // ========== HYPRLAND RECURSIVE PARSING ==========
+  function parseNextHyprlandFile() {
+    if (filesToParse.length === 0) {
+      logInfo("All Hyprland files parsed, total lines: " + accumulatedLines.length);
+      if (accumulatedLines.length > 0) {
+        parseHyprlandConfig(accumulatedLines.join("\n"));
+      } else {
+        logWarn("No content found in config files");
+      }
+      return;
+    }
+
+    var nextFile = filesToParse.shift();
+
+    // Handle glob patterns
+    if (isGlobPattern(nextFile)) {
+      hyprGlobProcess.command = ["sh", "-c", "for f in " + nextFile + "; do [ -f \"$f\" ] && echo \"$f\"; done"];
+      hyprGlobProcess.running = true;
+      return;
+    }
+
+    if (parsedFiles[nextFile]) {
+      parseNextHyprlandFile();
+      return;
+    }
+
+    parsedFiles[nextFile] = true;
+    logInfo("Parsing Hyprland file: " + nextFile);
+
+    currentLines = [];
+    hyprReadProcess.currentFilePath = nextFile;
+    hyprReadProcess.command = ["cat", nextFile];
+    hyprReadProcess.running = true;
+  }
+
+  Process {
+    id: hyprGlobProcess
+    property var expandedFiles: []
+    running: false
+
+    stdout: SplitParser {
+      onRead: data => {
+        var trimmed = data.trim();
+        if (trimmed.length > 0) hyprGlobProcess.expandedFiles.push(trimmed);
+      }
+    }
+
+    onExited: {
+      for (var i = 0; i < expandedFiles.length; i++) {
+        var path = expandedFiles[i];
+        if (!root.parsedFiles[path] && root.filesToParse.indexOf(path) === -1) {
+          root.filesToParse.push(path);
+        }
+      }
+      expandedFiles = [];
+      root.parseNextHyprlandFile();
+    }
+  }
+
+  Process {
+    id: hyprReadProcess
+    property string currentFilePath: ""
+    running: false
+
+    stdout: SplitParser {
+      onRead: data => { root.currentLines.push(data); }
+    }
+
+    onExited: (exitCode, exitStatus) => {
+      if (exitCode === 0 && root.currentLines.length > 0) {
+        for (var i = 0; i < root.currentLines.length; i++) {
+          var line = root.currentLines[i];
+          root.accumulatedLines.push(line);
+
+          // Check for source directive
+          var sourceMatch = line.trim().match(/^source\s*=\s*(.+)$/);
+          if (sourceMatch) {
+            var sourcePath = sourceMatch[1].trim();
+            var commentIdx = sourcePath.indexOf('#');
+            if (commentIdx > 0) sourcePath = sourcePath.substring(0, commentIdx).trim();
+            var resolvedPath = root.resolveRelativePath(currentFilePath, sourcePath);
+            logInfo("Found source: " + sourcePath + " -> " + resolvedPath);
+            if (!root.parsedFiles[resolvedPath] && root.filesToParse.indexOf(resolvedPath) === -1) {
+              root.filesToParse.push(resolvedPath);
+            }
+          }
+        }
+      }
+      root.currentLines = [];
+      root.parseNextHyprlandFile();
     }
   }
 
@@ -207,17 +518,30 @@ Item {
 
           var parts = line.split(',');
           if (parts.length >= 2) {
-            var mod = parts[0].split('=')[1].trim().replace("$mod", "Super");
-            var key = parts[1].trim().toUpperCase();
-            if (parts[0].includes("SHIFT")) mod += " + Shift";
-            if (parts[0].includes("CTRL")) mod += " + Ctrl";
-            if (parts[0].includes("ALT")) mod += " + Alt";
+            var modPart = parts[0].split('=')[1].trim().toUpperCase();
+            var rawKey = parts[1].trim().toUpperCase();
+            var key = formatSpecialKey(rawKey);
+
+            // Build modifiers list properly
+            var mods = [];
+            if (modPart.includes("$MOD") || modPart.includes("SUPER")) mods.push("Super");
+            if (modPart.includes("SHIFT")) mods.push("Shift");
+            if (modPart.includes("CTRL") || modPart.includes("CONTROL")) mods.push("Ctrl");
+            if (modPart.includes("ALT")) mods.push("Alt");
+
+            // Build full key string
+            var fullKey;
+            if (mods.length > 0) {
+              fullKey = mods.join(" + ") + " + " + key;
+            } else {
+              fullKey = key;
+            }
 
             currentCategory.binds.push({
-              "keys": mod + " + " + key,
+              "keys": fullKey,
               "desc": description
             });
-            logDebug("Added bind: " + mod + " + " + key);
+            logDebug("Added bind: " + fullKey);
           }
         }
       }
@@ -285,11 +609,11 @@ Item {
         break;
       }
 
-      // Comments as category hints
+      // Category markers: // #"Category Name" - only these create categories
       if (line.startsWith("//")) {
-        var commentText = line.substring(2).trim();
-        if (commentText.length > 0 && commentText.length < 50) {
-          currentCategory = commentText;
+        var categoryMatch = line.match(/\/\/\s*#"([^"]+)"/);
+        if (categoryMatch) {
+          currentCategory = categoryMatch[1];
         }
         continue;
       }
@@ -352,8 +676,67 @@ Item {
     saveToDb(categories);
   }
 
+  function formatSpecialKey(key) {
+    var keyMap = {
+      // Audio keys (uppercase for Hyprland)
+      "XF86AUDIORAISEVOLUME": "Vol Up",
+      "XF86AUDIOLOWERVOLUME": "Vol Down",
+      "XF86AUDIOMUTE": "Mute",
+      "XF86AUDIOMICMUTE": "Mic Mute",
+      "XF86AUDIOPLAY": "Play",
+      "XF86AUDIOPAUSE": "Pause",
+      "XF86AUDIONEXT": "Next",
+      "XF86AUDIOPREV": "Prev",
+      "XF86AUDIOSTOP": "Stop",
+      "XF86AUDIOMEDIA": "Media",
+      // Audio keys (mixed case for Niri)
+      "XF86AudioRaiseVolume": "Vol Up",
+      "XF86AudioLowerVolume": "Vol Down",
+      "XF86AudioMute": "Mute",
+      "XF86AudioMicMute": "Mic Mute",
+      "XF86AudioPlay": "Play",
+      "XF86AudioPause": "Pause",
+      "XF86AudioNext": "Next",
+      "XF86AudioPrev": "Prev",
+      "XF86AudioStop": "Stop",
+      "XF86AudioMedia": "Media",
+      // Brightness keys
+      "XF86MONBRIGHTNESSUP": "Bright Up",
+      "XF86MONBRIGHTNESSDOWN": "Bright Down",
+      "XF86MonBrightnessUp": "Bright Up",
+      "XF86MonBrightnessDown": "Bright Down",
+      // Other common keys
+      "XF86CALCULATOR": "Calc",
+      "XF86MAIL": "Mail",
+      "XF86SEARCH": "Search",
+      "XF86EXPLORER": "Files",
+      "XF86WWW": "Browser",
+      "XF86HOMEPAGE": "Home",
+      "XF86FAVORITES": "Favorites",
+      "XF86POWEROFF": "Power",
+      "XF86SLEEP": "Sleep",
+      "XF86EJECT": "Eject",
+      // Print screen
+      "PRINT": "PrtSc",
+      "Print": "PrtSc",
+      // Navigation
+      "PRIOR": "PgUp",
+      "NEXT": "PgDn",
+      "Prior": "PgUp",
+      "Next": "PgDn",
+      // Mouse (for Hyprland)
+      "MOUSE_DOWN": "Scroll Down",
+      "MOUSE_UP": "Scroll Up",
+      "MOUSE:272": "Left Click",
+      "MOUSE:273": "Right Click",
+      "MOUSE:274": "Middle Click"
+    };
+    return keyMap[key] || key;
+  }
+
   function formatNiriKeyCombo(combo) {
-    return combo
+    // First handle modifiers
+    var formatted = combo
       .replace(/Mod\+/g, "Super + ")
       .replace(/Super\+/g, "Super + ")
       .replace(/Ctrl\+/g, "Ctrl + ")
@@ -362,7 +745,19 @@ Item {
       .replace(/Shift\+/g, "Shift + ")
       .replace(/Win\+/g, "Super + ")
       .replace(/\+\s*$/, "")
-      .replace(/\s+/g, " ");
+      .replace(/\s+/g, " ")
+      .trim();
+
+    // Then format special keys (XF86, Print, etc.)
+    var parts = formatted.split(" + ");
+    var formattedParts = parts.map(function(part) {
+      var trimmed = part.trim();
+      if (["Super", "Ctrl", "Alt", "Shift"].indexOf(trimmed) === -1) {
+        return formatSpecialKey(trimmed);
+      }
+      return trimmed;
+    });
+    return formattedParts.join(" + ");
   }
 
   function formatNiriAction(action) {
@@ -406,6 +801,15 @@ Item {
           runParser();
         }
         pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen));
+      }
+    }
+
+    function refresh() {
+      logDebug("IPC refresh called");
+      if (pluginApi) {
+        parserStarted = false;
+        compositor = "";
+        detectCompositor();
       }
     }
   }
