@@ -27,7 +27,9 @@
       "keybind-setup": "Configuration du Raccourci",
       "keybind-setup-description": "Pour ouvrir le cheatsheet avec un raccourci clavier, ajoutez ce bind a la configuration de votre compositeur:",
       "keybind-example-hyprland": "Hyprland: bind = $mod, F1, exec, qs -c \"noctalia-shell\" ipc call \"keybind-cheatsheet\" \"toggle\"",
-      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }"
+      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }",
+      "mod-var": "Variable de Touche Mod",
+      "mod-var-hint": "Le nom de la variable utilisée pour votre touche Super (ex. $mod ou $mainMod)."
     }
   }
 }

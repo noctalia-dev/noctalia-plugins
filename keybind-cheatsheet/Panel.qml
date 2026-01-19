@@ -60,9 +60,9 @@ Item {
     columnItems = items;
   }
 
-  // Screen height limit (80% of screen)
+  // Screen height limit (90% of screen)
   property var panelOpenScreen: pluginApi?.panelOpenScreen
-  property real maxScreenHeight: panelOpenScreen ? panelOpenScreen.height * 0.8 : 800
+  property real maxScreenHeight: panelOpenScreen ? panelOpenScreen.height * 0.9 : 800
 
   property real contentPreferredWidth: settingsWidth
   property real contentPreferredHeight: calculateDynamicHeight()
@@ -108,11 +108,10 @@ Item {
     }
 
     // header (45) + content + margins (16)
-    var totalHeight = 45 + maxColumnHeight + 16;
+    var totalHeight = 45 + maxColumnHeight + 16 + 15 + 15;
     // Limit to 80% of screen height
     return Math.max(300, Math.min(totalHeight, maxScreenHeight));
   }
-
 
   // ========== UI ==========
   Rectangle {
@@ -190,60 +189,64 @@ Item {
       anchors.left: parent.left
       anchors.right: parent.right
       clip: true
-      leftPadding: Style.marginM
-      rightPadding: Style.marginM
-      topPadding: Style.marginS
-      bottomPadding: Style.marginM
+      leftPadding: 35
+      rightPadding: -10
+      topPadding: 15
+      bottomPadding: 15
 
       RowLayout {
         id: mainLayout
-        width: scrollView.availableWidth
+        width: scrollView.availableWidth - Style.marginS  
         spacing: Style.marginS
 
         Repeater {
-            model: root.columnItems.length
+          model: root.columnItems.length
 
-            ColumnLayout {
-              Layout.fillWidth: true
-              Layout.alignment: Qt.AlignTop
-              spacing: 2
+          ColumnLayout {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
+            spacing: 2
 
-              property var colItems: root.columnItems[index] || []
+            property var colItems: root.columnItems[index] || []
 
-              Repeater {
-                model: colItems
-                Loader {
-                  Layout.fillWidth: true
-                  sourceComponent: modelData.type === "header" ? headerComponent :
-                                 (modelData.type === "spacer" ? spacerComponent : bindComponent)
-                  property var itemData: modelData
-                }
+            Repeater {
+              model: colItems
+              Loader {
+                Layout.fillWidth: true
+                sourceComponent: modelData.type === "header" ? headerComponent :
+                               (modelData.type === "spacer" ? spacerComponent : bindComponent)
+                property var itemData: modelData
               }
             }
           }
         }
+      }
     }
   }
 
   Component {
     id: headerComponent
-    RowLayout {
-      spacing: Style.marginXS
+    ColumnLayout {  
+      Layout.preferredWidth: 300      
       Layout.topMargin: Style.marginM
       Layout.bottomMargin: 4
-      NIcon {
-        icon: "circle-dot"
-        pointSize: 10
-        color: Color.mPrimary
-      }
+      spacing: 0
+  
+      Item { Layout.fillWidth: true; height: 1 }  
+  
       NText {
+        Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter  
+        x: parent.width - implicitWidth             
         text: itemData.title
         font.pointSize: 11
         font.weight: Font.Bold
         color: Color.mPrimary
       }
+  
+      Item { Layout.fillWidth: true; height: 1 }  
     }
   }
+ 
 
   Component {
     id: spacerComponent

@@ -497,6 +497,10 @@ Item {
     var lines = text.split('\n');
     var categories = [];
     var currentCategory = null;
+    
+    // TUTAJ ZMIANA: Pobierz ustawioną zmienną (domyślnie $mod) i zamień na wielkie litery
+    var modVar = pluginApi?.pluginSettings?.modKeyVariable || "$mod";
+    var modVarUpper = modVar.toUpperCase();
 
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i].trim();
@@ -524,7 +528,9 @@ Item {
 
             // Build modifiers list properly
             var mods = [];
-            if (modPart.includes("$MOD") || modPart.includes("SUPER")) mods.push("Super");
+            // TUTAJ ZMIANA: Sprawdzamy czy to ustawiony mod (np. $MAINMOD) albo SUPER
+            if (modPart.includes(modVarUpper) || modPart.includes("SUPER")) mods.push("Super");
+            
             if (modPart.includes("SHIFT")) mods.push("Shift");
             if (modPart.includes("CTRL") || modPart.includes("CONTROL")) mods.push("Ctrl");
             if (modPart.includes("ALT")) mods.push("Alt");

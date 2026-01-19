@@ -10,7 +10,7 @@
       "width": "宽度:",
       "height": "高度:",
       "auto-height": "自动",
-      "auto-height-hint": "启用"自动"时，高度会根据内容自动调整。",
+      "auto-height-hint": "启用\"自动\"时，高度会根据内容自动调整。",
       "layout": "布局",
       "columns": "列数:",
       "columns-hint": "更多列在较宽的窗口中效果更好。",
@@ -27,7 +27,9 @@
       "keybind-setup": "快捷键设置",
       "keybind-setup-description": "要使用键盘快捷键打开速查表，请将此绑定添加到合成器配置中:",
       "keybind-example-hyprland": "Hyprland: bind = $mod, F1, exec, qs -c \"noctalia-shell\" ipc call \"keybind-cheatsheet\" \"toggle\"",
-      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }"
+      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }",
+      "mod-var": "Mod 键变量",
+      "mod-var-hint": "用于 Super 键的变量名称（例如 $mod 或 $mainMod）。"
     }
   }
 }

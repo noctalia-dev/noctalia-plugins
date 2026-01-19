@@ -27,7 +27,9 @@
       "keybind-setup": "Kisayol Ayari",
       "keybind-setup-description": "Cheatsheet'i bir klavye kisayoluyla acmak icin, bu bind'i compositor yapilandirmaniza ekleyin:",
       "keybind-example-hyprland": "Hyprland: bind = $mod, F1, exec, qs -c \"noctalia-shell\" ipc call \"keybind-cheatsheet\" \"toggle\"",
-      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }"
+      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }",
+      "mod-var": "Mod Tusu Degiskeni",
+      "mod-var-hint": "Super tusunuz icin kullanilan degisken adi (orn. $mod veya $mainMod)."
     }
   }
 }

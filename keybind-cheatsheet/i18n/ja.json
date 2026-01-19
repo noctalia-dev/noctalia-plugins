@@ -27,7 +27,9 @@
       "keybind-setup": "キーバインド設定",
       "keybind-setup-description": "キーボードショートカットでチートシートを開くには、このバインドをコンポジター設定に追加してください:",
       "keybind-example-hyprland": "Hyprland: bind = $mod, F1, exec, qs -c \"noctalia-shell\" ipc call \"keybind-cheatsheet\" \"toggle\"",
-      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }"
+      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }",
+      "mod-var": "Modキー変数",
+      "mod-var-hint": "Superキーに使用される変数名（例: $mod または $mainMod）。"
     }
   }
 }

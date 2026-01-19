@@ -27,7 +27,9 @@
       "keybind-setup": "Configuracao de Atalho",
       "keybind-setup-description": "Para abrir o cheatsheet com um atalho de teclado, adicione este bind a configuracao do seu compositor:",
       "keybind-example-hyprland": "Hyprland: bind = $mod, F1, exec, qs -c \"noctalia-shell\" ipc call \"keybind-cheatsheet\" \"toggle\"",
-      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }"
+      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }",
+      "mod-var": "Variável da Tecla Mod",
+      "mod-var-hint": "O nome da variável usada para sua tecla Super (ex. $mod ou $mainMod)."
     }
   }
 }

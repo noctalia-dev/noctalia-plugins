@@ -27,7 +27,9 @@
       "keybind-setup": "Настройка клавиши",
       "keybind-setup-description": "Чтобы открыть шпаргалку с помощью клавиши, добавьте этот bind в конфигурацию композитора:",
       "keybind-example-hyprland": "Hyprland: bind = $mod, F1, exec, qs -c \"noctalia-shell\" ipc call \"keybind-cheatsheet\" \"toggle\"",
-      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }"
+      "keybind-example-niri": "Niri: Super+F1 { spawn \"qs\" \"-c\" \"noctalia-shell\" \"ipc\" \"call\" \"keybind-cheatsheet\" \"toggle\"; }",
+      "mod-var": "Переменная клавиши Mod",
+      "mod-var-hint": "Имя переменной, используемой для клавиши Super (например, $mod или $mainMod)."
     }
   }
 }

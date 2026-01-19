@@ -22,6 +22,8 @@ ColumnLayout {
   property int windowHeight: cfg.windowHeight ?? defaults.windowHeight ?? 0
   property bool autoHeight: cfg.autoHeight ?? defaults.autoHeight ?? true
   property int columnCount: cfg.columnCount ?? defaults.columnCount ?? 3
+  // NOWA ZMIENNA TUTAJ:
+  property string modKeyVariable: cfg.modKeyVariable || defaults.modKeyVariable || "$mod"
   property string hyprlandConfigPath: cfg.hyprlandConfigPath || defaults.hyprlandConfigPath || "~/.config/hypr/hyprland.conf"
   property string niriConfigPath: cfg.niriConfigPath || defaults.niriConfigPath || "~/.config/niri/config.kdl"
 
@@ -227,7 +229,7 @@ ColumnLayout {
         }
       }
 
-      // Config File Paths
+      // Config File Paths & Parsing
       NBox {
         Layout.fillWidth: true
         Layout.preferredHeight: pathsContent.implicitHeight + Style.marginM * 2
@@ -248,11 +250,62 @@ ColumnLayout {
 
           NText {
             text: pluginApi?.tr("keybind-cheatsheet.settings.config-paths-description") ||
-              "Specify custom paths to your keybind configuration files. The plugin will automatically parse the appropriate file based on your compositor."
+              "Specify custom paths and variables for your keybinds."
             color: Color.mOnSurfaceVariant
             pointSize: Style.fontSizeS
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
+          }
+          
+          // NOWA SEKCJA: Mod Variable Setting
+          ColumnLayout {
+            Layout.fillWidth: true
+            spacing: Style.marginXS
+
+            RowLayout {
+                spacing: Style.marginS
+                NIcon {
+                    icon: "keyboard"
+                    pointSize: Style.fontSizeM
+                    color: Color.mOnSurface
+                }
+                NText {
+                    text: pluginApi?.tr("keybind-cheatsheet.settings.mod-var") || "Mod Key Variable"
+                    color: Color.mOnSurface
+                    pointSize: Style.fontSizeM
+                    font.weight: Style.fontWeightBold
+                }
+            }
+
+            NTextInput {
+                id: modVarInput
+                Layout.fillWidth: true
+                Layout.preferredHeight: Style.baseWidgetSize
+                text: modKeyVariable
+                placeholderText: "$mod"
+
+                onTextChanged: {
+                    if (text.length > 0 && pluginApi && pluginApi.pluginSettings) {
+                        pluginApi.pluginSettings.modKeyVariable = text;
+                    }
+                }
+            }
+            
+            NText {
+                text: pluginApi?.tr("keybind-cheatsheet.settings.mod-var-hint") || 
+                    "The variable name used for your Super key (e.g., $mod or $mainMod)."
+                color: Color.mOnSurfaceVariant
+                pointSize: Style.fontSizeXS
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+            }
+          }
+
+          Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 1
+            color: Color.mOutline
+            opacity: 0.3
           }
 
           // Hyprland path
@@ -268,7 +321,7 @@ ColumnLayout {
                 color: Color.mPrimary
               }
               NText {
-                text: "Hyprland"
+                text: "Hyprland Path"
                 color: Color.mOnSurface
                 pointSize: Style.fontSizeM
                 font.weight: Style.fontWeightBold
@@ -319,7 +372,7 @@ ColumnLayout {
                 color: Color.mSecondary
               }
               NText {
-                text: "Niri"
+                text: "Niri Path"
                 color: Color.mOnSurface
                 pointSize: Style.fontSizeM
                 font.weight: Style.fontWeightBold
@@ -400,6 +453,8 @@ ColumnLayout {
                   pluginApi.pluginSettings.windowHeight = defaults.windowHeight || 0;
                   pluginApi.pluginSettings.autoHeight = defaults.autoHeight ?? true;
                   pluginApi.pluginSettings.columnCount = defaults.columnCount || 3;
+                  // RESET DLA NOWEJ ZMIENNEJ:
+                  pluginApi.pluginSettings.modKeyVariable = defaults.modKeyVariable || "$mod";
                   pluginApi.pluginSettings.hyprlandConfigPath = defaults.hyprlandConfigPath || "~/.config/hypr/hyprland.conf";
                   pluginApi.pluginSettings.niriConfigPath = defaults.niriConfigPath || "~/.config/niri/config.kdl";
                   pluginApi.pluginSettings.cheatsheetData = [];
@@ -411,6 +466,8 @@ ColumnLayout {
                   heightInput.text = "850";
                   autoHeightToggle.checked = true;
                   columnCombo.currentKey = "3";
+                  // AKTUALIZACJA UI DLA NOWEJ ZMIENNEJ:
+                  modVarInput.text = defaults.modKeyVariable || "$mod";
                   hyprlandPathInput.text = defaults.hyprlandConfigPath || "~/.config/hypr/hyprland.conf";
                   niriPathInput.text = defaults.niriConfigPath || "~/.config/niri/config.kdl";
 
