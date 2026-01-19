@@ -1,0 +1,24 @@
+{
+  "id": "battery-threshold",
+  "name": "Battery Threshold Control",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "Wilfred Mallawa",
+  "license": "MIT",
+  "repository": "https://github.com/twilfredo/noctalia-battery-threshold",
+  "description": "Set the battery threshold for laptop batteries to extend battery lifespan",
+  "tags": ["Bar", "Panel", "System"],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "chargeThreshold": 80
+    }
+  }
+}
